@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static "" as baseUrl %}
+{% block body %}
+
+<div class="pcoded-content">
+    <div class="page-header card">
+        <div class="row align-items-end">
+          <div class="col-lg-8">
+            <div class="page-header-title">
+              <div class="d-inline">
+                <h5>Batches</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+               <div class="text-right prd-btn">
+                    <a href="{% url 'batch/' %}" class="btn btn-primary">Add Batch</a>
+               </div>
+          </div>
+        </div>
+      </div>
+    <div class="page-header card">
+            <div class="card">
+                <div class="card-block">
+                    <div class="dt-responsive table-responsive">  
+                        <table id="multi-colum-dt-batch" class="table table-striped table-bordered nowrap">
+                            <thead>
+                                <th>Batch Number</th>
+                                <th>Quantity</th>
+                                <th>Product Name</th>
+                                <th>Batch Start Date</th>
+                                <th>Batch Start Time</th>
+                                <th>Action</th>                            
+                            </thead>
+                            <tbody>
+                                {% for batches,pn in combo %}
+                                    <tr>
+                                        <td>{{ batches.batch_name }} </td>
+                                        <td>{{ batches.quantity }}</td>
+                                        <td>{{ pn }}</td>
+                                        <td>{{ batches.start_date }}</td>
+                                        <td>{{ batches.start_time }}</td>
+                                        <td><div class="dn-link clearfix text-underline"  ><a href="{% url 'qr/' bid=batches.id %}">Download the QR Code</a></div></td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+
+
+{% if download %}
+  <script>
+    swal("success", "{{ download }}", "success")
+  </script>
+{% endif %}
+
+{% endblock %}

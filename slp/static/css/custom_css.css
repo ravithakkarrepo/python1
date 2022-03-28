@@ -1,0 +1,212 @@
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ca2222;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2ab934;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(55px);
+  -ms-transform: translateX(55px);
+  transform: translateX(55px);
+}
+
+/*------ ADDED CSS ---------*/
+.on
+{
+  display: none;
+}
+
+.on, .off
+{
+  color: white;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  font-size: 10px;
+  font-family: Verdana, sans-serif;
+}
+
+input:checked+ .slider .on
+{display: block;}
+
+input:checked + .slider .off
+{display: none;}
+
+/*--------- END --------*/
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;}
+
+
+  .swal-footer{text-align:center; }
+  body .swal-modal .swal-text{text-align:center !important; }
+  .login-block{min-height: inherit; padding-top: 60px;}
+  .login-block label{ font-size: 13px;  }
+  .dataTables_filter label .form-control{margin-top: 0;}
+  .table tr th{border: none !important;}
+
+ .pg-404-box h2 {
+    font-size: 100px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0 0 20px 0;
+} 
+
+#loader{position: absolute; left: 0; top: 0; right: 0; bottom: 0; z-index: 999; background: rgba(0,0,0,0.5);
+text-align: center;}
+#loader div{  position: absolute; top: 50%; margin-top: -40px; left: 0; right: 0; }
+  }
+  
+.question_tag {
+  width: 100%;
+}
+.file_name{
+  word-break: break-word;
+}
+.delete-q-one{position: absolute; right: 10px; top: 10px; z-index: 1; }
+.ques-one{position: relative;}
+
+
+body .swal2-confirm.btn.btn-success{
+  margin-left: 5px; margin-right: 5px;
+}
+
+
+/*.swal-button*/
+
+body .product_loader{position: fixed !important; left: 0; top: 0; right: 0; bottom: 0; z-index: 999; background: rgba(0,0,0,0.5);
+text-align: center;}
+
+body .add_merchant_loader{position: fixed !important; left: 0; top: 0; right: 0; bottom: 0; z-index: 999; background: rgba(0,0,0,0.5);
+text-align: center;}
+
+.question_tag{
+  width: inherit;
+}
+
+.date-time-main .material-icons {
+  vertical-align: middle;
+}
+
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  /* font-size: 24px; */
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+.table thead tr{    background: #2c2c6b; color: #fff;}
+.card .card-block table tr.even{background: #f3f0f0}
+
+.table{width: 100% !important;}
+/* #multi-colum-dt-qr{width: 1283px;} */
+.dataTables_scrollBody thead tr{height: 0px !important;}
+/* h5.p-b-10 {
+  padding-top: 13px;
+} */
+#upc-setting .p-b-10{padding-top: 10px;}
+
+.custome-modal .modal-content{width: 500px;}
+.mb-10{margin-bottom: 10px;}
+#attachment .browse-btn {
+  width: 120px;
+  position: relative;
+  float: right;
+  margin-top: -42px;
+}
+#attachment label {
+  display: inline-block;
+  margin-bottom: .5rem;
+  margin-top: .5rem;
+  /* width: 100%; */
+  float: left;
+}
+#attachment .prod-guidelines-list{
+  margin-top: 20px;
+}
+#attachment .prod-guidelines-list h2{
+  font-size: 15px;
+  max-width: 300px;
+  text-align: left;
+}
+.prod-guidelines-list #attachment_file_ul li
+{
+  width: 100%;
+}
+.modal-content.assign-task
+{
+  max-height: 500px; overflow: auto;
+}
+div.attachment{margin-bottom: 15px;}
+
+#job-category .modal-content
+{
+  width: 400px;
+}
+#job-category .modal-content label
+{
+  text-align: left;
+    float: left;
+}
+#job-category .modal-dialog
+{
+  top:50%; transform: translateY(-50%); max-width: 400px;
+}
+#add-task .modal-dialog
+{
+  top:50%; transform: translateY(-50%); max-width: 400px;
+}
+#add-task .close span, #job-category .close span
+{
+  color: red;
+    font-size: 24px;
+}

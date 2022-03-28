@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<a onclick="noBack()" href="{% url 'login_error' %}"></a>
+        <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5><a href="{% url 'quiz_list' %}"><i class="icofont icofont-simple-left"></i></a> View Questions</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                 
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+               <div class="card">
+                    <div class="card-block view-ques-section">
+                         <div class="v-product-top">
+               <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Quiz Name</label>
+                        <div class="col-sm-8">
+                           <h4>{{ quiz_name }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Points</label>
+                        <div class="col-sm-8">
+                           <h4>{{ points }}</h4>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+                         <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Choose Video</label>
+                        <div class="col-sm-8">
+                           <h4>{{ video_name }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                             <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Product Name</label>
+                        <div class="col-sm-8">
+                           <h4>{% if quiz_obj.product is not None %}{{ quiz_obj.product.product_name }}{% else %}-{% endif %}</h4>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+                           {% for ques,op1,op2,op3,op4,ans in comb %}
+                           <div class="ques-one">
+                              <div class="row">
+                      <div class="col-xl-12 col-lg-12 col-sm-12">
+                         <div class="form-group row">
+                            <label class="col-sm-4 col-lg-2 col-form-label">Question</label>
+                            <div class="col-sm-8 col-lg-10">
+                               <h4>{{ ques }}</h4>
+                            </div>
+                         </div>
+                      </div>
+                  </div>
+                              <div class="row">
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Option 1</label>
+                          <div class="col-sm-8">
+                             <h4>{{ op1 }}</h4>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Option 2</label>
+                          <div class="col-sm-8">
+                             <h4>{{ op2 }}</h4>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                            <div class="row">
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Option 3</label>
+                          <div class="col-sm-8">
+                             <h4>{{ op3 }}</h4>
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Option 4</label>
+                          <div class="col-sm-8">
+                             <h4>{{ op4 }}</h4>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                              <div class="row">
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Correct Answer</label>
+                          <div class="col-sm-8">
+                             <h4>{{ ans }}</h4>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                           </div>
+                           {% endfor %}
+                       </div>
+                    </div>
+               </div>
+          </div>
+        </div>
+
+<script type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</script> 
+{% endblock %}
+

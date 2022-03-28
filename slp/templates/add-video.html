@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static "" as baseUrl %}
+{% block body %}
+
+        <div class="pcoded-content"> 
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5><a href="{% url 'video_table' %}"><i class="icofont icofont-simple-left"></i></a> Add Videos</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   
+              </div>
+            </div>
+          </div>
+          <form method="POST" action="{% url 'add_new_video' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div class="page-header card">
+               <div class="card">
+               	    <div class="card-block">
+               	    	 <div class="row">
+								<div class="col-xl-6 col-lg-6 col-sm-12">
+									 <div class="form-group">
+										  <label>Select Category</label>
+										  <select class="form-control" name="category" required>
+                        <option value="" disabled selected>Select category</option>
+                        {% for catlist in obj %}
+										  	      <option value="{{catlist.category_name}}">{{catlist.category_name}}</option>
+                        {% endfor %}
+										  </select>
+									 </div>
+								</div>
+								<div class="col-xl-6 col-lg-6 col-sm-12">
+									 <div class="form-group">
+										  <label>Title<span style="color:red;">*</span></label>
+										  <input type="text" id="title_video" class="form-control" name="title" required>
+									 </div>
+								</div>
+                 	     </div>
+                 	     <div class="row">
+								<div class="col-xl-6 col-lg-6 col-sm-12">
+									 <div class="form-group">
+										  <label>Video<span style="color:red;">*</span></label>
+										  <input type="file" class="form-control file_multi_video " id="video_mp4" name="video" accept="video/mp4" onchange="imagePreview(this.files[0])" required>
+									 
+                   <div class="video-preview-box">
+                          <div class="v-img">
+                          <video width="320" height="240" controls controlsList="nodownload" disablePictureInPicture>
+                              <source src="#" id="video_here">
+                            Your browser does not support the video tag.
+                          </video>
+                      </div>
+                      <br>
+                      <!-- <div class="v-text">
+                      <h4>{{edit_obj.video_name}}</h4>
+                      </div>  -->
+                      </div>
+                      </div>
+								</div>
+                	     		<div class="col-xl-6 col-lg-6 col-sm-12">
+									 <div class="form-group">
+										  <label>Description<span style="color:red;">*</span></label>
+										  <textarea class="form-control" id="Description_video" name="discription" required></textarea>
+									 </div>
+								</div>
+                 	     </div>
+                 	     <div class="clearfix text-right">
+                         <a href="{% url 'video_table' %}"><button type="button" class="btn btn-danger"  name="cancel">Cancel</button></a>
+                 	     	  <button type="submit" id="video_submit" class="btn btn-primary">Submit</button>
+                          
+                          
+                 	     </div>
+               	    </div>
+               </div>
+          </div>
+          </form>
+        </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if video_added %}
+<script>
+swal({
+    title: "Success!",
+    text: "Video has been successfully Added",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'video_table'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+  
+
+$('form').submit(function(){
+    var extensionVideo = $('#video_mp4').val().substring($('#video_mp4').val().lastIndexOf('.') + 1)
+    console.log('extensionVideo---',extensionVideo)
+    if(extensionVideo != 'mp4'){
+        Swal.fire({
+          type: 'error',
+          title: 'Oops...',
+          text: 'Please Choose MP4 Video.',
+      })
+      return false;
+    }else{
+      $(this).find('button[type=submit]').prop('disabled', true);
+    }
+});
+
+    function imagePreview(thisVal) {
+        console.log('-----------------',thisVal);
+        var extensionBannarImage = $('#video_mp4').val().substring($('#video_mp4').val().lastIndexOf('.') + 1)
+
+       console.log(extensionBannarImage, typeof (extensionBannarImage))
+        if(extensionBannarImage == 'mp4')
+        {
+         // alert("File size must under 2mb!");
+            console.log("if123")
+            document.getElementById('video_here').src = window.URL.createObjectURL(thisVal);
+            $("#video_here").parent().load()
+
+                {#var source = $('#video_here');#}
+                {#console.log("source ---",source)#}
+                {#source.src = URL.createObjectURL(this.files[0]);#}
+                {#console.log("source.src-----",source.src)#}
+                {#source.parent()[0].load();#}
+        }
+
+        else
+        {
+            console.log("else")
+            console.log("---",$('#video_mp4').val())
+            var extensionBannarImage1 = $('#video_mp4').val().substring($('#video_mp4').val().lastIndexOf('.') + 1)
+            console.log("--1",extensionBannarImage1)
+            {#if(extensionBannarImage1 == ""){#}
+            {#    console.log("else if 1")#}
+            {#}#}
+            if(extensionBannarImage1 != "" && extensionBannarImage1 == 'mp4'){
+                console.log("else else if")
+                document.getElementById('video_here').src = window.URL.createObjectURL(thisVal);
+            }else{
+                console.log("else else")
+                if(extensionBannarImage1 != "") {
+                    $("#video_mp4").val("")
+                    document.getElementById('video_here').removeAttribute('src')
+                    $("#video_here").parent().hide()
+                    swal("error", "Please Choose MP4 Video.", "error")
+                }
+                document.getElementById('video_here').removeAttribute('src')
+                $("#video_here").parent().hide()
+                return false;
+            }
+        }
+    }
+</script>    
+
+
+{% if my_title %}
+<script type="text/javascript">
+  Swal.fire({
+  type: 'error',
+  title: 'Oops...',
+  text: 'This title already exists for this category',
+})
+</script>
+{% endif %}
+
+{% endblock %}

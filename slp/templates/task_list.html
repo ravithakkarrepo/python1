@@ -1,0 +1,719 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+        <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5>Tasks</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   <div class="text-right">
+                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#add-task">Assign Task</a>
+                   </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+              <div class="card">
+                <div class="card-block">
+                  <div class="dt-responsive table-responsive">
+                    <table id="multi-colum-dt-assign-task-list" class="table table-striped table-bordered nowrap">
+                      <thead>
+                        <tr>
+                          <th hidden>Task ID</th>
+                          <th>Title</th>
+                          <th>User</th>
+                          <th>Job</th>
+                          <th>Status</th>
+                          <th>QR Code</th>
+                          <th>Date-Time</th>
+                          <th>Product Name</th>
+                          <th>Location</th>
+                          <th>Weather Information</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for data,task_id,qr,DT,pn,l,w in comb %}
+                        <tr id={{ task_id }}>
+                          <td hidden id="task_id_{{ task_id }}">{{ task_id }}</td>
+                          <td id="title_{{ task_id }}">{{data.title}}</td>
+                          <td id="user_name_{{ task_id }}">{{data.assigned_user.full_name}}</td>
+                          <td id="job_name_{{ task_id }}">{{data.assigned_job.job_category_name}}</td>
+                          <td id="status_{{ task_id }}">{{data.task_status}}</td>
+                          <td>{{qr}}</td>
+                          <td>{{DT}}</td>
+                          <td>{{pn}}</td>
+                          <td class="location_{{forloop.counter}}">{{l}}</td>
+                          <td class="weather_{{forloop.counter}}" class="weather_info">{{w}}</td>
+                          <td>
+                            <a href="task_details/{{data.id}}" title="View" class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i class="icofont icofont-eye-alt"></i></a>
+                            <a href="javascript:void(0)" title="Delete" data-url="task_delete/{{data.id}}" class="tabledit-edit-button btn btn-primary waves-light waves-effect" onclick="task_delete($(this).attr('data-url'))"><i class="icofont icofont-trash"></i></a>
+                            {% if data.task_status == "To Do" %}
+                            <a href="#" title="You cannot add the points until your job gets started or completed" class="tabledit-edit-button btn btn-primary waves-light waves-effect" disabled><i
+                            class="icofont icofont-plus" disabled></i></a>
+                            {% else %}
+                            <a href="#" title="Add Points"  onclick="task_points({{ task_id }})" data-toggle="modal" data-target="#add-points" class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i
+                            class="icofont icofont-plus"></i></a>
+                            {% endif %}
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <form method="POST" action="{% url 'add_task' %}" enctype="multipart/form-data" id="attachment">
+            {% csrf_token %}
+            <div class="modal fade" id="add-task" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-sm custome-modal" role="document">
+                <div class="modal-content assign-task p-l-20 p-r-20 p-t-15" >
+                <div class="modal-body text-center">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    <h4>Assign Task</h4>
+                    <label>Title <span style="color:red;">*</span></label>
+                    <input class="form-control" type="text" name="title" required="">
+                    <label>Select User <span style="color:red;">*</span></label>
+                    <select class="form-control" name="assigned_user" id="assigned_user" required="">
+                        <option value="">Choose User</option>
+                        {% for user_id in users %}
+                        <option value="{{user_id.id}}">{{user_id.full_name}},({{ user_id.email }})</option>
+                    {% endfor %}
+                        </select>        
+                    <label>Select Job <span style="color:red;">*</span></label>
+                    <select class="form-control" name="assigned_job" id="assigned_job" required="">
+                        <option value="">Choose Job</option>
+                        {% for catlist in job_choice %}
+                            <option value="{{catlist.id}}">{{catlist.job_category_name}}</option>
+                        {% endfor %}
+                </select>   
+                <label>Description<span style="color:red;">*</span></label>
+                    <textarea class="form-control" id="description" name="description" required></textarea>
+
+                    
+                    <div class="prod-guidelines-list clearfix" >
+                      <div class="clearfix">
+                        <h2>Attachment (Supported File Type: pdf, png, jpg, jpeg)</h2>
+                        <div class="browse-btn">
+                          <input type="file" name="attachment_file_0" class="custom-file-input attachment_file" id="attachment_file_0" accept=".pdf,image/*" onchange="attachmentFile('attachment_file_0');">
+                          <label>Upload</label>
+                          <input type="hidden" id="change_n_attachment" value="0">
+                        </div>
+                      </div>
+                      <ul id="attachment_file_ul"></ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary waves-effect waves-light" id="job_category_submit">Submit</button>
+                        <!-- <button type="reset" class="btn btn-default waves-effect"  id="cancel_button">Cancel</button> -->
+                </div>
+                </div>
+            </div>
+            </div>
+            </form>   
+            
+            
+
+            <div class="modal fade" id="add-points" tabindex="-1" role="dialog">
+              <div class="modal-dialog modal-sm custome-modal" role="document">
+                  <div class="modal-content p-l-20 p-r-20 p-t-15">
+                      <div class="modal-body text-center">
+      
+                          <h4>Add Points</h4>
+                          <div class="row">
+                            <div class="col-md-4 col-xs-12">
+                                <label>Title <span style="color:red;">* : </span></label>
+                            </div>
+                            <div class="col-md-8 col-xs-12 mb-10">
+                                <input id="title" type="text" class="form-control" name="" placeholder="" disabled>
+                            </div>
+                              <div class="col-md-4 col-xs-12">
+                                  <label>User <span style="color:red;">* : </span></label>
+                              </div>
+                              <div class="col-md-8 col-xs-12 mb-10">
+                                  <input id="t_id" type="text" class="form-control" name="" placeholder="" hidden value="">
+                                  <input id="u_name" type="text" class="form-control" name="" placeholder="" disabled>
+                              </div>
+                              <div class="col-md-4 col-xs-12">
+                                  <label>Job <span style="color:red;">* : </span></label>
+                              </div>
+                              <div class="col-md-8 col-xs-12 mb-10">
+                                  <input id="j_name" type="text" class="form-control" name="" placeholder="" disabled>
+                              </div>
+                              <div class="col-md-4 col-xs-12">
+                                  <label>Status <span style="color:red;">* : </span></label></div>
+                              <div class="col-md-8 col-xs-12 mb-10">
+                                  <input id="sta_details" type="text" class="form-control" name="" placeholder="" disabled>
+                              </div>
+                              <div class="col-md-4 col-xs-12">
+                                  <label>Additional Points</label>&nbsp;<span style="color:red;">*</span></div>
+                              <div class="col-md-8 col-xs-12 ">
+                                  <input id="addtln_points" type="number" class="form-control your_class" name=""
+                                         placeholder="" min="0">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="modal-footer">
+                          <button type="submit" class="btn btn-primary waves-effect waves-light"
+                                  onclick="viewDollarPrice($(this).attr('data-url'))" id="points_submit"
+                                  data-url="{% url 'contractor/task/points/usd' %}">Submit
+                          </button>
+                          <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                      </div>
+                  </div>
+              </div>
+          </div>      
+            
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/add_task.js' %}"></script>
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">      
+{% if add_task %}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+  swal({
+    title: "Success!",
+    text: "Task has been successfully added",
+    icon: "success",
+    buttons: false
+  })
+    function redirect(){
+    
+        window.location.href = "{% url 'task'  %}";
+    }
+
+    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}     
+
+
+<script type="text/javascript">
+$('form').submit(function(){
+    $(this).find('button[type=submit]').prop('disabled', true);
+});
+function attachmentPreview(thisVal) {
+  console.log(thisVal);
+  var oFile = $('#attachment')[0].files[0].size
+  var attachmentExtension = $('#attachment').val().substring($('#attachment').val().lastIndexOf('.') + 1)
+
+  console.log(oFile, attachmentExtension)
+  if (oFile < 2097152)
+  {// 2 mb for bytes.
+     if(attachmentExtension == 'png' || attachmentExtension == 'jpg' || attachmentExtension == 'jpeg' || attachmentExtension == 'pdf') 
+     {
+        // alert("File size must under 2mb!");
+        document.getElementById('attachment').src = window.URL.createObjectURL(thisVal);
+     } else {
+       swal("error","Please Choose PNG or JPG or JPEG or PDF file type","error")
+        return false;
+     }
+  }else{
+        swal("error","File size must under 2mb!","error");
+  }
+}
+
+
+// $(document).ready(function() {
+//    $('#cancel_button').on('click', function() {     
+//       $('.attachment_file').val('');
+//    });
+// });
+
+
+// delete task
+
+function task_delete(url) {
+    console.log('url--',url)
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+          confirmButton: 'btn btn-success',
+          cancelButton: 'btn btn-danger',
+        },
+        buttonsStyling: false
+      })
+  
+      swalWithBootstrapButtons.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes, delete it!',
+          cancelButtonText: 'No, cancel!',
+          reverseButtons: true
+      }).then((result) => { console.log('result--',result.value, result)
+        if (result.value) {
+         
+          $.ajax({
+              url:url,
+              // type:'post',
+              data:{
+                  'deleted':true,
+              },
+              success:function(data){
+                  console.log('success delete')
+                   swalWithBootstrapButtons.fire(
+                    'Deleted!',
+                    'Your task has been deleted.',
+                    'success',
+                  )
+                  if($('.swal2-confirm').html() == 'OK') {
+                      $('.swal2-confirm').css('display', 'none');
+                  }
+                   function redirect(){
+                      window.location.href = "{% url 'task'  %}";
+                  }
+                  setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+              },
+              
+          });
+        } 
+        
+      })
+  };
+ 
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
+
+// attachment remove function
+function attachment_customRemoveElement(elem, fieldName, fieldId) {
+    console.log('elem-->',elem)
+    console.log('fieldName--->',fieldName,typeof(fieldName))
+    console.log('fieldId--->',fieldId)
+    var elem_siblings = elem.siblings()
+    console.log('ele siblings-->',elem_siblings.eq("1").html())
+    if(fieldName == 'attachment_file'){
+        console.log('inside if custom remove')
+        attachment_exists_file_name = $('#attachment-selected-files').val()
+        console.log('attachment_exists_file_name11',attachment_exists_file_name)
+        tmpExistingFiles = attachment_exists_file_name.split(', ')
+        console.log('tmpExistingFiles11',tmpExistingFiles)
+
+        var removeItem = elem_siblings.eq("1").html();
+        console.log('removeItem',removeItem)
+
+        tmpExistingFiles = jQuery.grep(tmpExistingFiles, function(value) {
+          return value != removeItem;
+        });
+        attachment_exists_file_name = tmpExistingFiles.join(', ');
+        $('#attachment-selected-files').val(attachment_exists_file_name);
+        console.log('attachment_exists_file_name-->',attachment_exists_file_name)
+
+        console.log('attachment length--------', $('.attachment_file').length)
+        for(var i = 0; i < $('.attachment_file').length-1;i++){
+            console.log('in for loop remove-----',i)
+            var attachment_id = $('#'+fieldId)
+            console.log('attachment_id----',attachment_id)
+            var attachment_val = attachment_id.val()
+            console.log('attachment_val----',attachment_val)
+            var splitattachmentVal = attachment_val.split('\\')
+            console.log('splitattachmentVal[i]---',splitattachmentVal)
+            console.log('splitattachmentVal---last---',splitattachmentVal.reverse()[0], typeof(splitattachmentVal.reverse()[0]))
+            console.log('ele siblings-->',elem_siblings.eq("1").html())
+            if(splitattachmentVal.reverse()[0] == elem_siblings.eq("1").html()){
+                console.log('attachment_id----if',attachment_id)
+                attachment_id.remove()
+                elem.parent().parent().remove();
+                break
+            }
+        }
+    }
+}
+
+
+
+
+
+var attachment_exists_file_name = ' '
+var splitExists_file_name;
+var res = false
+
+function checkFile(id){
+
+    var selectedFiles = $('#'+id)[0].files;
+    console.log('selectedFiles-->',selectedFiles)
+    selectedFiles_name = selectedFiles[0].name;
+    console.log('selectedFiles_name-->',selectedFiles_name)
+    var splitId = id.split('_')
+    console.log('splitId-----',splitId,splitId[2])
+    // if(splitId[2] >= '3'){
+    //     $('#'+id).val('')
+    //     swal("error","You cannot add more than 3 files","error");
+    //     res = false
+    // }
+    if(splitId[0] == "attachment"){
+        console.log('attachment_exists_file_name-->',attachment_exists_file_name)
+        splitExists_file_name = attachment_exists_file_name.split(', ');
+    }
+
+    console.log('splitExists_file_name.length--->',splitExists_file_name.length);
+    console.log('splitExists_file_name___________',splitExists_file_name)
+    console.log('selectedFiles_name------------',selectedFiles_name)
+
+    if(splitExists_file_name.includes(selectedFiles_name)){
+        console.log("if-----")
+        $('#'+id).val('')
+        swal("error","File already exists","error");
+        res = false
+    }else{
+        res = true
+    }
+}
+
+// attachment  add file
+
+var c = 0
+var c_inc = 0
+var c_change_n = 0
+
+function attachmentFile(id) {
+    checkFile(id);
+    if(res)
+    {
+        tmpId = id.split('_');
+        newTmpId = tmpId[tmpId.length - 1];
+        c_inc = newTmpId;
+        c_change_n++
+        // $('#change_n_attachment').val(c_change_n);
+        var attachmentSelectedFiles = $('#'+id)[0].files;
+        var extension = $('#'+id).val().substring($('#'+id).val().lastIndexOf('.') + 1)
+        var allExtension = ['pdf','jpg','png','jpeg']
+        if(attachmentSelectedFiles.length != 0 && !allExtension.includes(extension)){
+            console.log('extension-----',extension)
+            swal("error","Please Choose PDF or JPG or JPEG or PNG File","error")
+        }else{
+            for(i = 0; i < attachmentSelectedFiles.length; i++) {
+                c++
+                var attachment_file_ul = $('#attachment_file_ul')
+                var extensionIcon = '';
+                if(extension == 'pdf'){
+                    extensionIcon = `<i class="icofont icofont-file-pdf"></i>`
+                } else {
+                    extensionIcon = `<i class="icofont icofont-ui-image"></i>`
+                }
+                var attachment_li_html = `<li><div class="box"><a onclick="attachment_customRemoveElement($(this),'attachment_file','attachment_file_`+(c-1)+`')" class="remove1"><i class="icofont icofont-close"></i></a><div class="icon">`+extensionIcon+`</div><div id="attachment_file_name_` + c + `" class="file_name"></div></div></li>`
+                attachment_file_ul.append(attachment_li_html)
+                $('#attachment_file_name_'+c).text(attachmentSelectedFiles[i].name)
+                var attachmentTmpSelectedFiles = $('#attachment-selected-files').val();
+                if(attachmentTmpSelectedFiles == '') {
+                    attachmentTmpSelectedFiles = attachmentSelectedFiles[i].name;
+                } else {
+                    attachmentTmpSelectedFiles += ', '+ attachmentSelectedFiles[i].name;
+                }
+                $('#attachment-selected-files').val(attachmentTmpSelectedFiles);
+            }
+            $('#'+id).css('display','none')
+            c_inc++
+            var btn = `<input id="attachment_file_`+c_inc+`" name="attachment_file_`+c_inc+`" type="file" class="custom-file-input attachment_file" onchange="attachmentFile('attachment_file_`+c_inc+`');" accept=".pdf,image/*"><label>Upload</label>`
+            $('#'+id).parent().append(btn)
+        }
+        console.log('ookokok in change',$('#attachment_file_'+$('#change_n').val()));
+        attachment_exists_file_name = $('#attachment-selected-files').val()
+        console.log('attachment_exists_file_name-->',attachment_exists_file_name)
+    }
+}
+
+
+// attachment edit file
+
+var edit_attachment = 0
+var edit_inc_attachment = 0
+var edit_change_n_attachment = 0
+function editattachmentFile(id) {
+    checkFile(id);
+    if(res)
+    {
+        tmpId = id.split('_');
+        newTmpId = tmpId[tmpId.length - 1];
+        edit_inc_attachment = newTmpId;
+        edit_change_n_attachment++
+        $('#change_n_attachment').val(edit_change_n_attachment);
+        var attachmentSelectedFiles = $('#'+id)[0].files;
+        var extension = $('#'+id).val().substring($('#'+id).val().lastIndexOf('.') + 1)
+        var allExtension = ['pdf','jpg','png','jpeg']
+        if(attachmentSelectedFiles.length != 0 && !allExtension.includes(extension)){
+            swal("error","Please Choose PDF or PNG or JPEG or JPG File","error")
+        }
+        else{
+            for(i = 0; i < attachmentSelectedFiles.length; i++) {
+                edit_attachment++
+                var extensionIcon = '';
+                if(extension == 'pdf'){
+                    extensionIcon = `<i class="icofont icofont-file-pdf"></i>`
+                } else {
+                    extensionIcon = `<i class="icofont icofont-ui-image"></i>`
+                }
+                var attachment_file_ul = $('#attachment_file_ul')
+                var attachment_li_html = `<li><div class="box"><a onclick="attachment_customRemoveElement($(this),'attachment_file','attachment_file_`+edit_inc_attachment+`')" class="remove1"><i class="icofont icofont-close"></i></a><div class="icon">`+extensionIcon+`</div><div id="attachment_file_name_` + edit_attachment + `" class="file_name"></div></div></li>`
+                
+                attachment_file_ul.append(attachment_li_html)
+                $('#attachment_file_name_'+edit_attachment).text(attachmentSelectedFiles[i].name)
+                var attachmentTmpSelectedFiles = $('#attachment-selected-files').val();
+                if(attachmentTmpSelectedFiles == '') {
+                    attachmentTmpSelectedFiles = attachmentSelectedFiles[i].name;
+                } else {
+                    attachmentTmpSelectedFiles += ', '+ attachmentSelectedFiles[i].name;
+                }
+                $('#attachment-selected-files').val(attachmentTmpSelectedFiles);
+            }
+            $('#'+id).css('display','none')
+            edit_inc_attachment++
+            var btn = `<input id="attachment_file_`+edit_inc_attachment+`" name="attachment_file_`+edit_inc_attachment+`" type="file" class="custom-file-input attachment_file" onchange="editattachmentFile('attachment_file_`+edit_inc_attachment+`');" accept=".pdf,image/*"><label>Upload</label>`
+            $('#'+id).parent().append(btn)
+        }
+        console.log('ookokok in change',$('#attachment_file_'+$('#change_n').val()));
+        attachment_exists_file_name = $('#attachment-selected-files').val()
+        console.log('attachment_exists_file_name-->',attachment_exists_file_name)
+    }
+}
+</script>
+
+
+
+
+
+<!-- Add points  -->
+<script>
+  function task_points(tr) {
+
+      tr0 = document.getElementById("task_id_" + tr);
+      task_id = tr0.textContent
+      console.log("task_id : ", task_id)
+      $('#t_id').attr("value", task_id)
+
+      tr1 = document.getElementById("user_name_" + tr);
+      user_name = tr1.textContent
+      $('#u_name').attr("placeholder", user_name)
+
+
+      tr2 = document.getElementById("job_name_" + tr);
+      job_name = tr2.textContent
+      $('#j_name').attr("placeholder", job_name)
+
+      tr3 = document.getElementById("status_" + tr);
+      status = tr3.textContent
+      $('#sta_details').attr("placeholder", status)
+
+      tr4 = document.getElementById("title_" + tr);
+      title = tr4.textContent
+      $('#title').attr("placeholder", title)
+  }
+</script>
+
+<script>
+
+  function viewDollarPrice(url) {
+      tid = $('#t_id').val();
+      addtln_points = $('#addtln_points').val();
+      console.log('url : ', url, "addtln_points : ", addtln_points, "tid : ", tid);
+
+      $.ajax({
+          url: url,
+          type: "GET",
+          dataType: 'json',
+          data: {
+              'points': addtln_points,
+              'tid':tid
+          },
+          success: function (data) {
+              expected_bill = data['returned_dollar'];
+              console.log('success data : ', data['returned_dollar']);
+
+              const swalWithBootstrapButtons = Swal.mixin({
+                  customClass: {
+                      confirmButton: 'btn btn-success',
+                      cancelButton: 'btn btn-danger',
+                  },
+                  buttonsStyling: false
+              })
+
+
+              swalWithBootstrapButtons.fire({
+                  title: 'Are you sure?',
+                  text: "To add " + addtln_points + " additional points, you will be charged " + expected_bill + " USD extra.",
+                  type: 'warning',
+                  showCancelButton: true,
+                  confirmButtonText: 'Yes, do it!',
+                  cancelButtonText: 'No, cancel!',
+                  reverseButtons: true
+              }).then((result) => {
+                  console.log('result--', result.value, result)
+                  if (result.value) {
+
+                      $.ajax({
+                          url: url + '/',
+                          type: 'POST',
+                          data: {
+                              'addtln_points': addtln_points,
+                              'expected_bill': expected_bill,
+                              'task_id': tid
+                          },
+                          success: function (data) {
+                              console.log('success')
+                              swalWithBootstrapButtons.fire(
+                                  'Request Sent!',
+                                  'Your request for adding points in task is successfully sent to admin.',
+                                  'success',
+                              )
+                              if ($('.swal2-confirm').html() == 'OK') {
+                                  $('.swal2-confirm').css('display', 'none');
+                              }
+
+                              function redirect() {
+                                  window.location.href = "{% url 'task'  %}";
+                              }
+
+                              setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+                          },
+
+                      });
+                  }
+
+              })
+
+
+          }
+      });
+
+  }
+
+  document.querySelector(".your_class").addEventListener("keypress", function (evt) {
+      if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+          evt.preventDefault();
+      }
+  });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        var htmlSpan = '<span></span>';
+        console.log('htmlSpan-------->',htmlSpan)
+        // var i = 0;
+        var flag = 0;
+        console.log("$('td').parent().length----------",$('td').parent().length)
+        for(var i=1; i <= $('td').parent().length; i++){
+            console.log('i------>',i)
+            var fullLocation = $('.location_'+i).text()
+            console.log('fullLocation---------->',fullLocation)
+            var splitFullLocation = fullLocation.split(',')
+            console.log('splitFullLocation--------->',splitFullLocation,'splitFullLocation.length-------->',splitFullLocation.length)
+            for(var j = 0; j<splitFullLocation.length; j++){
+                if(j != splitFullLocation.length - 1) {
+                    console.log('if------')
+                    htmlSpan += '<span>'+splitFullLocation[j]+','+splitFullLocation[j+1]+'.</span><br>'
+                } else {
+                    console.log('else------')
+                    htmlSpan += '<span>'+splitFullLocation[j]+'.</span><br>'
+                }
+                console.log('append htmlSpan------',htmlSpan)
+                $('.location_'+i).html(htmlSpan)
+                $('.location_'+i).css('text-align: inherit;')
+                j=j+1;
+                console.log('j=j+2----------',j)
+            }
+            htmlSpan = '<span></span>'
+            console.log('final htmlSpan-------',htmlSpan)
+        }
+
+        var WhtmlSpan = '<span></span>';
+        console.log('WhtmlSpan-------->',WhtmlSpan)
+        var i = 0;
+        var Wflag = 0;
+        var mix = []
+
+        console.log("$('td').parent().length----------",$('td').parent().length)
+        for(var l=1; l <= $('td').parent().length; l++){
+            console.log('l------>',l)
+            var WfullLocation = $('.weather_'+l).text()
+            console.log('WfullLocation---'+l+'------->',WfullLocation)
+            if(WfullLocation != 'NA'){
+                var WsplitFullLocation = WfullLocation.split(',')
+                console.log('WsplitFullLocation--------->',WsplitFullLocation,'WsplitFullLocation.length-------->',WsplitFullLocation.length)
+
+                var WsplitFullLocation2 = WsplitFullLocation[0].split(": ")
+                console.log("WsplitLocation2 :",WsplitFullLocation2)
+                var WsplitFullLocation3 = WsplitFullLocation2[0].split("'")
+                console.log("WsplitLocation3 :",WsplitFullLocation3)
+                var humidity = WsplitFullLocation3[1]
+                var humidityValue = WsplitFullLocation2[1]
+                console.log("humidity :",humidity, "value :",humidityValue)
+            
+
+                console.log("--------------",WsplitFullLocation[1])
+                var WsplitFullLocation4 = WsplitFullLocation[1].split(": ")
+                console.log("WsplitLocation4 :",WsplitFullLocation4)
+                var WsplitFullLocation5 = WsplitFullLocation4[0].split("'")
+                console.log("WsplitLocation5 :",WsplitFullLocation5)
+                var windSpeed = WsplitFullLocation5[1]
+                var windSpeedValue = WsplitFullLocation4[1]
+                console.log("windSpeed :",windSpeed, "windSpeedValue :",windSpeedValue)
+
+                console.log("--------------",WsplitFullLocation[2])
+                var WsplitFullLocation6 = WsplitFullLocation[2].split(": ")
+                console.log("WsplitLocation6 :",WsplitFullLocation6)
+                var WsplitFullLocation7 = WsplitFullLocation6[0].split("'")
+                console.log("WsplitLocation7 :",WsplitFullLocation7)
+                var WsplitFullLocation8 = WsplitFullLocation6[1].split("}")
+                console.log("WsplitLocation8 :",WsplitFullLocation8)
+                var temp = WsplitFullLocation7[1]
+                var tempValue = WsplitFullLocation8[0]
+                console.log("temp :",temp, "tempValue :",tempValue)
+                
+                mix.push(WsplitFullLocation3[1])
+                mix.push(WsplitFullLocation2[1])
+
+                mix.push(WsplitFullLocation5[1])
+                mix.push(WsplitFullLocation4[1])
+
+                mix.push(WsplitFullLocation7[1])
+                mix.push(WsplitFullLocation8[0])
+
+                console.log("mix :",mix, "mix length :",mix.length)
+                console.log("WsplitFullLocation2.length :",WsplitFullLocation2.length)
+                for(var k = 0; k < mix.length; k++){
+                    console.log("k :",k)
+                    if(k != mix.length - 1) {
+                        console.log('if------')
+                        WhtmlSpan += '<span>'+mix[k]+': '+mix[k+1]+'</span><br>'
+                        k++
+                    } 
+                    // else {
+                    //     console.log('else------')
+                    //     k++
+                    //     console.log("k 2:",k)
+                    //     WhtmlSpan += '<span>'+mix[k]+'.</span><br>'
+                    // }
+                    console.log('append WhtmlSpan------',WhtmlSpan)
+                    $('.weather_'+l).html(WhtmlSpan)
+                    $('.weather_'+l).css('text-align: inherit;')
+                    // console.log('l=l+2----------',l)
+                }
+                // console.log('final htmlSpan--1-----',htmlSpan)
+                WhtmlSpan = '<span></span>'
+                console.log('final WhtmlSpan---2----',WhtmlSpan)
+                mix = []
+            }
+            // l++
+            // console.log("l++ -----",l)
+        }
+
+    });
+</script>
+       
+{% endblock %}
+
+
+

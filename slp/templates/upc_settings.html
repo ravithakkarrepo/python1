@@ -1,0 +1,532 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+        <div class="pcoded-content" id="upc-setting">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                       <h5>UPC Settings</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   
+              </div>
+            </div>
+          </div>
+      
+       
+        <div class="page-header card">
+          <form method="POST" action="{% url 'setting' %}">
+              {% csrf_token %}
+             <div class="card">
+                   <div class="card-block">
+                      <div class="settings-section">
+                          <div class="row">
+                               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                     <div class="form-group">
+                                       <h3>Starting Drum Temperature Settings</h3>
+                                       <h5 class="p-b-10">Recommended Starting Drum Temperature = {{recommended_temp}}</h5>
+                                        <label>Enter the New Temperature <a href="#" class="f-16" title="By entering the value, you can change the recommended starting drum temperature. Right now the current temperature value is {{recommended_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                        <input type="number" class="form-control" name="recommended_starting_drum_temp" min="0">
+                                     </div>
+                               </div>
+                          </div>
+                          <div class="clearfix">
+                               <button class="btn btn-primary" type="submit">Submit</button>
+                              </div>
+                          </div>
+                      </div>
+                  </form>
+              
+              <form method="POST" action="{% url 'conditions' %}">
+                  {% csrf_token %}
+             <div class="">
+                   <div class="card-block">
+                      <div class="settings-section">
+                          <div class="row">
+                               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                  <div class="form-group">
+                                    <h3>Condition1 for Starting Drum Temperature</h3>
+                                      <h5 class="p-b-10" style="padding-top: 10px;">Difference = {{cond_difference}}</h5>
+                                      <label>Enter the New Temperature <a href="#" class="f-16" title="By entering the value, you can change the Difference between recommended temperature and starting drum temp. Right now the difference is {{cond_difference}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                       <input type="number" class="form-control" name="difference" min="0">
+
+                                      <h5 class="p-b-10" style="padding-top: 10px;">Change in A&B heaters = {{cond_change_in_heaters}}</h5>
+                                      <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the increase value of A&B heaters. Right now the change in heaters is {{cond_change_in_heaters}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                       <input type="number" class="form-control" name="change_in_heaters" min="0">
+
+                                      <h5 class="p-b-10" style="padding-top: 10px;">Warning Message = {{cond_warning_message}}</h5>
+                                       <label>Enter the warning message <a href="#" class="f-16" title="By entering the text, you can change the warning message when recommended starting drum temperature is {{recommended_temp}}. Right now the warning message is {{cond_warning_message}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                       <input type="text" class="form-control" name="warning_message">
+                                  </div>
+                               </div>
+                          </div>
+                          <div class="clearfix">
+                               <button class="btn btn-primary" type="submit">Submit</button>
+                          </div>
+                      </div> 
+                   </div>
+             </div>
+             </form>
+
+             <form method="POST" action="{% url 'condition' %}">
+              {% csrf_token %}
+         <div class="">
+               <div class="card-block">
+                  <div class="settings-section">
+                      <div class="row">
+                           <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                              <div class="form-group">
+                                <h3>Condition2 for Starting Drum Temperature</h3>
+                                  <h5 class="p-b-10">Difference = {{cond_difference1}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the Difference between recommended temperature and starting drum temp. Right now the difference is {{cond_difference1}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="difference" min="0">
+
+                                  <h5 class="p-b-10" style="padding-top: 10px;">Change in A&B heaters = {{cond_change_in_heaters1}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the increase value of A&B heaters. Right now the change in heaters is {{cond_change_in_heaters1}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="text" class="form-control" name="change_in_heaters" min="0" placeholder="Warning" disabled>
+
+                                  <h5 class="p-b-10" style="padding-top: 10px;">Warning Message = {{cond_warning_message1}}</h5>
+                                   <label>Enter the warning message <a href="#" class="f-16" title="By entering the text, you can change the warning message when recommended starting drum temperature is {{recommended_temp}}. Right now the warning message is {{cond_warning_message1}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="text" class="form-control" name="warning_message">
+                              </div>
+                           </div>
+                      </div>
+                      <div class="clearfix">
+                           <button class="btn btn-primary" type="submit">Submit</button>
+                      </div>
+                  </div> 
+               </div>
+         </div>
+         </form>
+        </div>
+        <div class=" card">
+         <!-- 1 -->
+
+          <form method="POST" action="{% url 'spray_level' %}">
+          {% csrf_token %}
+         <div class="">
+                 <div class="card-block">
+                      <div class="settings-section">
+                          <div class="row">
+                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                              <div class="form-group">
+                                <h3>Humidity Level</h3>
+                                  <h5 class="p-b-10">Recommended Humidity Temperature = {{humidity_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the recommended humidity temperature. Right now the recommended humidity temperature is {{humidity_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="recommended_humidity_temp" min="0">
+
+                                  <h5 class="p-b-10" style="padding-top: 10px;">Recommended Ambient Temperature = {{ambient_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the value of recommended ambient temperature. Right now the recommended ambient temperature is {{ambient_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="recommended_ambient_temp" min="0">
+
+                                  <h5 class="p-b-10" style="padding-top: 10px;">Increased Temperature = {{increased_temp}}</h5>
+                                   <label>Enter the value of points <a href="#" class="f-16" title="By entering the text, you can change the value of increased temperature. Right now the value of increased temperature is {{increased_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="increased_temp" min="0">
+                              </div>
+                                 </div>
+                          </div>
+                          <div class="clearfix">
+                                 <button class="btn btn-primary" type="submit">Submit</button>
+                          </div>
+                    </div> 
+                 </div>
+         </div>
+         </form>
+        </div>
+
+        <div class=" card">
+         <!-- 1 -->
+
+          {% csrf_token %}
+            <div class="">
+                <div class="card-block">
+                    <div class="settings-section">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                <div class="form-group">
+                                    <h3>UPC Spray Data Sheet</h3>
+                                    <h5 class="p-b-10">Download UPC Spray Data Sheet</h5>
+                                    <a href="{% get_media_prefix %}UPC_data_update_sheet.xlsx " class="btn btn-primary">Click
+                                        here to Download the sheet</a>
+                                    <br /><br />
+                                    <a href="{% url 'upc/viewData' %}" target="_blank" class="btn btn-primary">Click
+                                    here to View Data Sheet</a>
+                                    <label>Upload the updated sheet here to make changes in data in system</label>
+                                    <input type="file" class="form-control" name="upc_sheet" id="upc_sheet">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="clearfix">
+                            <button class="btn btn-primary" type="submit" id="xlsx_submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!--<div class=" card">
+         <form method="POST" action="{% url 'spraying_speed' %}">
+          {% csrf_token %}
+         <div class="">
+                 <div class="card-block">
+                      <div class="settings-section">
+                          <div class="row">
+                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                              <div class="form-group">
+                                <h3>Speed Of Spraying</h3>
+                                  <h5 class="p-b-10">Fast Increased Temperature = {{fast_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the fast increased temperature. Right now the fast increased temperature is {{fast_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="fast_increased_temp" min="0">
+
+                                  <h5 class="p-b-10" style="padding-top: 10px;">Slow Decreased Temperature = {{slow_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the value of slow decreased temperature. Right now the slow decreased temperature is {{slow_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="slow_decreased_temp" min="0">
+
+                              </div>
+                                 </div>
+                          </div>
+                          <div class="clearfix">
+                                 <button class="btn btn-primary" type="submit">Submit</button>
+                          </div>
+                    </div> 
+                 </div>
+         </div>
+         </form>
+        </div>-->
+        <!--<div class=" card">
+         <form method="POST" action="{% url 'insulated_hose' %}">
+          {% csrf_token %}
+         <div class="">
+                 <div class="card-block">
+                      <div class="settings-section">
+                          <div class="row">
+                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                              <div class="form-group">
+                                <h3>Hose Insulated</h3>
+                                  <h5 class="p-b-10">Well Insulated Decreased Temperature = {{well_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the well insulated decreased temperature. Right now the well insulated decreased temperature is {{well_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="well_insulated_decreased_temp" min="0">
+
+                                  <h5 class="p-b-10" style="padding-top: 10px;">Poorly Insulated Increased Temperature = {{poor_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the value of poorly insulated increased temperature. Right now the poorly insulated increased temperature is {{poor_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="poorly_insulated_increased_temp" min="0">
+
+                              </div>
+                                 </div>
+                          </div>
+                          <div class="clearfix">
+                                 <button class="btn btn-primary" type="submit">Submit</button>
+                          </div>
+                    </div> 
+                 </div>
+         </div>
+         </form>
+        </div>-->
+         <!--<div class=" card">
+         <form method="POST" action="{% url 'hose_in_spray' %}">
+          {% csrf_token %}
+         <div class="">
+                 <div class="card-block">
+                      <div class="settings-section">
+                          <div class="row">
+                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                              <div class="form-group">
+                                <h3>Spray Hose In</h3>
+                                  <h5 class="p-b-10">Sun or Hot Asphalt Decreased Temperature = {{sun_or_hot_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the Sun or Hot Asphalt decreased temperature. Right now the Sun or Hot Asphalt decreased temperature is {{sun_or_hot_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="sun_or_hot_asphalt_decreased_temp" min="0">
+
+                                  <h5 class="p-b-10" style="padding-top: 10px;">Rain or Snow Increased Temperature = {{rain_or_snow_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the value of Rain or Snow increased temperature. Right now the Rain or Snow increased temperature is {{rain_or_snow_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="rain_or_snow_increased_temp" min="0">
+
+                              </div>
+                                 </div>
+                          </div>
+                          <div class="clearfix">
+                                 <button class="btn btn-primary" type="submit">Submit</button>
+                          </div>
+                    </div> 
+                 </div>
+         </div>
+         </form> 
+         </div>-->
+         <!--<div class=" card">
+         <form method="POST" action="{% url 'substrate_type' %}">
+          {% csrf_token %}
+         <div class="">
+                 <div class="card-block">
+                      <div class="settings-section">
+                          <div class="row">
+                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                              <div class="form-group">
+                                <h3>Substrate Type</h3>
+                                  <h5 class="p-b-10">Metal Increased Temperature = {{metal_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the Metal Increased temperature. Right now the Metal Increased temperature is {{metal_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="metal_increased_temp" min="0">
+
+                                  <h5 class="p-b-10" style="padding-top: 10px;">Concrete Increased Temperature = {{concrete_temp}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the value of Concrete Increased temperature. Right now the Concrete Increased temperature is {{concrete_temp}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="concrete_increased_temp" min="0">
+
+                              </div>
+                                 </div>
+                          </div>
+                          <div class="clearfix">
+                                 <button class="btn btn-primary" type="submit">Submit</button>
+                          </div>
+                    </div> 
+                 </div>
+         </div>
+         </form> 
+         </div>-->
+         <!--<div class=" card">
+         <form method="POST" action="{% url 'layer' %}">
+          {% csrf_token %}
+         <div class="">
+                 <div class="card-block">
+                      <div class="settings-section">
+                          <div class="row">
+                                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                              <div class="form-group">
+                                <h3>Spray Layers</h3>
+                                  <h5 class="p-b-10">Percentage To Yield = {{get_percentage_to_yield}}</h5>
+                                  <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the Percentage To Yield. Right now the Percentage To Yield is {{get_percentage_to_yield}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                   <input type="number" class="form-control" name="percentage_to_yield" min="0">
+
+                              </div>
+                                 </div>
+                          </div>
+                          <div class="clearfix">
+                                 <button class="btn btn-primary" type="submit">Submit</button>
+                          </div>
+                    </div> 
+                 </div>
+         </div>
+         </form>      
+        </div>-->
+      </div>
+
+
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if drum_temp_updated %}
+<script>
+swal({
+    title: "Success!",
+    text: "Recommended Starting Drum value has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'admin_settings' %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}  
+
+{% if data0 %}
+<script>
+swal({
+    title: "Success!",
+    text: "Data has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'admin_settings' %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if data1 %}
+<script>
+swal({
+    title: "Success!",
+    text: "Data has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'admin_settings' %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+
+{% if data %}
+<script>
+swal({
+    title: "Success!",
+    text: "Data has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'admin_settings' %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if data2 %}
+<script>
+swal({
+    title: "Success!",
+    text: "Data has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'admin_settings' %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if data3 %}
+<script>
+swal({
+    title: "Success!",
+    text: "Data has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'admin_settings' %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if data4 %}
+<script>
+swal({
+    title: "Success!",
+    text: "Data has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'admin_settings' %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if data5 %}
+<script>
+swal({
+    title: "Success!",
+    text: "Data has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'admin_settings' %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if data6 %}
+<script>
+swal({
+    title: "Success!",
+    text: "Data has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'admin_settings' %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+    <script>
+        $('#upc_sheet').on('change', function () {
+            var csv_file = $('#upc_sheet')[0].files[0];
+            console.log('csv_file : ', csv_file);
+            console.log('type: ', $('#upc_sheet').val().substring($('#upc_sheet').val().lastIndexOf('.') + 1));
+            var typee = $('#upc_sheet').val().substring($('#upc_sheet').val().lastIndexOf('.') + 1);
+            if (csv_file == undefined || csv_file == '' || typee != "xlsx") {
+                $('#upc_sheet').val("");
+                swal({
+                    title: 'Error',
+                    text: 'Please select a xlsx file.',
+                    icon: 'warning',
+                    buttons: false
+                })
+            }
+        })
+
+        $('#xlsx_submit').on('click', function () {
+            var csv_file = $('#upc_sheet')[0].files[0];
+            var typee = $('#upc_sheet').val().substring($('#upc_sheet').val().lastIndexOf('.') + 1);
+            if (csv_file != undefined && csv_file != '' && typee == "xlsx") {
+                $('#loader').show();
+                var formdata = new FormData();
+                formdata.append('files', csv_file);
+                $.ajax({
+                    url: "/upc/update/xlsx/",
+                    type: 'post',
+                    processData: false,
+                    contentType: false,
+                    data: formdata,
+                    success: function (data) {
+                        console.log('success data : ', data);
+                        $('#loader').hide();
+                        swal({
+                            title: 'Success',
+                            text: 'Successfully Updated data in system',
+                            icon: 'success',
+                        })
+                        function redirect(){
+                            window.location.reload();
+                        }
+                        setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+
+                    },
+                    error: function (error) {
+                        console.log('error data : ', error);
+                        $('#upc_sheet').val("");
+                        $('#loader').hide();
+                        swal({
+                            title: 'Error',
+                            text: 'Something went wrong',
+                            icon: 'warning',
+                            buttons: false
+                        })
+                    }
+                })
+            }else {
+                $('#upc_sheet').val("");
+                swal({
+                    title: 'Error',
+                    text: 'Please select a xlsx file.',
+                    icon: 'warning',
+                    buttons: false
+                })
+            }
+        })
+
+    </script>
+
+
+{% endblock %}
+
+

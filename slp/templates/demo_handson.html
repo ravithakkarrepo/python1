@@ -1,0 +1,23 @@
+{% load static %}
+<html>
+    <head>
+        <title>SLP</title>
+        <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/icofont.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/handsontable.full.min-0.31.0.css' %}">
+        <script src="{% static 'js/handsontable.full.min-0.31.0.js' %}"></script>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/handson_table.css' %}">
+    </head>
+
+    <body>
+        <!--<h3><a href="{% url 'admin_settings'  %}" title="Back"><i class="icofont icofont-simple-left"></i></a>UPC Spray Data Sheet</h3>-->
+        <h3>UPC Spray Data Sheet</h3>
+        <table>
+            <tr>
+                <td>
+                    {{ handsontable_content|safe }}
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

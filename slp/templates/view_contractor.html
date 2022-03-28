@@ -1,0 +1,491 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<a onclick="noBack()" href="{% url 'login_error' %}"></a>
+<div class="pcoded-content">
+  <div class="page-header card">
+    <div class="row align-items-end">
+      <div class="col-lg-8">
+        <div class="page-header-title">
+          <div class="d-inline">
+            <h5><a href="{% url 'contractors' %}"><i class="icofont icofont-simple-left"></i></a> {{ contractor.full_name }}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+      </div>
+    </div>
+  </div>
+  <div class="page-header card">
+    <div class="card">
+      <div class="card-block">
+          <div class="user-prof-one-part clearfix">
+            <div class="image">
+                 <img src="{{ contractor.image.url }}" alt="image not found">
+                                         <!-- False -->
+              <div class="text-center p-t-20 c_block_unblock" >
+
+                <!--{% if contractor.is_blocked %}
+                    <button type="button" id="c_block_id" data-url="{% url 'contractors/block/' contractor.id %}" class="btn btn-primary  text-center waves-effect text-center c_block"  title="Contractor is Unblocked. Click here to block contractor.">Block</button>
+                {% else %}
+                    <button type="button" data-url = "{% url 'contractors/block/' contractor.id %}"  class="btn btn-danger  text-center waves-effect text-center c_unblock" id="c_unblock_id" onclick="c_unblock()" title="Contractor is blocked. Click here to unblock contractor.">Unblock </button>
+                {% endif %}-->
+
+                {% if contractor.is_blocked %}
+                  <button type="button" data-url = "{% url 'contractors/block/' contractor.id %}" id="c_unblock_id" class="btn btn-danger  text-center waves-effect text-center c_unblock" onclick="c_unblock()" title="Contractor is blocked. Click here to unblock contractor.">Unblock</button>
+                  {% else %}
+                  <button type="button" data-url = "{% url 'contractors/block/' contractor.id %}" class="btn btn-primary  text-center waves-effect text-center c_block" id="c_block_id" title="Contractor is Unblocked. Click here to block contractor.">Block</button>
+                  {% endif %}
+
+                  </div>
+
+            </div>
+            <div class="text v-product-top">
+              <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+                 <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Company Name</label>
+                    <div class="col-sm-8">
+                       <h4>{{ contractor.company_name }}</h4>
+                    </div>
+                 </div>
+              </div>
+             </div>
+             
+              <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+                 <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Contact Name 1</label>
+                    <div class="col-sm-8">
+                       <h4>{{ contractor.contact_name }}</h4>
+                    </div>
+                 </div>
+              </div>
+             </div>
+                         <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+                 <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Email Address 1</label>
+                    <div class="col-sm-8">
+                       <h4>{{ contractor.email }}</h4>
+                    </div>
+                 </div>
+              </div>
+             </div>
+                         <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+                 <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Phone Number 1</label>
+                    <div class="col-sm-8">
+                       <h4>{{ contractor.phone }}</h4>
+                    </div>
+                 </div>
+              </div>
+             </div>
+             <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+                 <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Address 1</label>
+                    <div class="col-sm-8">
+                       <h4>{{ contractor.address.add_line1 }}</h4>
+                    </div>
+                 </div>
+              </div>
+             </div>
+                         <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+                 <!--
+                  <button type="button" id="block_user" data-url = "/ublock/2/" class="btn btn-primary  text-center waves-effect text-center user_block" onclick="block()"
+                   title="User is Unblocked click here to block User">Block</button>
+                   -->
+              </div>
+
+             </div>
+<div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+    <div class="form-group row"></div>
+              </div>
+
+             </div>
+                <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+    <div class="form-group row"></div>
+              </div>
+
+             </div>
+                <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+    <div class="form-group row"></div>
+              </div>
+
+             </div>
+                <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+    <div class="form-group row"></div>
+              </div>
+
+             </div>
+                <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+    <div class="form-group row"></div>
+              </div>
+
+             </div>
+                <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+    <div class="form-group row"></div>
+              </div>
+
+             </div>
+                <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+    <div class="form-group row"></div>
+              </div>
+
+             </div>
+                <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+    <div class="form-group row"></div>
+              </div>
+
+             </div>
+                <div class="row">
+              <div class="col-xl-8 col-lg-12 col-sm-12">
+    <div class="form-group row"></div>
+              </div>
+
+             </div>
+
+            </div>
+         </div>
+{#        <div class="v-product-top">#}
+{#          <div class="row">#}
+{#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+{#              <div class="form-group row">#}
+{#                <label class="col-sm-4 col-form-label">Name</label>#}
+{#                <div class="col-sm-8">#}
+{#                    <h4>{{ contractor.full_name }}</h4>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+{#              <div class="form-group row">#}
+{#              <label class="col-sm-4 col-form-label">Phone Number</label>#}
+{#                <div class="col-sm-8">#}
+{#                  <h4>{{ contractor.phone }}</h4>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="row">#}
+{#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+{#              <div class="form-group row">#}
+{#              <label class="col-sm-4 col-form-label">Email</label>#}
+{#                <div class="col-sm-8">#}
+{#                  <h4>{{ contractor.email }}</h4>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+{#              <div class="form-group row">#}
+{#              <label class="col-sm-4 col-form-label">Company Name</label>#}
+{#                <div class="col-sm-8">#}
+{#                  <h4>{{ contractor.company_name }}</h4>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#          <div class="row c_block_unblock" >#}
+{#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+{#              <div class="form-group row">#}
+{#              <label class="col-sm-4 col-form-label">Status</label>#}
+{#                <div class="col-sm-8">#}
+{#                  <div class="switch-custom m-t-5 status">#}
+{#                            {% if contractor.is_blocked %}#}
+{##}
+{#                            <button type="button" data-url = "{% url 'contractors/block/' contractor.id %}"  class="btn btn-danger  text-center waves-effect text-center c_unblock" id="c_unblock_id" onclick="c_unblock()" title="Contractor is blocked. Click here to unblock contractor.">Unblock </button>#}
+{#                            {% else %}#}
+{##}
+{#                            <button type="button" data-url = "{% url 'contractors/block/' contractor.id %}" class="btn btn-primary  text-center waves-effect text-center c_block" id="c_block_id"  title="Contractor is Unblocked. Click here to block contractor.">Block </button>#}
+{#                            {% endif %}#}
+{#                  </div>#}
+{#                </div>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#              </div>#}
+                    </div>
+                    <div class="card-block">
+                      <div class="user-prof-one-part clearfix">
+                        
+                        <div class="text v-product-top">
+                          <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Contact Name 2</label>
+                                <div class="col-sm-8">
+                                   <h4>{% if contractor.contact_name2 %}{{ contractor.contact_name2 }}{% else %}None{% endif %}</h4>
+                                </div>
+                             </div>
+                          </div>
+                         </div>
+                         
+                          <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Email Address 2</label>
+                                <div class="col-sm-8">
+                                   <h4>{% if contractor.email2 %}{{ contractor.email2 }}{% else %}None{% endif %}</h4>
+                                </div>
+                             </div>
+                          </div>
+                         </div>
+                                     <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Phone Number 2</label>
+                                <div class="col-sm-8">
+                                   <h4>{% if contractor.phone2 %}{{ contractor.phone2 }}{% else %}None{% endif %}</h4>
+                                </div>
+                             </div>
+                          </div>
+                         </div>
+                                     
+                         <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Address 2</label>
+                                <div class="col-sm-8">
+                                   <h4>{% if contractor.address.add_line2 %}{{ contractor.address.add_line2 }}{% else %}None{% endif %}</h4>
+                                </div>
+                             </div>
+                          </div>
+                         </div>
+                                     <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <!--
+                              <button type="button" id="block_user" data-url = "/ublock/2/" class="btn btn-primary  text-center waves-effect text-center user_block" onclick="block()"
+                               title="User is Unblocked click here to block User">Block</button>
+                               -->
+                          </div>
+            
+                         </div>
+            <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                <div class="form-group row"></div>
+                          </div>
+            
+                         </div>
+                            <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                <div class="form-group row"></div>
+                          </div>
+            
+                         </div>
+                            <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                <div class="form-group row"></div>
+                          </div>
+            
+                         </div>
+                            <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                <div class="form-group row"></div>
+                          </div>
+            
+                         </div>
+                            <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                <div class="form-group row"></div>
+                          </div>
+            
+                         </div>
+                            <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                <div class="form-group row"></div>
+                          </div>
+            
+                         </div>
+                            <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                <div class="form-group row"></div>
+                          </div>
+            
+                         </div>
+                            <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                <div class="form-group row"></div>
+                          </div>
+            
+                         </div>
+                            <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                <div class="form-group row"></div>
+                          </div>
+            
+                         </div>
+            
+                        </div>
+                     </div>
+            {#        <div class="v-product-top">#}
+            {#          <div class="row">#}
+            {#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+            {#              <div class="form-group row">#}
+            {#                <label class="col-sm-4 col-form-label">Name</label>#}
+            {#                <div class="col-sm-8">#}
+            {#                    <h4>{{ contractor.full_name }}</h4>#}
+            {#                </div>#}
+            {#              </div>#}
+            {#            </div>#}
+            {#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+            {#              <div class="form-group row">#}
+            {#              <label class="col-sm-4 col-form-label">Phone Number</label>#}
+            {#                <div class="col-sm-8">#}
+            {#                  <h4>{{ contractor.phone }}</h4>#}
+            {#                </div>#}
+            {#              </div>#}
+            {#            </div>#}
+            {#          </div>#}
+            {#          <div class="row">#}
+            {#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+            {#              <div class="form-group row">#}
+            {#              <label class="col-sm-4 col-form-label">Email</label>#}
+            {#                <div class="col-sm-8">#}
+            {#                  <h4>{{ contractor.email }}</h4>#}
+            {#                </div>#}
+            {#              </div>#}
+            {#            </div>#}
+            {#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+            {#              <div class="form-group row">#}
+            {#              <label class="col-sm-4 col-form-label">Company Name</label>#}
+            {#                <div class="col-sm-8">#}
+            {#                  <h4>{{ contractor.company_name }}</h4>#}
+            {#                </div>#}
+            {#              </div>#}
+            {#            </div>#}
+            {#          </div>#}
+            {#          <div class="row c_block_unblock" >#}
+            {#            <div class="col-xl-6 col-lg-12 col-sm-12">#}
+            {#              <div class="form-group row">#}
+            {#              <label class="col-sm-4 col-form-label">Status</label>#}
+            {#                <div class="col-sm-8">#}
+            {#                  <div class="switch-custom m-t-5 status">#}
+            {#                            {% if contractor.is_blocked %}#}
+            {##}
+            {#                            <button type="button" data-url = "{% url 'contractors/block/' contractor.id %}"  class="btn btn-danger  text-center waves-effect text-center c_unblock" id="c_unblock_id" onclick="c_unblock()" title="Contractor is blocked. Click here to unblock contractor.">Unblock </button>#}
+            {#                            {% else %}#}
+            {##}
+            {#                            <button type="button" data-url = "{% url 'contractors/block/' contractor.id %}" class="btn btn-primary  text-center waves-effect text-center c_block" id="c_block_id"  title="Contractor is Unblocked. Click here to block contractor.">Block </button>#}
+            {#                            {% endif %}#}
+            {#                  </div>#}
+            {#                </div>#}
+            {#              </div>#}
+            {#            </div>#}
+            {#          </div>#}
+            {#              </div>#}
+                                </div>
+                  </div>
+<div class="page-header-title p-b-15">
+           <div class="d-inline">
+             <h5>Users with this Contractor</h5>
+           </div>
+              </div>
+              <div class="card">
+                <div class="card-block">
+                  <div class="dt-responsive table-responsive">
+                    <table id="multi-colum-dt-merchant_details" class="table table-striped table-bordered nowrap">
+                      <thead>
+                        <tr>
+                          <th>User Name</th>
+                          <th>Email</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for user in users %}
+                        <tr>
+                          <td>{{ user.full_name }}</td>
+                          <td>{{ user.email }}</td>
+                          <td>
+                            <a href="{% url 'view_list' user_id=user.id %}" class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i class="icofont icofont-eye-alt" title="View"></i></a>
+                          </td>
+
+                        </tr>
+                        {% endfor %}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+
+        </div>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}">
+          </script>
+<script type="text/javascript">
+  window.history.forward();
+    function noBack() { window.history.forward(); }
+
+
+    $('.c_block_unblock').on('click','.c_block',function(e){
+    e.preventDefault();
+    var result = confirm('Are you sure to want to block this contractor?');
+    if (result){
+      var url_link = $(this).attr("data-url");
+      var m_unblock_html = `<button type="button" data-url = "` + url_link + `" id = "c_unblock_id" class ="btn btn-danger  text-center waves-effect text-center c_unblock" onclick="c_unblock()" >Unblock </button>`;
+      var m_block_data = "{{ contractor.is_blocked }}";
+
+      $.ajax({
+        url: url_link,
+        dataType: 'text',
+        data: {
+          'is_blocked':m_block_data,
+        },
+        success: function(data){
+          $('#c_block_id').remove();
+          $('.c_block_unblock').append(m_unblock_html);
+          $("#c_unblock_id").attr('title', 'Contractor is blocked. Click here to unblock contractor.');
+
+        }
+      });
+    }
+    else{
+      console.log('eeeeeeeeeeee');
+    }
+  });
+
+function c_unblock() {
+  var res = confirm('Are you sure to want to Unblock contractor?')
+  console.log('res---->',res);
+  if (res){
+    var url_link = $('.c_unblock').attr("data-url");
+    console.log('url_link-->',url_link);
+    var m_block = `<button type="button" data-url = "`+url_link+`" class="btn btn-primary  text-center waves-effect text-center c_block" id="c_block_id" >Block </button>`;
+
+    var block = "{{ contractor.is_blocked }}"
+    console.log(block);
+    $.ajax({
+      url: url_link,
+      dataType: 'text',
+      data: {
+        'is_blocked':block,
+      },
+      success: function(data){
+        console.log('success')
+        $('#c_unblock_id').remove();
+        $('.c_block_unblock').append(m_block);
+        $("#c_block_id").attr('title', 'Contractor is Unblocked. Click here to block contractor.');
+
+      }
+    });
+  }
+  else{
+      console.log('eeeeeeeeeeee');
+    }
+};
+
+</script>
+{% endblock %}

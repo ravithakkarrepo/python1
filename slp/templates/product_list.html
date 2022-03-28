@@ -1,0 +1,384 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+    <div class="pcoded-content">
+        <div class="page-header card">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <div class="d-inline">
+                            <h5>Products</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    {% if is_admin %}
+                        <div class="text-right">
+                            <a href="{% url 'product/' %}" class="btn btn-primary">Add Product</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="page-header card">
+            <div class="card">
+                <div class="card-block">
+                    <div class="dt-responsive table-responsive">
+                        <table id={% if is_contractor %}
+                            "multi-colum-dt-contractor-product"
+                        {% else %}
+                            "multi-colum-dt-product"
+                        {% endif %}
+                        class="table table-striped table-bordered nowrap">
+                        <thead>
+                        <tr>
+                            {% if is_admin %}
+                                <th>Merchant Name</th>
+                                <th>Product Name</th>
+                                <th>Total Points</th>
+                            {% endif %}
+                            {% if is_merchant %}
+                                <th>Product Name</th>
+                                <th>Points</th>
+                                <th>Image</th>
+                            {% endif %}
+                            {% if is_contractor %}
+                                <th hidden>Product ID</th>
+                                <th>Merchant Name</th>
+                                <th>Product Name</th>
+                                <th>Points</th>
+                            {% endif %}
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        {% if is_admin %}
+                            <tbody>
+                            {% for pname,point,mname,pid in admin_combo %}
+                                <tr>
+                                    <td>{{ mname }}</td>
+                                    <td>{{ pname }}</td>
+                                    <td>{{ point }}</td>
+                                    <td><a href="{% url 'product' id=pid %}" title="View"
+                                           class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i
+                                            class="icofont icofont-eye-alt"></i></a>
+                                        <a href="{% url '_product/' id=pid %}" title="Edit"
+                                           class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i
+                                                class="icofont icofont-edit-alt"></i></a>
+                                        <a href="javascript:void(0)" title="Delete"
+                                           data-url="{% url 'product/' id=pid %}"
+                                           class="tabledit-edit-button btn btn-primary waves-light waves-effect"
+                                           onclick="archiveFunction($(this).attr('data-url'))"><i
+                                                class="icofont icofont-trash"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% endif %}
+                        {% if is_merchant %}
+                            <tbody>
+                            {% for p in products %}
+                                <tr>
+                                    <td>{{ p.product_name }}</td>
+                                    <td>{{ p.total_points }}</td>
+                                    <td><img src="{{ MEDIA_URL }}{{ p.image }}" width="50"></td>
+                                    <td><a href="{% url 'product_' id=p.id %}" title="View"
+                                           class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i
+                                            class="icofont icofont-eye-alt"></i></a></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% endif %}
+
+                        {% if is_contractor %}
+                            <tbody>
+                            {% for merchant_names, pname_list, total_points_list, pid_list in contractor_combo %}
+                                <tr id={{ pid_list }}>
+                                    <td hidden id="product_id_{{ pid_list }}">{{ pid_list }}</td>
+                                    <td id="merchant_name_{{ pid_list }}">{{ merchant_names }}</td>
+                                    <td id="product_name_{{ pid_list }}">{{ pname_list }}</td>
+                                    <td id="product_points_{{ pid_list }}">{{ total_points_list }}</td>
+                                    <td><a href="{% url 'contractor/products/' product_id=pid_list %}" title="View"
+                                           class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i
+                                            class="icofont icofont-eye-alt"></i></a>
+                                        <!-- <a href="#" title="Add Points" onclick="select_data({{ pid_list }})"
+                                           data-toggle="modal" data-target="#add-points"
+                                           class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i
+                                                class="icofont icofont-plus"></i></a> -->
+                                            </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        {% endif %}
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    {% if add or edit %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>{% else %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
+    {% endif %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+
+
+    <!--<form method="POST" action="{% url 'contractor/products' %}">
+        {% csrf_token %}-->
+    <div class="modal fade" id="add-points" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-sm custome-modal" role="document">
+            <div class="modal-content p-l-20 p-r-20 p-t-15">
+                <div class="modal-body text-center">
+
+                    <h4>Add Points</h4>
+                    <div class="row">
+                        <div class="col-md-4 col-xs-12">
+                            <label>Manufacturer <span style="color:red;">* : </span></label>
+                        </div>
+                        <div class="col-md-8 col-xs-12 mb-10">
+                            <input id="p_id" type="text" class="form-control" name="" placeholder="" hidden value="">
+                            <input id="m_name" type="text" class="form-control" name="" placeholder="" disabled>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <label>Product Name <span style="color:red;">* : </span></label>
+                        </div>
+                        <div class="col-md-8 col-xs-12 mb-10">
+                            <input id="p_name" type="text" class="form-control" name="" placeholder="" disabled>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <label>Product Points <span style="color:red;">* : </span></label></div>
+                        <div class="col-md-8 col-xs-12 mb-10">
+                            <input id="p_points" type="text" class="form-control" name="" placeholder="" disabled>
+                        </div>
+                        <div class="col-md-4 col-xs-12">
+                            <label>Additional Points</label>&nbsp;<span style="color:red;">*</span></div>
+                        <div class="col-md-8 col-xs-12 ">
+                            <input id="addln_points" type="number" class="form-control your_class" name=""
+                                   placeholder="" min="0">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary waves-effect waves-light"
+                            onclick="showDollarPrice($(this).attr('data-url'))" id="points_submit"
+                            data-url="{% url 'contractor/prediction/points/usd' %}">Submit
+                    </button>
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--</form>-->
+
+    <script>
+        function select_data(tr) {
+
+            tr0 = document.getElementById("product_id_" + tr);
+            product_id = tr0.textContent
+            console.log("product_id : ", product_id)
+            $('#p_id').attr("value", product_id)
+
+            tr1 = document.getElementById("merchant_name_" + tr);
+            merchant_name = tr1.textContent
+            $('#m_name').attr("placeholder", merchant_name)
+
+
+            tr2 = document.getElementById("product_name_" + tr);
+            product_name = tr2.textContent
+            $('#p_name').attr("placeholder", product_name)
+
+            tr3 = document.getElementById("product_points_" + tr);
+            product_points = tr3.textContent
+            $('#p_points').attr("placeholder", product_points)
+        }
+    </script>
+
+    <script>
+
+        function showDollarPrice(url) {
+            pid = $('#p_id').val();
+            addln_points = $('#addln_points').val();
+            console.log('url : ', url, "addln_points : ", addln_points, "pid : ", pid);
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                dataType: 'json',
+                data: {
+                    'points': addln_points
+                },
+                success: function (data) {
+                    expected_bill = data['returned_dollar'];
+                    console.log('success data : ', data['returned_dollar']);
+
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        customClass: {
+                            confirmButton: 'btn btn-success',
+                            cancelButton: 'btn btn-danger',
+                        },
+                        buttonsStyling: false
+                    })
+
+
+                    swalWithBootstrapButtons.fire({
+                        title: 'Are you sure?',
+                        text: "To add " + addln_points + " additional points, you will be charged monthly " + expected_bill + " USD extra.",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, do it!',
+                        cancelButtonText: 'No, cancel!',
+                        reverseButtons: true
+                    }).then((result) => {
+                        console.log('result--', result.value, result)
+                        if (result.value) {
+
+                            $.ajax({
+                                url: url + '/',
+                                type: 'POST',
+                                data: {
+                                    'addln_points': addln_points,
+                                    'expected_bill': expected_bill,
+                                    'product_id': pid
+                                },
+                                success: function (data) {
+                                    console.log('success')
+                                    swalWithBootstrapButtons.fire(
+                                        'Request Sent!',
+                                        'Your request for adding points in product is successfully sent to admin.',
+                                        'success',
+                                    )
+                                    if ($('.swal2-confirm').html() == 'OK') {
+                                        $('.swal2-confirm').css('display', 'none');
+                                    }
+
+                                    function redirect() {
+                                        window.location.href = "{% url 'contractor/products'  %}";
+                                    }
+
+                                    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+                                },
+
+                            });
+                        }
+
+                    })
+
+
+                }
+            });
+
+        }
+
+        document.querySelector(".your_class").addEventListener("keypress", function (evt) {
+            if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+                evt.preventDefault();
+            }
+        });
+    </script>
+
+
+
+
+
+    {% if add %}
+        <script type="text/javascript">
+            $('.swal-overlay--show-modal').css('display', 'block')
+
+            swal({
+                title: "Success!",
+                text: "Your product has been added successfully",
+                icon: "success",
+                buttons: false
+            })
+
+            function redirect() {
+                window.location.href = "/product";
+                $('.swal-overlay--show-modal').css('display', 'none')
+            }
+
+            setTimeout(redirect, 2000);
+        </script>
+    {% endif %}
+    {% if edit %}
+        <script type="text/javascript">
+            $('.swal-overlay--show-modal').css('display', 'block')
+
+            swal({
+                title: "Success!",
+                text: "Your product has been updated successfully",
+                icon: "success",
+                buttons: false
+            })
+
+            function redirect() {
+                window.location.href = "/product";
+                $('.swal-overlay--show-modal').css('display', 'none')
+            }
+
+            setTimeout(redirect, 2000);
+        </script>
+    {% endif %}
+
+    <script>
+
+        function archiveFunction(url) {
+            console.log('url--', url)
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'No, cancel!',
+                reverseButtons: true
+            }).then((result) => {
+                console.log('result--', result.value, result)
+                if (result.value) {
+
+                    $.ajax({
+                        url: url,
+                        // type:'post',
+                        data: {
+                            'deleted': true,
+                        },
+                        success: function (data) {
+                            console.log('success delete')
+                            swalWithBootstrapButtons.fire(
+                                'Deleted!',
+                                'Your product has been deleted.',
+                                'success',
+                            )
+                            if ($('.swal2-confirm').html() == 'OK') {
+                                $('.swal2-confirm').css('display', 'none');
+                            }
+
+                            function redirect() {
+                                window.location.href = "{% url 'product'  %}";
+                            }
+
+                            setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+                        },
+
+                    });
+                }
+
+            })
+        };
+
+    </script>
+
+
+
+
+{% endblock %}

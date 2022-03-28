@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div class="pcoded-content">
+   <div class="page-header card">
+      <div class="row align-items-end">
+         <div class="col-lg-8">
+            <div class="page-header-title">
+               <div class="d-inline">
+               <h5><a href="{% url 'banner_list' %}"><i class="icofont icofont-simple-left"></i></a> Add Banner</h5>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-4">
+         </div>
+      </div>
+   </div>
+   <div class="page-header card">
+      <div class="card">
+         <div class="card-block">
+            <form class="" action="{% url 'add_banner'  %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+            <div class="row">
+               <div class="col-xl-6 col-lg-6 col-sm-12">
+                  <div class="form-group">
+                     <label>Company Name <span style="color:red;">*</span></label>
+                     <input type="text" name="company_name" class="form-control" id="com_name" required="">
+                  </div>
+                  <div class="form-group">
+                     <label>URL <span style="color:red;">*</span></label>
+                     <input type="url" onblur="checkURL(this)" class="form-control url_class" name="banner_url" placeholder="www.example.com" target="_blank" required="">
+
+                     <!-- <input type="url" class="form-control" name="banner_url"> -->
+                  </div>
+               </div>
+               <div class="col-xl-6 col-lg-6 col-sm-12">
+                  <div class="form-group">
+                     <label>Image <span style="color:red;">*</span><a href="#" class="f-16 d-inline-block align-top" title="The Picture should be in the 1005*360 pixel"><i class="icofont icofont-question-circle"></i></a></label>
+                     <div class="prof-pic-part prof-pic-part-admin">
+                        <div class="prof-pic-img">
+                           <img src="https://slp-static.s3.us-east-2.amazonaws.com/media/product/image/default.png" alt="" id="product_fake_image">
+                        </div>
+                        <div class="prof-pic-btn">
+                           <input type="file"  name="image" class="form-control" id="banner_image"  required="" accept="image/*" onchange="imagePreview(this.files[0])">
+                           <span><i class="icofont icofont-camera-alt"></i></span>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="clearfix">
+               <button type="submit" class="btn btn-primary m-r-10" id="banner_submit">Submit</button>
+               <button type="reset" id="reset" class="btn btn-default">Reset</button>
+            </div>
+         </form>
+         </div>
+      </div>
+   </div>
+</div>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+{% if add_banner %}
+<script>
+//  after banner add successfully it gets redirect to banner list page
+swal({
+    title: "Success!",
+    text: "Banner has been successfully added",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'banner_list'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+
+
+<script type="text/javascript">
+
+// Banner image limit 2mb
+function imagePreview(thisVal) {
+   console.log(thisVal);
+   var oFile = $('#banner_image')[0].files[0].size
+   var extensionBannarImage = $('#banner_image').val().substring($('#banner_image').val().lastIndexOf('.') + 1)
+
+   console.log(oFile, extensionBannarImage)
+   if (oFile < 2097152)
+   {// 2 mb for bytes.
+      if(extensionBannarImage == 'png' || extensionBannarImage == 'jpg' || extensionBannarImage == 'jpeg') 
+      {
+         // alert("File size must under 2mb!");
+         document.getElementById('product_fake_image').src = window.URL.createObjectURL(thisVal);
+      } else {
+        swal("error","Please Choose PNG or JPG or JPEG Image","error")
+         return false;
+      }
+   }else{
+         swal("error","File size must under 2mb!","error");
+   }
+}
+
+
+//while click on reset button img also get reset
+$('#reset').click(function(){
+   $('#product_fake_image').attr('src','https://slp-static.s3.us-east-2.amazonaws.com/media/product/image/default.png')
+});
+
+
+//url https add automatically also check url is valid or not
+function checkURL (abc) {
+   var string = abc.value;
+   if (!~string.indexOf("http")) {
+      string = "http://" + string;
+      string = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+   abc.value = string;
+   return abc
+}
+}
+
+$('form').submit(function(){
+    $(this).find('button[type=submit]').prop('disabled', true);
+});
+</script> 
+
+<script type="text/javascript">
+   $(document).ready(function(){
+     $('#banner_submit').click(function(){
+       console.log('in 1')
+         // console.log(!$('.phone').val().match(reg_phone))
+         if($('#com_name').val().trim() == "") {
+           alert("company name cannot be null")
+         return false;
+       }
+     })
+   })
+   </script>
+{% endblock %}
+

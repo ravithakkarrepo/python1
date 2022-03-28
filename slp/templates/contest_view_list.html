@@ -1,0 +1,417 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<a onclick="noBack()" href="{% url 'login_error' %}"></a>
+            <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5><a href="{% url 'contest_details' id=contest_id %}"><i class="icofont icofont-simple-left"></i></a>{{ first_name }}&nbsp;{{ last_name }}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+              <div class="card">
+                <div class="card-block">
+                     <div class="user-prof-one-part clearfix">
+                        <div class="image">
+                             <img src="{{MEDIA_URL}}{{ image }}" alt="image not found">
+                                                     <!-- {{is_blocked}} -->
+                          <div class="text-center p-t-20" id="unblock_block_user">
+
+                              {% if is_blocked %}
+                              <button type="button" data-url = "{% url 'ublock' user_id %}" id="unblock_user" class="btn btn-danger  text-center waves-effect text-center user_unblock" onclick="unblock()" title="User is blocked click here to unblock User">Unblock</button>
+                              {% else %}
+                              <button type="button" id="block_user" data-url = "{% url 'ublock' user_id %}" class="btn btn-primary  text-center waves-effect text-center user_block" onclick="block()"
+                              title="User is Unblocked click here to block User">Block</button>
+                              {% endif %}    
+                              </div>                   
+                             
+                        </div>
+                        <div class="text v-product-top">
+                          <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">First Name</label>
+                                <div class="col-sm-8">
+                                   <h4>{{ first_name }}</h4>
+                                </div>
+                             </div>
+                          </div>
+                         </div>
+                         <div class="row">
+                           <div class="col-xl-8 col-lg-12 col-sm-12">
+                              <div class="form-group row">
+                                 <label class="col-sm-4 col-form-label">Last Name</label>
+                                 <div class="col-sm-8">
+                                    <h4>{{ last_name }}</h4>
+                                 </div>
+                              </div>
+                           </div>
+                          </div>
+                                     <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Email Address</label>
+                                <div class="col-sm-8">
+                                   <h4>{{ email }}</h4>
+                                </div>
+                             </div>
+                          </div>
+                         </div>
+                                     <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Telephone Number</label>
+                                <div class="col-sm-8">
+                                   <h4>{{ phone }}</h4>
+                                </div>
+                             </div>
+                          </div>
+                         </div>
+                                     <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label EarnedPoints">Total Earned Points</label>
+                                <div class="col-sm-8">
+                                   <h4>{{ lifetime_earned_points }}</h4>
+                                </div>
+                             </div>
+                          </div>
+                         </div>
+                                     <div class="row">
+                          <div class="col-xl-8 col-lg-12 col-sm-12">
+                             <div class="form-group row">
+                                <label class="col-sm-4 col-form-label">Available Points</label>
+                                <div class="col-sm-8">
+                                   <h4>{{ available_points }}</h4>
+                                </div>
+                             </div>
+                             <!-- {% if is_blocked %}
+                              <button type="button" data-url = "{% url 'ublock' user_id %}" id="unblock_user" class="btn btn-danger  text-center waves-effect text-center user_unblock" onclick="unblock()" title="User is blocked click here to unblock User">Unblock</button>
+                              {% else %}
+                              <button type="button" id="block_user" data-url = "{% url 'ublock' user_id %}" class="btn btn-primary  text-center waves-effect text-center user_block" onclick="block()"
+                               title="User is Unblocked click here to block User">Block</button>
+                              {% endif %} -->
+                          </div>
+
+                         </div>
+                 
+                        </div>
+                     </div>
+                </div>
+              </div>
+              <div class="page-header-title p-b-15">
+           <div class="d-inline">
+             <h5>User Information</h5>
+           </div>
+              </div>
+              <div class="card">
+                   <div class="card-block">
+                      <div class="v-product-top">
+              <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Company Name</label>
+                        <div class="col-sm-8">
+                           <h4>{{ company_name }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Country</label>
+                        <div class="col-sm-8">
+                           <h4>{{ country }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                          <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Address</label>
+                        <div class="col-sm-8">
+                           <h4>{{ add_line1 }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Zip Code</label>
+                        <div class="col-sm-8">
+                           <h4>{{ zip_code }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                          <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">City</label>
+                        <div class="col-sm-8">
+                           <h4>{{ city }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Refer Code</label>
+                        <div class="col-sm-8">
+                           <h4>{{ referral_code }}</h4>
+                        </div>
+                     </div>
+                  </div>
+              </div>
+                          <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">State</label>
+                        <div class="col-sm-8">
+                           <h4>{{ state }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Refer By</label>
+                        <div class="col-sm-8">
+                           <h4>{{ referred }}</h4>
+                        </div>
+                     </div>
+                  </div>
+              </div>
+                      
+                      </div>
+                   </div>
+              </div>
+              <div class="page-header p-b-15">
+        <div class="row align-items-end">
+          <div class="col-lg-8">
+            <div class="page-header-title">
+              <div class="d-inline">
+              <h5>Reward History</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+                       <div class="text-right">
+                            <a href="#" class="btn btn-primary wave RewardManagement" data-toggle="modal" data-target="#reward-management">Reward Management</a>
+                       </div>
+          </div>
+        </div>
+        </div>
+              <div class="card">
+                   <div class="card-block">
+                      <div class="dt-responsive table-responsive">
+                        <table id="multi-colum-dt12" class="table table-striped table-bordered nowrap">
+                          <tr>
+                            <th>Date and Time</th>
+                            <th>QR Code</th>
+                            <th>Earned Points</th>
+                            <th>Splited </th>
+                            <th>Points-Type</th>
+                            <th>Reward-Type</th>
+                            <th>Reason</th>
+                          </tr>
+                          {% for created,reward,splitted,reward_type,qr_id,points_type,admin_reason in comb %}
+                              <tr>
+                                <td>{{ created }}</td>
+                                <td>{{ qr_id }}</td>
+                                <td>{{ reward }}</td>
+                                {% if splitted %} <td> YES </td> {% else %}<td> No </td> {% endif %}
+                                <td>{{ points_type }}</td>
+                                <td>{{ reward_type }}</td>
+                                <td>{{ admin_reason }}</td>
+                              </tr>
+                          {% endfor %}
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+<div class="modal fade" id="reward-management" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header"></div>
+      <div class="modal-body">
+           <h3 class="modal-title text-center">Reward Points Management</h3>
+           <div class="v-product-top p-15">
+         <div class="row">
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+             <div class="form-group row m-b-10">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                   <h4>{{ first_name }}&nbsp;{{ last_name }}</h4>
+                </div>
+             </div>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+             <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Email</label>
+                <div class="col-sm-8">
+                   <h4>{{ email }}</h4>
+                </div>
+             </div>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+             <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Available Points</label>
+                <div class="col-sm-8">
+                   <h4 id="available_point_reward_management">{{ points }}</h4>
+                </div>
+             </div>
+          </div>
+         </div>
+         <form action="{% url 'reward' user_id %}" method="post">{% csrf_token %}
+         <div class="row">
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+             <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Manage Rewards</label>
+                <div class="col-sm-8">
+                   <div class="form-check p-t-5">
+                    <input class="form-check-input exampleRadios" type="radio" name="exampleRadios" id="exampleRadios1" value="add" checked>
+                    <label class="form-check-label" for="exampleRadios1">
+                    Add
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input exampleRadios" type="radio" name="exampleRadios" id="exampleRadios2" value="remove">
+                    <label class="form-check-label" for="exampleRadios2">
+                    Remove
+                    </label>
+                  </div>
+                </div>
+             </div>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+             <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Points</label>
+                <div class="col-sm-8">
+                  <input type="hidden" name="user_id" value="{{ user_id }}">
+                  <input type="hidden" name="available_point" value="{{ points }}">
+                  <input type="number" class="form-control points_reward" id="points_reward" name="points_reward" required="">
+                </div>
+             </div>
+          </div>
+         </div>
+         <div class="row">
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+             <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Reason</label>
+                <div class="col-sm-8">
+                      <textarea class="form-control" name="admin_reason" required=""></textarea>
+                </div>
+             </div>
+          </div>
+         </div>
+         <div class="clearfix text-right">
+              <button type="submit" class="btn btn-primary waves-effect" id="Reward_Points_Management_btn">Submit</button>
+              <button type="reset" class="btn btn-default waves-effect waves-light m-l-10" data-dismiss="modal">Cancel</button>
+         </div>
+        </form>
+       </div>
+      </div>
+      
+    </div>
+  </div>
+</div>              
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+  window.history.forward();
+    function noBack() { window.history.forward(); }
+
+  document.querySelector(".points_reward").addEventListener("keypress", function (evt) {
+      if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+      {
+          evt.preventDefault();
+      }
+  });  
+
+    $('#points_reward').change(function(){
+        var AddRemove = $("input[name='exampleRadios']:checked").val()
+        var availablePoint = $('#available_point_reward_management').text()
+        var inputPoint = $('#points_reward').val()
+        console.log(AddRemove,'availablePoint---',parseInt(availablePoint), 'inputPoint---',parseInt(inputPoint), inputPoint)
+        if(AddRemove == 'remove' && parseInt(inputPoint) > parseInt(availablePoint)){
+            console.log('if')
+            $('#Reward_Points_Management_btn').attr('disabled','true')
+            $('#Reward_Points_Management_btn').attr('title','please change points value')
+        }else{
+            console.log('else')
+            $('#Reward_Points_Management_btn').removeAttr('disabled')
+            $('#Reward_Points_Management_btn').removeAttr('title')
+        }
+        if(AddRemove == 'add'){
+            $('#Reward_Points_Management_btn').removeAttr('disabled')
+            $('#Reward_Points_Management_btn').removeAttr('title')
+        }
+    })
+    $('.exampleRadios').change(function(){
+        var AddRemove = $("input[name='exampleRadios']:checked").val()
+        var availablePoint = $('#available_point_reward_management').text()
+        var inputPoint = $('#points_reward').val()
+        console.log(AddRemove,'availablePoint---',parseInt(availablePoint), 'inputPoint---',parseInt(inputPoint), inputPoint)
+        if(AddRemove == 'remove' && parseInt(inputPoint) > parseInt(availablePoint)){
+            console.log('if')
+            $('#Reward_Points_Management_btn').attr('disabled','true')
+            $('#Reward_Points_Management_btn').attr('title','please change points value')
+        }else{
+            console.log('else')
+            $('#Reward_Points_Management_btn').removeAttr('disabled')
+            $('#Reward_Points_Management_btn').removeAttr('title')
+        }
+        if(AddRemove == 'add'){
+            $('#Reward_Points_Management_btn').removeAttr('disabled')
+            $('#Reward_Points_Management_btn').removeAttr('title')
+        }
+    })
+
+
+    $('#Reward_Points_Management_btn').click(function(){
+        var AddRemove = $("input[name='exampleRadios']:checked").val()
+        var availablePoint = $('#available_point_reward_management').text()
+        var inputPoint = $('.points_reward').val()
+        console.log('--AddRemove--',AddRemove, parseInt(inputPoint),'>', parseInt(availablePoint))
+        // return false;
+        if(AddRemove == "remove" && parseInt(inputPoint) > parseInt(availablePoint)){
+            console.log('remove')
+            swal("error","eeeee","error")
+            $('#Reward_Points_Management_btn').attr('disabled','true')
+            $('#Reward_Points_Management_btn').attr('title','please change points value')
+        }else{
+            $('#Reward_Points_Management_btn').removeAttr('disabled')
+            $('#Reward_Points_Management_btn').removeAttr('title')
+        }
+
+        if(AddRemove == 'add'){
+            console.log('add')
+            $('#Reward_Points_Management_btn').removeAttr('disabled')
+            $('#Reward_Points_Management_btn').removeAttr('title')
+        }
+    })
+});
+
+</script>   
+
+{% endblock %}
+

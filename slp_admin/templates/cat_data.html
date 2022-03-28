@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>cat data</title>
+</head>
+<body>
+
+<select>
+	{% for x in cat_list %}
+  <option value="{{x.category_name}}">{{x.category_name}}</option>
+  {% endfor %}
+</select>
+
+</body>
+</html>

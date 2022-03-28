@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static "" as baseUrl %}
+{% block body %}
+
+    <div class="pcoded-content">
+        <div class="page-header card">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <div class="d-inline">
+                            <h5>User UPC Ratings</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page-header card">
+            <div class="">
+                <div class="card">
+                    <div class="card-block">
+
+                        <div class="dt-responsive table-responsive">
+                            <table id="multi-colum-demo" class="table table-striped table-bordered nowrap">
+                                <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>User Email</th>
+                                    <th>User Mobile</th>
+                                    <th>Given Rating</th>
+                                    <th>Rating Date Time</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for x in data %}
+                                    <td>{{ x.user.full_name }}</td>
+                                    <td>{{ x.user.email }}</td>
+                                    <td>{{ x.user.phone }}</td>
+                                    <td>{{ x.rating }}</td>
+                                    <td>{{ x.updated_at | date:'Y-m-d H:i' }}</td>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static "" as baseUrl %}
+{% block body %}
+<style type="text/css">
+  .asteriskField{
+    color: red;
+  }
+</style>
+<div class="pcoded-content">
+    <div class="page-header card">
+        <div class="row align-items-end">
+          <div class="col-lg-8">
+            <div class="page-header-title">
+              <div class="d-inline">
+                <h5><a href="{% url 'cmslist' %}"><i class="icofont icofont-simple-left"></i></a> Edit CMS</h5>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+             
+          </div>
+        </div>
+      </div>
+	<div class="page-header card">
+		<div class="card">
+			<div class="card-block">
+{% load crispy_forms_tags %}
+
+<form method="post" class="post-form" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form |crispy  }}
+        {{ form.media |safe   }}
+    <a href="{% url 'cmslist' %}"><button type="button" class="btn btn-danger"  name="cancel">Cancel</button></a>
+  <button type="submit" class="btn btn-primary" >submit</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+{% if cms_edited %}
+<script>
+//  after banner add successfully it gets redirect to banner list page
+swal({
+    title: "Success!",
+    text: "CMS page has been successfully edited",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'cmslist'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+<script type="text/javascript">
+  $('form').submit(function(){
+    $(this).find('button[type=submit]').prop('disabled', true);
+});
+</script>
+{% endblock %}

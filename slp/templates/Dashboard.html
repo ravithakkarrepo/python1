@@ -1,0 +1,235 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+    {% if e %}
+        {{ e }}
+    {% endif %}
+    <div class="pcoded-content">
+        <div class="page-header card">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <div class="d-inline">
+                            <h5 id="dashboard">Dashboard</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                </div>
+            </div>
+        </div>
+        <div class="page-header card tuser_listext-center">
+            <div class="row align-items-end">
+                {% if is_admin %}
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'user_list' %}">
+                            <div class="card prod-p-card card-green">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700 text-white">{{ count_user }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Users</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'video_table' %}">
+                            <div class="card prod-p-card card-blue">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700  text-white">{{ count_video }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Videos</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'product' %}">
+                            <div class="card prod-p-card card-red">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700  text-white">{{ count_product }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Total Products</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'banner_list' %}">
+                            <div class="card prod-p-card card-yellow">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700  text-white">{{ count_banner }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Banners</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'merchant_list' %}">
+                            <div class="card prod-p-card card-red">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700  text-white">{{ count_merchant }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Merchants</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                {% endif %}
+                {% if is_merchant %}
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'batch' %}">
+                            <div class="card prod-p-card card-red">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700 text-white">{{ count_batch }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Batches</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'product_' %}">
+                            <div class="card prod-p-card card-blue">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700  text-white">{{ count_product }} </h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Total Products</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <div class="card prod-p-card card-yellow">
+                            <div class="card-body">
+                                <div class="row align-items-center ">
+                                    <div class="col">
+                                        <h3 class="m-b-0 f-w-700  text-white">{{ count_qr }} </h3>
+                                        <h6 class="m-t-5 m-b-0 text-white">QR Code Generated</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <div class="card prod-p-card card-green">
+                            <div class="card-body">
+                                <div class="row align-items-center ">
+                                    <div class="col">
+                                        <h3 class="m-b-0 f-w-700  text-white">{{ count_scanned_qr }} </h3>
+                                        <h6 class="m-t-5 m-b-0 text-white">QR Code Scanned</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                {% if is_contractor %}
+
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'contractor/users' %}">
+                            <div class="card prod-p-card card-green">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700 text-white">{{ count_users }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Users</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'contractor/products' %}">
+                            <div class="card prod-p-card card-blue">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700 text-white">{{ products_count }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Products</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'jobs' %}">
+                            <div class="card prod-p-card card-red">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700 text-white">{{ job_count }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Job Categories</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'task' %}">
+                            <div class="card prod-p-card card-yellow">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700 text-white">{{ task_count }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Tasks</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div class="col-xl-3 col-md-6 text-center">
+                        <a href="{% url 'contractor/task/due/bills' %}">
+                            <div class="card prod-p-card card-yellow">
+                                <div class="card-body">
+                                    <div class="row align-items-center ">
+                                        <div class="col">
+                                            <h3 class="m-b-0 f-w-700 text-white">{{ fees }}</h3>
+                                            <h6 class="m-t-5 m-b-0 text-white">Total Bill amount to Pay </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

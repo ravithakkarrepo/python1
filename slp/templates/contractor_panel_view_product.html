@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<a onclick="noBack()" href="{% url 'contractor/login/' %}"></a>
+
+        <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5><a href="{% url 'contractor/products' %}"><i class="icofont icofont-simple-left"></i></a> View Products</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+                 <div class="card">
+                    <div class="card-block">
+                           <div class="v-product-top">
+                 <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Product Name</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.product_name }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                     <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Product  Description</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.description }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                 <div class="row">
+
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Product Image</label>
+                        <div class="col-sm-8 sheet-img">
+                           <img src="{{ MEDIA_URL }}{{ product.image }}" alt="" id="sheet-img">
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                 <hr>
+                 <div class="page-header-title p-b-15">
+                   <div class="d-inline">
+                       <h5>Product Activation Details</h5>
+                   </div>
+                  </div>
+                 <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">A - Side Batch</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.a_side_batch }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">B - Side set temp</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.b_side_set_temp }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                             <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">A - Side set temp</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.a_side_set_temp }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Hot set temp</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.hose_set_temp }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                             <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Mixing Chamber Size</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.mixing_chamber_size }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Pressure set</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.pressure_set }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Starting Drum Temperature</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.start_drum_temp }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                         </div>
+                    </div>
+                 </div>
+                 <div class="page-header-title p-b-15">
+            <div class="d-inline">
+               <h5>Product Guidelines</h5>
+            </div>
+                 </div>
+                 <div class="card">
+                    <div class="card-block">
+                         <div class="prod-guidelines-list clearfix">
+                              <h2>Technical Datasheet</h2>
+                              <ul>
+                                {% for t, name in tech_combo %}
+                                <li>
+                                    <div class="box">
+                                         <div class="icon">
+                                         <a href="{{ MEDIA_URL }}{{ t }}" target="_blank">
+                                              <i class="icofont icofont-file-pdf"></i>
+                                         </a></div>
+                                    </div>
+                                    <div>{{ name }}</div>
+                                </li>
+                                {% endfor %}
+                              </ul>
+                         </div>
+                         <div class="prod-guidelines-list clearfix">
+                              <h2>Application Guideline</h2>
+                              <ul>
+                                {% for ap, name in app_combo %}
+                                <li>
+                                    <div class="box">
+                                         <div class="icon">
+                                         <a href="{{ MEDIA_URL }}{{ ap }}" target="_blank">
+                                              <i class="icofont icofont-file-pdf"></i>
+                                          </a>
+                                         </div>
+                                    </div>
+                                    <div>{{ name }}</div>
+
+                                </li>
+                                {% endfor %}
+                              </ul>
+                         </div>
+                         <div class="prod-guidelines-list video-guidelines-list clearfix">
+                              <h2>Video</h2>
+                              <ul>
+                                {% for vi,name in video_combo %}
+                                <li>
+                                    <div class="box">
+                                         <div class="icon">
+                                         <a href="{{ MEDIA_URL }}{{ vi }}" target="_blank">
+                                              <i class="icofont icofont-video"></i>
+                                          </a>
+                                         </div>
+                                    </div>
+                                         <div>{{ name }}</div>
+                                </li>
+                                {% endfor %}
+                              </ul>
+                         </div>
+                         <div class="prod-guidelines-list clearfix">
+                            <h2>Safety Datasheet</h2>
+                            <ul>
+                                {% for s,name in safety_combo %}
+                                <li>
+                                    <div class="box">
+                                         <div class="icon">
+                                         <a href="{{ MEDIA_URL }}{{ s }}" target="_blank">
+                                              <i class="icofont icofont-file-pdf"></i>
+                                          </a>
+                                         </div>
+                                    </div>
+                                    <div>{{ name }}</div>
+
+                                </li>
+                                {% endfor %}
+                              </ul>
+                         </div>
+                         <div class="prod-guidelines-list clearfix ">
+                            <h2>Certificate</h2>
+                            <ul>
+                                {% for c,cer_name in certificate_combo %}
+                                <li>
+                                    <div class="box">
+                                         <div class="icon">
+                                           <a href="{{ MEDIA_URL }}{{ c }}" target="_blank">
+
+                                            </a>
+                                         </div>
+                                    </div>
+                                    <div id="certificate_{{forloop.counter}}" class="certificate">{{ cer_name }}</div>
+
+                                </li>
+                                {% endfor %}
+                              </ul>
+                         </div>
+
+                    </div>
+                 </div>
+                 <div class="page-header-title p-b-15">
+            <div class="d-inline">
+               <h5>Product Rewards</h5>
+            </div>
+                 </div>
+                 <div class="card">
+                    <div class="card-block">
+                         <div class="v-product-top">
+                  <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">QR Code Scan</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.initial_point }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">A - Side Batch</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.a_side_batch_point }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                            <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">A side set temp</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.a_side_set_temp_point }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">B side set temp</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.b_side_set_temp_point }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                              <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Hot set temp</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.hose_set_temp_point }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Pressure set</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.pressure_set_point }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                              <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Mixing Chamber Size</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.mixing_chamber_size_point }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Photo of Installed foam</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.image_point }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Starting Drum Temperature Point</label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.start_drum_temp_point }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                            <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label"><strong>Total Points</strong></label>
+                        <div class="col-sm-8">
+                           <h4>{{ product.total_points }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                 </div>
+                         </div>
+                    </div>
+                 </div>
+
+          </div>
+        </div>
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}">
+  </script>
+<script type="text/javascript">
+  window.history.forward();
+  function noBack() { window.history.forward(); }
+
+  var certificateLength = $('.certificate').length
+  console.log('certificateLength-----',certificateLength)
+  var extensionIcon = ''
+  for(var i =0; i<certificateLength; i++){
+    console.log('i---',i)
+    var certificateFileName = $('#certificate_'+(i+1)).text()
+    console.log('certificateFileName-----',certificateFileName)
+    var certificateExtension = certificateFileName.split('.')
+    if(certificateExtension[1] == 'pdf'){
+      extensionIcon = `<i class="icofont icofont-file-pdf"></i>`
+      console.log('--pdf---',$('#certificate_'+(i+1)))
+      $('#certificate_'+(i+1)).prev().children().children().append(extensionIcon)
+
+    }
+    if(certificateExtension[1] == 'png' || certificateExtension[1] == 'jpg' || certificateExtension[1] == 'jpeg'){
+      extensionIcon = `<i class="icofont icofont-ui-image"></i>`
+      console.log('---png--',$('#certificate_'+(i+1)))
+      $('#certificate_'+(i+1)).prev().children().children().append(extensionIcon)
+    }
+  }
+
+</script>
+{% endblock %}

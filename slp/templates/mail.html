@@ -1,0 +1,479 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+{% if is_user %}
+    {% if forget_password %}
+        <!-- Hi, {{ first_name }} <br> -->
+        <!-- Click here to reset your password. <br> -->
+        <!-- <a href={{ url }}><button type="button"><b>Click here to Reset Password</b></button></a> -->
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <meta http-equiv="X-UA-Compatible" content="IE=edge">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <meta name="format-detection" content="telephone=no">
+            <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i" rel="stylesheet">
+            <title>Welcome</title>
+            <style type="text/css">
+                body {
+                    margin: 0!important;
+                    padding: 0!important
+                }
+                img {
+                    border: 0!important;
+                    outline: none!important
+                }
+                p {
+                    Margin: 0px!important;
+                    Padding: 0px!important
+                }
+                table {
+                    border-collapse: collapse
+                }
+                td,
+                a,
+                span {
+                    border-collapse: collapse
+                }
+                ExternalClass * {
+                    line-height: 100%
+                }
+                @media only screen and (min-width:481px) and (max-width:599px) {
+                    .wrap {
+                        width: 100%!important
+                    }
+                    .hide {
+                        display: none!important
+                    }
+                    .side {
+                        width: 15px !important;
+                    }
+                    .pa {
+                        padding: 15px !important;
+                    }
+                    .pb {
+                        padding-bottom: 20px;
+                    }
+                }
+                @media only screen and (max-width:480px) {
+                    .wrap {
+                        width: 100%!important
+                    }
+                    .hide {
+                        display: none!important
+                    }
+                    .h20 {
+                        height: 20px !important;
+                    }
+                    .side {
+                        width: 15px !important;
+                    }
+                    .pa {
+                        padding: 15px !important;
+                    }
+                    .pb {
+                        padding-bottom: 20px;
+                    }
+                }
+            </style>
+        </head>
+
+        <body style="margin:0px;padding:0px" bgcolor="#ffffff">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+                <tr>
+                    <td align="center" valign="top">
+                        <table width="600" border="0" cellspacing="0" cellpadding="0" class="wrap">
+                            <tr>
+                                <td height="60" class="h20">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td align="center" valign="top" style="box-shadow:0 0 0px #e6e6e6;">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f5f5f5">
+                                        <tr>
+                                            <td width="30" class="side">&nbsp;</td>
+                                            <td align="center" valign="top" style="padding-top:30px;">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td align="center" valign="top" style="box-shadow:0 0 3px #e4e9eb;">
+                                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                <tr>
+                                                                    <td valign="top" style="padding: 20px 0 10px 0; text-align: center; background: #2b2c6c;">
+                                                                        <img width="50" src="{% static 'mail-img/lock2.png' %}" alt="">
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:20px; color:#ffffff; background: #2b2c6c; line-height:22px; font-weight:bold; padding:10px 0 30px 0;" class="pb">Forgot your password to Sprayer loyalty program?</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td bgcolor="#ffffff" align="center" valign="top" class="pa" style="padding:30px;">
+                                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                            <tr>
+                                                                                <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:15px; color:#333333; line-height:20px; font-weight:normal; padding:0px 0 15px 0;" class="pb">Click the link below to choose a new one.</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td align="center" style="padding: 0 0 20px 0; font-family:'Lato', Arial, sans-serif; font-size:15px;  "><a href="{{ url }}" style="color:#ffffff; text-decoration: none; display: inline-block; background: #2b2c6c; padding: 8px 15px; border-radius: 4px; vertical-align: top;">Reset Password</a></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:15px; color:#333333; line-height:20px; padding:0 0 15px 0;">P.S. if you didn't request this email, you may safely ignore it. </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td align="center" valign="top" style="padding: 15px 0 15px 0;"><img width="80" src="https://slp-static.s3.us-east-2.amazonaws.com/static/img/logo.png" alt=""></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:15px; color:#333333; line-height:20px;">Regards, <br>Sprayer loyalty program team.</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" valign="top" style="padding:15px 15px 15px 15px; font-family:'Lato', Arial, sans-serif; font-size:11px; color:#777777; line-height:15px;">
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                            <td width="30" class="side">&nbsp;</td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="60" class="h20">&nbsp;</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+            <div class="hide" style="white-space:nowrap;font:20px courier;color:#ffffff">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                &nbsp; &nbsp; &nbsp;</div>
+        </body>
+    {% elif tech_request %}
+        To Admin,   <br>
+        <br>
+        {{ message }}
+        <br>
+        <br>
+        From, {{ first_name }} <br>
+    {% else %}
+        Dear {{ first_name }}, <br>
+        <br />
+        Thank you for registering on Sprayer loyalty program<br />
+        Please click on the link given below to validate your email address for Sprayer loyalty program<br />
+        <br />
+        <a href={{ url }}><button type="button"><b>Activation Link</b></button></a><br />
+        <br />
+        Email verification is necessary to activate the Sprayer loyalty program account<br />
+        After verification, you can login to application.<br />
+        <br />
+        Regards,<br />
+        Sprayer loyalty program team.
+    {% endif %}
+{% endif %}
+
+{% if is_admin %}
+    Dear {{ first_name }}, <br>
+    <br />
+    Please click on the link given below to validate your email address for Sprayer loyalty program<br />
+    <br />
+    <a href={{ url }}><button type="button"><b>Set Your Password</b></button></a><br />
+    <br />
+    Email verification is necessary to activate the Sprayer loyalty program account<br />
+    After verification, you can login to your portal.<br />
+    <br />
+    Regards,<br />
+    Sprayer loyalty program team.
+{% endif %}
+
+{% if is_merchant %}
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="format-detection" content="telephone=no">
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i" rel="stylesheet">
+        <title>Welcome</title>
+        <style type="text/css">
+            body {
+                margin: 0!important;
+                padding: 0!important
+            }
+            img {
+                border: 0!important;
+                outline: none!important
+            }
+            p {
+                Margin: 0px!important;
+                Padding: 0px!important
+            }
+            table {
+                border-collapse: collapse
+            }
+            td,
+            a,
+            span {
+                border-collapse: collapse
+            }
+            ExternalClass * {
+                line-height: 100%
+            }
+            @media only screen and (min-width:481px) and (max-width:599px) {
+                .wrap {
+                    width: 100%!important
+                }
+                .hide {
+                    display: none!important
+                }
+                .side {
+                    width: 15px !important;
+                }
+                .pa {
+                    padding: 15px !important;
+                }
+                .pb {
+                    padding-bottom: 20px;
+                }
+            }
+            @media only screen and (max-width:480px) {
+                .wrap {
+                    width: 100%!important
+                }
+                .hide {
+                    display: none!important
+                }
+                .h20 {
+                    height: 20px !important;
+                }
+                .side {
+                    width: 15px !important;
+                }
+                .pa {
+                    padding: 15px !important;
+                }
+                .pb {
+                    padding-bottom: 20px;
+                }
+            }
+        </style>
+    </head>
+
+    <body style="margin:0px;padding:0px" bgcolor="#ffffff">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+            <tr>
+                <td align="center" valign="top">
+                    <table width="600" border="0" cellspacing="0" cellpadding="0" class="wrap">
+                        <tr>
+                            <td height="60" class="h20">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top" style="box-shadow:0 0 0px #e6e6e6;">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f5f5f5">
+                                    <tr>
+                                        <td width="30" class="side">&nbsp;</td>
+                                        <td align="center" valign="top" style="padding-top:30px;">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="center" valign="top" style="box-shadow:0 0 3px #e4e9eb;">
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td valign="top" style="padding: 20px 0 10px 0; text-align: center; background: #2b2c6c;">
+                                                                    <img width="50" src="{% static 'mail-img/lock2.png' %}" alt="">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:20px; color:#ffffff; background: #2b2c6c; line-height:22px; font-weight:bold; padding:10px 0 30px 0;" class="pb">Forgot your password to Sprayer loyalty program?</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td bgcolor="#ffffff" align="center" valign="top" class="pa" style="padding:30px;">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tr>
+                                                                            <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:15px; color:#333333; line-height:20px; font-weight:normal; padding:0px 0 15px 0;" class="pb">Click the link below to choose a new one.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="center" style="padding: 0 0 20px 0; font-family:'Lato', Arial, sans-serif; font-size:15px;  "><a href="{{ url }}" style="color:#ffffff; text-decoration: none; display: inline-block; background: #2b2c6c; padding: 8px 15px; border-radius: 4px; vertical-align: top;">Reset Password</a></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:15px; color:#333333; line-height:20px; padding:0 0 15px 0;">P.S. if you didn't request this email, you may safely ignore it. </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="center" valign="top" style="padding: 15px 0 15px 0;"><img width="80" src="https://slp-static.s3.us-east-2.amazonaws.com/static/img/logo.png" alt=""></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:15px; color:#333333; line-height:20px;">Regards, <br>Sprayer loyalty program team.</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" valign="top" style="padding:15px 15px 15px 15px; font-family:'Lato', Arial, sans-serif; font-size:11px; color:#777777; line-height:15px;">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="30" class="side">&nbsp;</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="60" class="h20">&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div class="hide" style="white-space:nowrap;font:20px courier;color:#ffffff">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp;</div>
+    </body>
+{% endif %}
+
+{% if is_contractor %}
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="format-detection" content="telephone=no">
+        <link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,700,700i" rel="stylesheet">
+        <title>Welcome</title>
+        <style type="text/css">
+            body {
+                margin: 0!important;
+                padding: 0!important
+            }
+            img {
+                border: 0!important;
+                outline: none!important
+            }
+            p {
+                Margin: 0px!important;
+                Padding: 0px!important
+            }
+            table {
+                border-collapse: collapse
+            }
+            td,
+            a,
+            span {
+                border-collapse: collapse
+            }
+            ExternalClass * {
+                line-height: 100%
+            }
+            @media only screen and (min-width:481px) and (max-width:599px) {
+                .wrap {
+                    width: 100%!important
+                }
+                .hide {
+                    display: none!important
+                }
+                .side {
+                    width: 15px !important;
+                }
+                .pa {
+                    padding: 15px !important;
+                }
+                .pb {
+                    padding-bottom: 20px;
+                }
+            }
+            @media only screen and (max-width:480px) {
+                .wrap {
+                    width: 100%!important
+                }
+                .hide {
+                    display: none!important
+                }
+                .h20 {
+                    height: 20px !important;
+                }
+                .side {
+                    width: 15px !important;
+                }
+                .pa {
+                    padding: 15px !important;
+                }
+                .pb {
+                    padding-bottom: 20px;
+                }
+            }
+        </style>
+    </head>
+
+    <body style="margin:0px;padding:0px" bgcolor="#ffffff">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+            <tr>
+                <td align="center" valign="top">
+                    <table width="600" border="0" cellspacing="0" cellpadding="0" class="wrap">
+                        <tr>
+                            <td height="60" class="h20">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="top" style="box-shadow:0 0 0px #e6e6e6;">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#f5f5f5">
+                                    <tr>
+                                        <td width="30" class="side">&nbsp;</td>
+                                        <td align="center" valign="top" style="padding-top:30px;">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td align="center" valign="top" style="box-shadow:0 0 3px #e4e9eb;">
+                                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                            <tr>
+                                                                <td valign="top" style="padding: 20px 0 10px 0; text-align: center; background: #2b2c6c;">
+                                                                    <img width="50" src="{% static 'mail-img/lock2.png' %}" alt="">
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:20px; color:#ffffff; background: #2b2c6c; line-height:22px; font-weight:bold; padding:10px 0 30px 0;" class="pb">Forgot your contractor password to Sprayer loyalty program?</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td bgcolor="#ffffff" align="center" valign="top" class="pa" style="padding:30px;">
+                                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                                        <tr>
+                                                                            <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:15px; color:#333333; line-height:20px; font-weight:normal; padding:0px 0 15px 0;" class="pb">Click the link below to reset password.</td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="center" style="padding: 0 0 20px 0; font-family:'Lato', Arial, sans-serif; font-size:15px;  "><a href="{{ url }}" style="color:#ffffff; text-decoration: none; display: inline-block; background: #2b2c6c; padding: 8px 15px; border-radius: 4px; vertical-align: top;">Reset Password</a></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:15px; color:#333333; line-height:20px; padding:0 0 15px 0;">P.S. If you didn't request this email, you may safely ignore it. </td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="center" valign="top" style="padding: 15px 0 15px 0;"><img width="80" src="https://slp-static.s3.us-east-2.amazonaws.com/static/img/logo.png" alt=""></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td align="center" valign="top" style="font-family:'Lato', Arial, sans-serif; font-size:15px; color:#333333; line-height:20px;">Regards, <br>Sprayer loyalty program team.</td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" valign="top" style="padding:15px 15px 15px 15px; font-family:'Lato', Arial, sans-serif; font-size:11px; color:#777777; line-height:15px;">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="30" class="side">&nbsp;</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="60" class="h20">&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div class="hide" style="white-space:nowrap;font:20px courier;color:#ffffff">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp;</div>
+    </body>
+{% endif %}
+
+</html>

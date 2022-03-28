@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<a onclick="noBack()" href="{% url 'login_error' %}">Logout</a>
+ <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5><a href="{% url 'quiz_list' %}"><i class="icofont icofont-simple-left"></i></a> Edit Questions</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                 
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+               <div class="card">
+                    <div class="card-block view-ques-section">
+                         <div class="v-product-top">
+               <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Quiz Name</label>
+                        <div class="col-sm-8">
+                           <h4>{{ quiz_name }}</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Points</label>
+                        <div class="col-sm-8">
+                           <h4>{{ points }}</h4>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+                         <div class="row">
+                  <div class="col-xl-6 col-lg-12 col-sm-12">
+                     <div class="form-group row">
+                        <label class="col-sm-4 col-form-label">Choose Video</label>
+                        <div class="col-sm-8">
+                           <h4>{{ video_name }}</h4>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+                <div class="ques-list">
+                           {% for ques,op1,op2,op3,op4,ans,id in comb %}
+                           <div class="ques-one">
+                            <form method="post" data-url="/edit_questions/{{ id }}/" id="edit_add_ques_form_{{forloop.counter}}">
+                              {% csrf_token %}
+                              <input type="hidden" name="quiz_id" value="{{quiz_id}}" id="quiz_id">
+                              <input type="hidden" name="question_id" value="{{id}}">
+
+                              <div class="row">
+                      <div class="col-xl-12 col-lg-12 col-sm-12">
+                         <div class="form-group row">
+                            <label class="col-sm-4 col-lg-2 col-form-label question_text">Question {{ forloop.counter }}</label>
+                            <div class="col-sm-8 col-lg-9">
+                              <input type="text" name="question_{{ forloop.counter }}" id="question_{{ forloop.counter }}" class="question_tag" value="{{ ques }}" onchange="edit_question('question_{{ forloop.counter }}')" onfocus="question1('question_{{ forloop.counter }}')">
+                            </div>
+                         </div>
+                      </div>
+                  </div>
+                              <div class="row">
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Option 1</label>
+                          <div class="col-sm-8">
+                            <input type="text" name="a" class="a_tag option" value="{{ op1 }}" id=option_{{forloop.counter}}_1      onchange="edit_check1('option_{{forloop.counter}}_1','answer_{{forloop.counter}}')" onfocus="check2('option_{{forloop.counter}}_1','answer_{{forloop.counter}}')">
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Option 2</label>
+                          <div class="col-sm-8">
+                            <input type="text" name="b" class="b_tag option" value="{{ op2 }}" id=option_{{forloop.counter}}_2 onchange="edit_check1('option_{{forloop.counter}}_2','answer_{{forloop.counter}}')" onfocus="check2('option_{{forloop.counter}}_2','answer_{{forloop.counter}}')">
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                            <div class="row">
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Option 3</label>
+                          <div class="col-sm-8">
+                            <input type="text" name="c" class="c_tag option" value="{{ op3 }}" id=option_{{forloop.counter}}_3 onchange="edit_check1('option_{{forloop.counter}}_3','answer_{{forloop.counter}}')" onfocus="check2('option_{{forloop.counter}}_3','answer_{{forloop.counter}}')">
+                          </div>
+                       </div>
+                    </div>
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Option 4</label>
+                          <div class="col-sm-8">
+                            <input type="text" name="d" class="d_tag option" value="{{ op4 }}" id=option_{{forloop.counter}}_4 onchange="edit_check1('option_{{forloop.counter}}_4','answer_{{forloop.counter}}')" onfocus="check2('option_{{forloop.counter}}_4','answer_{{forloop.counter}}')">
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                              <div class="row">
+                    <div class="col-xl-6 col-lg-12 col-sm-12">
+                       <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Correct Answer</label>
+                          <div class="col-sm-8">
+                            <input type="text" name="answer_{{forloop.counter}}" class="corr_ans" value="{{ ans }}" id='answer_{{forloop.counter}}' onchange="edit_ans1('answer_{{forloop.counter}}')" onfocus="ans2('answer_{{forloop.counter}}')"></p>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="text-right p-b-15">  
+                    <button type="button" id="ques_update_{{forloop.counter}}" class="btn btn-success" onclick="edit_add_ques('1','edit_add_ques_form_{{forloop.counter}}','ques_update_{{forloop.counter}}')">Update</button>
+                 </div>
+                 <div class="delete-q-one">
+                 <a href="/delete_questions/{{ id }}" class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i class="icofont icofont-trash"></i> </a>
+                  </div>
+                </form>
+                           </div>
+                           {% endfor %}</div>
+                       </div>
+                <button type="button" class="btn btn-success" id="add_questions" onclick="add_question_edit(`{{quiz_id}}`)"><i class="icofont icofont-plus"></i></button>
+
+                    </div>
+               </div>
+          </div>
+        </div>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/add_questions.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</script>   
+
+<!-- {% if update_success %}
+<script>
+//  after quiz add successfully it gets redirect to quiz list page
+swal({
+    title: "error!",
+    text: "Question Updated",
+    icon: "error",
+    buttons: false
+  })
+{% endif %} -->
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    var change = $('.ques-one').length
+    console.log('change-----',change)
+    if(change == 1){
+      console.log('----',$('.delete-q-one').length)
+      $('.delete-q-one').find('a').attr('href','#').attr('onclick','delete_question($(this),"question_1")')
+    }
+  })
+</script>
+{% endblock %}

@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+        <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5><a href="{% url 'contestList' %}"><i class="icofont icofont-simple-left"></i></a> Edit contest</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                 
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+               <div class="card">
+               	    <div class="card-block">
+                        <form class="" action="/contest_edit/{{ contest.id }}/" method="post" enctype="multipart/form-data">{% csrf_token %}
+               	    	 <div class="row">
+								<div class="col-xl-6 col-lg-6 col-sm-12">
+									 <div class="form-group">
+                      <label>Contest Name <span style="color:red;">*</span></label>
+                      <input type="hidden" id="demo">
+										  <input type="hidden" class="status" value="{{ contest.contest_status }}">
+										  <input type="text" class="form-control" name="contest_name" required="" value="{{contest.contest_name}}">
+									 </div>
+								</div>
+														 <div class="col-xl-6 col-lg-6 col-sm-12">
+                   <div class="form-group">
+                      <label>Points <span style="color:red;">*</span></label>
+                      <input type="number" min="0" class="form-control contest_points" name="contest_point" required="" value="{{ contest.contest_point }}">
+                   </div>
+                </div>
+                 	     </div>
+
+                       <div class="row">
+                <div class="col-xl-6 col-lg-6 col-sm-12">
+                   <div class="form-group">
+                      <label>Contest Detail <span style="color:red;">*</span></label>
+                        <textarea class="form-control" name=contest_details rows="3" required="">{{ contest.contest_details }}</textarea>
+                   </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-sm-12">
+                    <div class="form-group">
+                       <label>Image <span style="color:red;">*</span><a href="#" class="f-16 d-inline-block align-top" title="The Picture should be in the 1005*360 pixel"><i class="icofont icofont-question-circle"></i></a></label>
+                       <div class="prof-pic-part prof-pic-part-admin">
+                          <div class="prof-pic-img">
+                             <img src="https://slp-static.s3.us-east-2.amazonaws.com/media/{{ contest.contest_image }}" alt="" id="product_fake_image">
+                          </div>
+                          <div class="prof-pic-btn">
+                             <input type="file"  name="contest_image" class="form-control" id="contest_image" accept="image/*" onchange="imagePreview(this.files[0])">
+                             <span><i class="icofont icofont-camera-alt"></i></span>
+                          </div>
+                       </div>
+                    </div>
+                 </div>
+                
+                       </div>
+                 	     <div class="row">
+								<div class="col-xl-6 col-lg-6 col-sm-12">
+                   <div class="form-group date-time-main">
+                                <label>Start Time <span style="color:red;">*</span></label>
+                              <div class="input-group">
+          <input type="hidden" class="hidden_start_time" value="{{ edit_get_start_data }}">
+          <input class="form-control start_Time" name='contest_startdate' id="datetimepicker" type="text" placeholder="Choose Date Time" required="" value="{{ edit_get_start_data }}">
+          <div class="input-group-prepend">
+            <span class="input-group-text"><i class="material-icons">event</i></span>
+          </div>
+        </div>
+								</div>
+              </div>
+                <div class="col-xl-6 col-lg-6 col-sm-12">
+                   <div class="form-group date-time-main">
+                                <label>End Time <span style="color:red;">*</span></label>
+                                <div class="input-group">
+                          <input class="form-control end_Time" name=contest_enddate id="datetimepicker1" type="text" placeholder="Choose Date Time" required="" value="{{ edit_get_end_data }}">
+                              <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="material-icons">event</i></span>
+          </div>
+        </div>
+                            </div>
+                </div>
+                 	     </div>
+                 	     <div class="clearfix">
+                 	     	  <button type="submit" id="dateTimeAddButton" class="btn btn-primary m-r-10">Update</button>
+                 	     	  <!-- <button type="reset" id="reset" class="btn btn-default">Cancel</button> -->
+						  </div>
+						  </form>
+               	    </div>
+               </div>
+          </div>
+        </div>
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+{% if edit_contest %}
+<script>
+//  after edit contest successfully it gets redirect to contest list page
+swal({
+    title: "Success!",
+    text: "Contest has been Updated Successfully",
+    icon: "success",
+    buttons: false
+  })
+$('.swal-overlay.swal-overlay--show-modal').show()
+
+function redirect(){
+   window.location.href = "{% url 'contestList'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% else %}
+<script>
+if($('.status').val() == 'running'){
+	swal({
+		title: "Warning!",
+		text: "You cannot edit start date as contest is already started",
+		icon: "warning",
+		// buttons: false
+	})
+	$(".start_Time").prop('disabled', true);
+	// function redirect(){
+	// 	window.location.href = "#"
+	// 	$('.swal-overlay.swal-overlay--show-modal').hide()
+	// }
+	// setTimeout(redirect,2000)
+}
+</script>
+{% endif %}
+
+<script type="text/javascript">
+// points field should not accept -ve value or alphabets
+  document.querySelector(".contest_points").addEventListener("keypress", function (evt) {
+    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+    {
+        evt.preventDefault();
+    }
+});
+
+//while click on reset button img also get reset
+$('#reset').click(function(){
+   $('#product_fake_image').attr('src','https://slp-static.s3.us-east-2.amazonaws.com/media/product/image/default.png')
+});
+
+// contest image limit 2mb
+function imagePreview(thisVal) {
+   console.log(thisVal);
+   var oFile = $('#contest_image')[0].files[0].size
+   var extensionContestImage = $('#contest_image').val().substring($('#contest_image').val().lastIndexOf('.') + 1)
+
+   console.log(oFile, extensionContestImage)
+   if (oFile < 2097152)
+   {// 2 mb for bytes.
+      if(extensionContestImage == 'png' || extensionContestImage == 'jpg' || extensionContestImage == 'jpeg') 
+      {
+         // alert("File size must under 2mb!");
+         document.getElementById('product_fake_image').src = window.URL.createObjectURL(thisVal);
+      } else {
+        swal("error","Please Choose PNG or JPG or JPEG Image","error")
+         return false;
+      }
+   }else{
+         swal("error","File size must under 2mb!","error");
+   }
+}
+
+// after single click on submit button it gets disabled
+$('form').submit(function(){
+    $(this).find('button[type=submit]').prop('disabled', true);
+});
+
+</script>
+{% endblock %}
+       

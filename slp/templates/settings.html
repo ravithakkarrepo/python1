@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static "" as baseUrl %}
+{% block body %}
+
+        <div class="pcoded-content" onclick="noBack()">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                       <h5>Settings</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+            <form method="POST" action="{% url 'setting_dollar' %}">
+               {% csrf_token %}
+               <div class="card">
+               	    <div class="card-block">
+                 	     <div class="settings-section">
+                 	     	  <div class="row">
+                 	     	  	   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                 	     	  	   	    <div class="form-group">
+                	     	  	   	    	 <h5 class="p-b-10">Current conversion value {{usd_value}} points = 1 USD</h5>
+                 	     	  	   	    	 <label>Enter the value of points <a href="#" class="f-16" title="By entering the value, you can change the conversation point to dollar. Right now the current conversation value is {{usd_value}} points = 1 USD"><i class="icofont icofont-info-circle"></i></a></label>
+                 	     	  	   	    	 <input type="number" class="form-control" name="usdvalue" required min="0">
+                 	     	  	   	    </div>
+                 	     	  	   </div>
+                 	     	  </div>
+                 	     	  <div class="clearfix">
+                 	     	  	   <button class="btn btn-primary" type="submit">Submit</button>
+                 	     	  </div>
+                 	     </div>
+               	    </div>
+               </div>
+              </form> 
+              <form method="POST" action="{% url 'settings_bonus' %}">
+                {% csrf_token %}
+               <div class="card">
+               	    <div class="card-block">
+               	    	 <div class="settings-section">
+                 	     	  <div class="row">
+                 	     	  	   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                 	     	  	   	    <div class="form-group">
+                	     	  	   	    	 <h5 class="p-b-10">Current referal bonus points {{pointsvalue}}</h5>
+                 	     	  	   	    	 <label>Enter the referal points <a href="#" class="f-16" title="By entering the value, You can change referal bonus points"><i class="icofont icofont-info-circle"></i></a></label>
+                 	     	  	   	    	 <input type="number" class="form-control" required name="bonuspoints" min="0">
+                 	     	  	   	    </div>
+                 	     	  	   </div>
+                 	     	  </div>
+                 	     	  <div class="clearfix">
+                 	     	  	   <button class="btn btn-primary" type="submit" >Submit</button>
+                 	     	  </div>
+                 	     </div> 
+               	    </div>
+               </div>
+               </form>
+               <form method="POST" action="{% url 'eligibility_points' %}">
+                {% csrf_token %}
+               <div class="card">
+                    <div class="card-block">
+                       <div class="settings-section">
+                          <div class="row">
+                               <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                                    <div class="form-group">
+                                       <h5 class="p-b-10">Current eligibility points {{eligibility_points}}</h5>
+                                       <label>Enter the Minimum points <a href="#" class="f-16" title="By entering the value, You can change Current eligibility points. Right now the current eligibility points is {{eligibility_points}}"><i class="icofont icofont-info-circle"></i></a></label>
+                                       <input type="number" class="form-control" required name="Eligibilitypoints" min="0">
+                                    </div>
+                               </div>
+                          </div>
+                          <div class="clearfix">
+                               <button class="btn btn-primary" type="submit" >Submit</button>
+                          </div>
+                       </div> 
+                    </div>
+               </div>
+               </form>
+
+              <form method="POST" action="{% url 'contractor_panel_points_to_1_dollar' %}">
+                {% csrf_token %}
+               <div class="card">
+               	    <div class="card-block">
+               	    	 <div class="settings-section">
+                 	     	  <div class="row">
+                 	     	  	   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                 	     	  	   	    <div class="form-group">
+                	     	  	   	    	 <h5 class="p-b-10">For Contractor Current number of points for one dollar is {{contractor_panel_no_of_points_to_one_usd}}</h5>
+                 	     	  	   	    	 <label>Enter the points <a href="#" class="f-16" title="By entering the value, You can change number of points per 1 USD."><i class="icofont icofont-info-circle"></i></a></label>
+                 	     	  	   	    	 <input type="number" class="form-control" required name="usdvalue" min="0">
+                 	     	  	   	    </div>
+                 	     	  	   </div>
+                 	     	  </div>
+                 	     	  <div class="clearfix">
+                 	     	  	   <button class="btn btn-primary" type="submit" >Submit</button>
+                 	     	  </div>
+                 	     </div>
+               	    </div>
+               </div>
+               </form>
+
+              <form method="POST" action="{% url 'support_point' %}">
+                {% csrf_token %}
+               <div class="card">
+               	    <div class="card-block">
+               	    	 <div class="settings-section">
+                 	     	  <div class="row">
+                 	     	  	   <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                 	     	  	   	    <div class="form-group">
+                	     	  	   	    	 <h5 class="p-b-10">User support request points is {{support_request_points}}</h5>
+                 	     	  	   	    	 <label>Enter the points <a href="#" class="f-16" title="By entering the value, You can change number of points."><i class="icofont icofont-info-circle"></i></a></label>
+                 	     	  	   	    	 <input type="number" class="form-control" required name="support_point" min="0">
+                 	     	  	   	    </div>
+                 	     	  	   </div>
+                 	     	  </div>
+                 	     	  <div class="clearfix">
+                 	     	  	   <button class="btn btn-primary" type="submit" >Submit</button>
+                 	     	  </div>
+                 	     </div>
+               	    </div>
+               </div>
+               </form>
+
+
+          </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if dollar_updated %}
+<script>
+swal({
+    title: "Success!",
+    text: "Dollar value has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'settings_admin'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if bonus_updated %}
+<script>
+swal({
+    title: "Success!",
+    text: "Bonus value has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'settings_admin'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if eligibility_updated %}
+<script>
+swal({
+    title: "Success!",
+    text: "Eligibility value has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'settings_admin'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if contractor_points_updated %}
+<script>
+swal({
+    title: "Success!",
+    text: "Number of points updated for 1 USD has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'settings_admin'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if support_points_updated %}
+<script>
+swal({
+    title: "Success!",
+    text: "Number of points for support request has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'settings_admin'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+
+<script type="text/javascript">
+  window.history.forward();
+  function noBack() { window.history.forward(); }
+</script>    
+{% endblock %}

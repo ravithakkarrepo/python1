@@ -1,0 +1,437 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-17 15:21+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: AllFoamTech/settings.py:171
+msgid "English"
+msgstr "Inglesa"
+
+#: AllFoamTech/settings.py:172
+msgid "Spanish"
+msgstr "Española"
+
+#: contractor/user_apis.py:23 contractor/user_apis.py:32
+#: contractor/user_apis.py:48 contractor/user_apis.py:57
+#: slp_admin/contest.py:604 slp_admin/contest.py:637 slp_admin/contest.py:679
+#: slp_admin/contest.py:705 slp_admin/contest.py:731 upc/user_rating.py:29
+#: upc/user_rating.py:35 upc/views.py:36 upc/views.py:42 upc/views.py:155
+#: upc/views.py:161 userapi/giftbitAPI.py:48 userapi/giftbitAPI.py:54
+#: userapi/notification.py:42 userapi/notification.py:48 userapi/products.py:43
+#: userapi/products.py:49 userapi/products.py:68 userapi/products.py:74
+#: userapi/products.py:98 userapi/products.py:104 userapi/quiz.py:41
+#: userapi/quiz.py:47 userapi/quiz.py:66 userapi/quiz.py:72 userapi/quiz.py:92
+#: userapi/quiz.py:98 userapi/quiz.py:121 userapi/quiz.py:127
+#: userapi/quiz.py:185 userapi/quiz.py:191 userapi/views.py:310
+#: userapi/views.py:316 userapi/views.py:350 userapi/views.py:438
+#: userapi/views.py:444 userapi/views.py:582 userapi/views.py:767
+#: userapi/views.py:808 userapi/views.py:926 userapi/views.py:1256
+#: userapi/views.py:1309 userapi/views.py:1378 userapi/views.py:1384
+#: userapi/views.py:1421 userapi/views.py:1513 userapi/views.py:1519
+#: userapi/views.py:1558 userapi/views.py:1564 userapi/views.py:1604
+#: userapi/views.py:1610 userapi/views.py:1663 userapi/views.py:1669
+#: userapi/views.py:1705 userapi/views.py:1711 userapi/views.py:1745
+#: userapi/views.py:1751 userapi/views.py:1788 userapi/views.py:1794
+#: userapi/views.py:1834 userapi/views.py:1840 userapi/views.py:1872
+#: userapi/views.py:1878 userapi/views.py:1916 userapi/views.py:1922
+msgid "Invalid Access Token"
+msgstr "Token de acceso inválido"
+
+#: contractor/user_apis.py:27 contractor/user_apis.py:52
+msgid "request successfully checked"
+msgstr "solicitud comprobada con éxito"
+
+#: contractor/user_apis.py:88 contractor/user_apis.py:108
+#: contractor/user_apis.py:168
+msgid "Successfully retrieved data"
+msgstr "Datos recuperados exitosamente"
+
+#: contractor/user_apis.py:113 contractor/user_apis.py:146
+#: contractor/user_apis.py:174 contractor/user_apis.py:211 userapi/views.py:889
+msgid "BAD REQUEST. Server Problem"
+msgstr "SOLICITUD INCORRECTA. Problema del servidor"
+
+#: contractor/user_apis.py:141 userapi/views.py:742
+msgid "Data Updated Successfully"
+msgstr "Datos actualizados exitosamente"
+
+#: contractor/user_apis.py:197
+msgid "This task is already assigned to another QR code."
+msgstr "Esta tarea ya está asignada a otro código QR."
+
+#: contractor/user_apis.py:206
+msgid "Task assigned to user and started successfully"
+msgstr "Tarea asignada al usuario e iniciada correctamente"
+
+#: slp_admin/contest.py:598 slp_admin/contest.py:630 slp_admin/contest.py:672
+#: slp_admin/contest.py:699 slp_admin/contest.py:724 userapi/views.py:78
+#: userapi/views.py:190 userapi/views.py:304 userapi/views.py:344
+#: userapi/views.py:517 userapi/views.py:576 userapi/views.py:761
+#: userapi/views.py:802 userapi/views.py:920 userapi/views.py:1250
+#: userapi/views.py:1303 userapi/views.py:1415 userapi/views.py:1929
+#: userapi/views.py:1969
+msgid "Invalid Request"
+msgstr "Solicitud no válida"
+
+#: slp_admin/contest.py:613
+msgid "Contest List"
+msgstr "Lista de concurso"
+
+#: slp_admin/contest.py:646
+msgid "You cannot participate because contest isn't start"
+msgstr "No puedes participar porque el concurso no ha comenzado"
+
+#: slp_admin/contest.py:649
+msgid "Contest is over. You cannot participate"
+msgstr "El concurso ha terminado. No puedes participar"
+
+#: slp_admin/contest.py:654
+msgid "You've already participated"
+msgstr "Ya has participado"
+
+#: slp_admin/contest.py:657
+msgid "Successfully participated"
+msgstr "Participó con éxito"
+
+#: slp_admin/contest.py:684
+msgid "Contest Each List"
+msgstr "Concurso cada lista"
+
+#: slp_admin/contest.py:709
+msgid "Contest User List"
+msgstr "Lista de usuarios del concurso"
+
+#: slp_admin/video_api.py:79
+msgid "video list"
+msgstr "lista de videos"
+
+#: slp_admin/video_api.py:127
+msgid "category list"
+msgstr "Lista de categoría"
+
+#: upc/user_rating.py:42
+msgid "Rating must in between 1 to 5."
+msgstr "La calificación debe estar entre 1 y 5."
+
+#: upc/views.py:133 userapi/views.py:280 userapi/views.py:1040
+msgid "Something went wrong"
+msgstr "Algo salió mal"
+
+#: upc/views.py:136
+msgid "Questions fetched successfully"
+msgstr "Preguntas obtenidas con éxito"
+
+#: userapi/giftbitAPI.py:140
+msgid "{0}$ coupon of '{1}' sent to your registered E-mail"
+msgstr "{0} $ cupón de '{1}' enviado a su correo electrónico registrado"
+
+#: userapi/giftbitAPI.py:143 userapi/giftbitAPI.py:146
+msgid "You have Insufficient points."
+msgstr "Tienes puntos insuficientes."
+
+#: userapi/giftbitAPI.py:153
+msgid "You are Not eligible for Reedem minimum required points is {0}"
+msgstr "No es elegible para los puntos mínimos requeridos de Reedem es {0}"
+
+#: userapi/notification.py:53 userapi/products.py:109
+msgid "notification list"
+msgstr "lista de notificaciones"
+
+msgid "Congratulations,  $ coupon of  sent to your registered E-mail."
+msgstr "Felicitaciones, $ cupón de enviado a su correo electrónico registrado."
+
+#: userapi/products.py:53 userapi/products.py:83
+msgid "product details"
+msgstr "Detalles de producto"
+
+#: userapi/quiz.py:52 userapi/quiz.py:198
+msgid "quiz list"
+msgstr "lista de cuestionarios"
+
+#: userapi/quiz.py:78
+msgid "question list"
+msgstr "lista de preguntas"
+
+#: userapi/quiz.py:164
+msgid "Your Answer matched and you Earned {0} Points"
+msgstr "Su respuesta coincidió y ganó {0} puntos"
+
+#: userapi/quiz.py:171
+msgid "Your Answer Not matched. No points Earned."
+msgstr "Su respuesta no coincide. No hay puntos ganados."
+
+#: userapi/views.py:86
+msgid "User with this email is already exists"
+msgstr "El usuario con este correo electrónico ya existe"
+
+#: userapi/views.py:94
+msgid "Invalid Referral Code"
+msgstr "Código de referencia inválido"
+
+#: userapi/views.py:161
+msgid "You have been Registered successfully. Please Check your email to Activate your account. Please allow several minutes for the email to arrive."
+msgstr "Te has registrado correctamente. Por favor, revisa tu e-mail para activar tu cuenta. Espere varios minutos para que llegue el correo electrónico."
+
+#: userapi/views.py:198
+msgid "No User is signed up with this email"
+msgstr "Ningún usuario está registrado con este correo electrónico"
+
+#: userapi/views.py:202
+msgid "Email is mandatory"
+msgstr "El correo electrónico es obligatorio."
+
+#: userapi/views.py:208
+msgid "Password is mandatory"
+msgstr "La contraseña es obligatoria"
+
+#: userapi/views.py:214
+msgid "device_id is mandatory"
+msgstr "device_id es obligatorio"
+
+#: userapi/views.py:220
+msgid "device_type is mandatory"
+msgstr "tipo_dispositivo es obligatorio"
+
+#: userapi/views.py:226
+msgid "device_fcm_token is mandatory"
+msgstr "device_fcm_token es obligatorio"
+
+#: userapi/views.py:236
+msgid "User hasn't verify their activation mail yet. Please accept that to Login"
+msgstr "El usuario aún no ha verificado su correo de activación. Acepta eso para iniciar sesión"
+
+#: userapi/views.py:241
+msgid "User is blocked by admin. Please contact admin to resolve this."
+msgstr "El usuario está bloqueado por el administrador. Por favor, póngase en contacto con el administrador para resolver esto."
+
+#: userapi/views.py:245 userapi/views.py:249
+msgid "Invalid Login Credential"
+msgstr "Credencial de inicio de sesión no válida"
+
+#: userapi/views.py:274
+msgid "User successfully logged in"
+msgstr "El usuario inició sesión correctamente"
+
+#: userapi/views.py:326
+msgid "Dashboard Retrieved"
+msgstr "Tablero recuperado"
+
+#: userapi/views.py:422
+msgid "Successfully got user data"
+msgstr "Obtuve con éxito los datos del usuario"
+
+#: userapi/views.py:461
+msgid "Successfully get user referral code and message"
+msgstr "Obtenga con éxito el código de referencia del usuario y el mensaje"
+
+#: userapi/views.py:523
+msgid "User with this email is not registered yet"
+msgstr "El usuario con este correo electrónico aún no está registrado"
+
+#: userapi/views.py:553
+msgid "Password reset link has been sent to your registered email address"
+msgstr "Se ha enviado el enlace de restablecimiento de contraseña a su dirección de correo electrónico registrada"
+
+#: userapi/views.py:674 userapi/views.py:781
+msgid "Bad Request"
+msgstr "Solicitud incorrecta"
+
+#: userapi/views.py:784
+msgid "User Logout Successfully"
+msgstr "Cierre de sesión del usuario correctamente"
+
+#: userapi/views.py:818
+msgid "Invalid QR Code"
+msgstr "Código de referencia inválido"
+
+#: userapi/views.py:832 userapi/views.py:838
+msgid "QR Code is already scanned"
+msgstr "El código QR ya está escaneado"
+
+#: userapi/views.py:899
+msgid "Successfully Scanned QR Code"
+msgstr "Código QR escaneado con éxito"
+
+#: userapi/views.py:1217
+msgid "Successfully saved data & QR History received"
+msgstr "Datos guardados exitosamente e historial QR recibido"
+
+#: userapi/views.py:1229
+msgid "Successfully Submitted Data"
+msgstr "Datos enviados correctamente"
+
+#: userapi/views.py:1284
+msgid "Successfully Deleted Table. Successfully Cancel"
+msgstr "Tabla eliminada con éxito. Cancelar con éxito"
+
+#: userapi/views.py:1325
+msgid "Already completed earn points process for this QR"
+msgstr "Proceso de obtención de puntos ya completado para este QR"
+
+#: userapi/views.py:1363
+msgid "Successfully credited points & User Rewards History received"
+msgstr "Puntos acreditados con éxito e historial de recompensas de usuario recibidos"
+
+#: userapi/views.py:1433
+msgid "QR Code scan process already Completed"
+msgstr "Proceso de escaneo de código QR ya completado"
+
+#: userapi/views.py:1498
+msgid "Successfully splitted points & User Rewards History received"
+msgstr "Puntos exitosamente divididos e historial de recompensas de usuario recibido"
+
+#: userapi/views.py:1543
+msgid "Notifications received"
+msgstr "Notificaciones recibidas"
+
+#: userapi/views.py:1589
+msgid "QR History received"
+msgstr "Historial QR recibido"
+
+#: userapi/views.py:1623
+msgid "User has already submitted product activation details for this qr code"
+msgstr "El usuario ya ha enviado los detalles de activación del producto para este código qr"
+
+#: userapi/views.py:1647
+msgid "Specific QR History details received"
+msgstr "Detalles específicos del historial QR recibidos"
+
+#: userapi/views.py:1690
+msgid "User Rewards History received"
+msgstr "Historial de recompensas de usuario recibido"
+
+#: userapi/views.py:1729
+msgid "Merchant list arrived"
+msgstr "Lista de comerciantes llegó"
+
+#: userapi/views.py:1772
+msgid "Merchant Specific product list arrived"
+msgstr "Lista de productos específicos del comerciante llegó"
+
+#: userapi/views.py:1815
+msgid "Specific product list arrived"
+msgstr "Lista de productos específicos llegó"
+
+#: userapi/views.py:1856
+msgid "TechSupport request sent successfully"
+msgstr "Solicitud de TechSupport enviada con éxito"
+
+#: userapi/views.py:1898
+msgid "Leader board list arrived"
+msgstr "Llegó la lista de líderes"
+
+#: userapi/views.py:1972
+msgid "Dispute request sent"
+msgstr "Solicitud de disputa enviada"
+
+msgid "Product activation for this qr is already submitted"
+msgstr "La activación del producto para este qr ya se ha enviado."
+
+msgid "Company list sent"
+msgstr "Lista de empresas enviada"
+
+msgid "Scan QR Code"
+msgstr "Escanear código QR"
+
+msgid "Sprayer Points"
+msgstr "Puntos de rociador"
+
+msgid "Learn to Earn Points"
+msgstr "Aprenda a ganar puntos"
+
+msgid "Earned Points"
+msgstr "Puntos ganados"
+
+msgid "Pending"
+msgstr "Pendiente"
+
+msgid "Submitted"
+msgstr "Presentada"
+
+msgid "None"
+msgstr "Ninguna"
+
+msgid "Completed"
+msgstr "Terminada"
+
+msgid "Split Point"
+msgstr "Punto de división"
+
+msgid "Resolved"
+msgstr "Resuelta"
+
+msgid "Dispute Points"
+msgstr "Puntos de disputa"
+
+msgid "Rewards from referred by an existing user"
+msgstr "Recompensas de referidos por un usuario existente"
+
+msgid "Referral Points"
+msgstr "Puntos de referencia"
+
+msgid "Congratulations, You have earned  points from scanning a product."
+msgstr "Felicitaciones, ha ganado puntos al escanear un producto."
+
+msgid "Congratulations, You have earned  points by referring a new user."
+msgstr "Felicitaciones, has ganado puntos al recomendar a un nuevo usuario."
+
+msgid "Congratulations, You have earned  points from admin for successful dispute request."
+msgstr "Enhorabuena, ha obtenido puntos del administrador por una solicitud de disputa exitosa."
+
+msgid "Congratulations, You have earned  points from referred by an existing user."
+msgstr "Enhorabuena, has ganado puntos de referidos por un usuario existente."
+
+msgid "Congratulations, You have earned  points from scanning a product which is splitted by"
+msgstr "Felicitaciones, ha ganado  puntos escaneando un producto dividido por"
+
+msgid "Congratulations, Your dispute request successfully sent to admin to resolve."
+msgstr "Felicitaciones, su solicitud de disputa se envió con éxito al administrador para que la resuelva."
+
+msgid "Congratulations, Your dispute request resolved by Admin."
+msgstr "Felicitaciones, su solicitud de disputa resuelta por el administrador."
+
+msgid "Congratulations, You have earned  points for attempting quiz successfully."
+msgstr "Enhorabuena, has ganado puntos por intentar la prueba con éxito."
+
+msgid "Congratulations, You have earned  points from admin for successfully dispute request."
+msgstr "Enhorabuena, ha obtenido puntos del administrador por una solicitud de disputa exitosa."
+
+msgid "Due to dispute request,  points have been debited from your account by admin."
+msgstr "Debido a una solicitud de disputa, los puntos han sido debitados de su cuenta por el administrador."
+
+msgid "upcoming"
+msgstr "próxima"
+
+msgid "running"
+msgstr "corriendo"
+
+msgid "completed"
+msgstr "terminada"
+
+msgid "No Data Found"
+msgstr "Datos no encontrados"
+
+msgid "Cash Out Points"
+msgstr "Puntos de retiro"
+
+msgid "Job Points"
+msgstr "Puntos de trabajo"
+
+msgid "To Do"
+msgstr "Que hacer"
+
+msgid "Running"
+msgstr "Corriendo"

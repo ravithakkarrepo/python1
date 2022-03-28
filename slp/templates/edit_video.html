@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static "" as baseUrl %}
+{% block body %}
+
+        <div class="pcoded-content" onclick="noBack()"> 
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5><a href="{% url 'video_table' %}"><i class="icofont icofont-simple-left"></i></a> Edit Videos</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   
+              </div>
+            </div>
+          </div>
+        <form method="POST" action="{% url 'update' edit_obj.id %}" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div class="page-header card">
+               <div class="card">
+               	    <div class="card-block">
+               	    	 <div class="row">
+								<div class="col-xl-6 col-lg-6 col-sm-12">
+									 <div class="form-group">
+										  <label>Select Category</label>
+										  <select class="form-control" name="category" required>
+                        
+                         {% for x in obj %}
+                         <option value="{{x.category_name}}" {% if x.category_name == edit_obj.category %} selected {% endif %}>{{x.category_name}}</option>
+                         {% endfor %}
+										  </select>
+
+									 </div>
+								</div>
+								<div class="col-xl-6 col-lg-6 col-sm-12">
+									 <div class="form-group">
+										  <label>Title</label>
+										  <input type="text" class="form-control" name="title" value="{{edit_obj.video_name}}" required>
+									 </div>
+								</div>
+                 	     </div>
+                 	     <div class="row">
+								<div class="col-xl-6 col-lg-6 col-sm-12">
+									 <div class="form-group">
+										  <label>Video</label>
+										  <input type="file" class="form-control file_multi_video" name="video" id="kuchbhia"  accept="video/mp4">
+                      <input type="hidden" class="form-control file_multi_video" name="video_asda" id="inpufile" value="{{edit_obj.upload_video}}" accept="video/*">
+                      <br>
+                      <div class="video-preview-box">
+                          <div class="v-img">
+                          <video width="320" height="240" controls controlsList="nodownload" disablePictureInPicture>
+                              <source src="{{ MEDIA_URL }}{{edit_obj.upload_video}}" id="video_here" >
+                            Your browser does not support the video tag.
+                          </video>
+                      </div>
+                      <br>
+                      <!-- <div class="v-text">
+                      <h4>{{edit_obj.video_name}}</h4>
+                      </div>  -->
+                      </div>
+									 </div>
+								</div>
+                	     		<div class="col-xl-6 col-lg-6 col-sm-12">
+									 <div class="form-group">
+										  <label>Description</label>
+										  <textarea class="form-control" name="discription" required>{{edit_obj.video_desc}}</textarea>
+									 </div>
+								</div>
+                 	     </div>
+                 	     <div class="clearfix text-right">
+                         <a href="{% url 'video_table' %}"><button type="button" class="btn btn-danger">Cancel</button></a>
+                 	     	  <button type="submit" class="btn btn-primary">Update</button>
+                 	     </div>
+               	    </div>
+               </div>
+          </div>
+          </form>
+
+        </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+{% if video_updated %}
+<script>
+swal({
+    title: "Success!",
+    text: "Video has been successfully updated",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'video_table'  %}";
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+<script type="text/javascript">
+  window.history.forward();
+  function noBack() { window.history.forward(); }
+  function customRemoveElement(elem, fieldName) {
+    $(fieldName).val('');
+    var v = elem.parent().parent().prev().prop('defaultValue','');
+    console.log('v-->',v)
+    elem.parent().parent().remove();
+}
+
+$(document).on("change", ".file_multi_video", function(evt) {
+  var $source = $('#video_here');
+  $source[0].src = URL.createObjectURL(this.files[0]);
+  $source.parent()[0].load();
+});
+
+function asda(){
+  var x  = document.getElementById('kuchbhia').value
+  document.getElementById('inpufile').innerHTML = x
+}
+asda()
+</script>
+
+
+
+{% endblock %}

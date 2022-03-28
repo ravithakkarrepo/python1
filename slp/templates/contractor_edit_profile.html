@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="pcoded-content">
+  <div class="page-header card">
+    <div class="row align-items-end">
+      <div class="col-lg-8">
+        <div class="page-header-title">
+          <div class="d-inline">
+            <h5><a href="{% url 'contractor/dashboard' %}"><i class="icofont icofont-simple-left"></i></a> Edit Profile</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+         
+      </div>
+    </div>
+  </div>
+  <div class="page-header card">
+         <div class="card">
+         	  <div class="card-block">
+         	  	<form method="post" action="{% url 'contractor/profile/' %}" enctype="multipart/form-data">
+         	  		{% csrf_token %}
+         	  	   	<input type="hidden" class="form-control" value="{{ value.id }}" name="cid">
+        	  	   <div class="prof-pic-part">
+        	  	   	    <div class="prof-pic-img">
+        	  	   	    	 <img id="prof-picture" src="{{ MEDIA_URL }}{{value.image}}" alt="">
+        	  	   	    </div>
+        	  	   	    <div class="prof-pic-btn">
+        	  	   	    	 <input type="file" name='image' class="edit_image" id="profile_image" accept="image/*" onchange="imagePreview(this.files[0])">
+        	  	   	    	 <span><i class="icofont icofont-camera-alt"></i></span>
+        	  	   	    </div>
+        	  	   </div>
+         	  	   <div class="row">
+         	  	   	    <div class="col-xl-6 col-lg-6 col-sm-12">
+         	  	   	    	 <div class="form-group">
+         	  	   	    	 	  <label>Name</label>
+         	  	   	    	 	  <input type="text" class="form-control" value="{{ value.full_name }}" name="full_name">
+         	  	   	    	 </div>
+         	  	   	    </div>
+         	  	   	    <div class="col-xl-6 col-lg-6 col-sm-12">
+         	  	   	    	 <div class="form-group">
+         	  	   	    	 	  <label>Company Name</label>
+                                    <input type="text" class="form-control" name="company_name" disabled="true" value="{{ value.company_name }}" >
+         	  	   	    	 </div>
+         	  	   	    </div>
+         	  	   </div>
+
+                    <div class="row">
+						<div class="col-xl-6 col-lg-6 col-sm-12">
+							<div class="form-group">
+								<label>Contact Name</label>
+								<input type="text" class="form-control" name="contact_name1" value="{{ value.contact_name }}">
+							</div>
+         	  	   	    </div>
+         	  	   	    <div class="col-xl-6 col-lg-6 col-sm-12">
+         	  	   	    	 <div class="form-group">
+         	  	   	    	 	  <label>Email Address</label>
+         	  	   	    	 	  <input type="text" class="form-control" name="email" disabled="true" value="{{ value.email }}">
+         	  	   	    	 </div>
+         	  	   	    </div>
+         	  	   </div>
+
+         	  	   <div class="row">
+					<div class="col-xl-6 col-lg-6 col-sm-12">
+						<div class="form-group">
+							  <label>Mobile Number</label>
+							  <input type="text" class="form-control" name="phone" value="{{ value.phone }}">
+						</div>
+				   </div>
+         	  	   	    <div class="col-xl-6 col-lg-6 col-sm-12">
+         	  	   	    	 <div class="form-group">
+         	  	   	    	 	  <label>Address</label>
+         	  	   	    	 	  <input type="text" class="form-control" name="address" value="{{ value.address.add_line1 }}">
+         	  	   	    	 </div>
+         	  	   	    </div>
+         	  	   	    
+         	  	   </div>
+         	  	   <div class="row">
+					<div class="col-xl-6 col-lg-6 col-sm-12">
+						<div class="form-group">
+							<label>Contact Name 2</label>
+							<input type="text" class="form-control" name="contact_name2" value="{{ value.contact_name2 }}">
+						</div>
+						  </div>
+						  <div class="col-xl-6 col-lg-6 col-sm-12">
+							   <div class="form-group">
+									 <label>Email Address 2</label>
+									 <input type="text" class="form-control" name="email2" value="{{ value.email2 }}">
+							   </div>
+						  </div>
+         	  	   </div>
+         	  	   <div class="row">
+					<div class="col-xl-6 col-lg-6 col-sm-12">
+						<div class="form-group">
+							  <label>Mobile Number 2</label>
+							  <input type="text" class="form-control" name="phone2" value="{{ value.phone2 }}">
+						</div>
+				   </div>
+         	  	   	    <div class="col-xl-6 col-lg-6 col-sm-12">
+         	  	   	    	 <div class="form-group">
+         	  	   	    	 	  <label>Address 2</label>
+         	  	   	    	 	  <input type="text" class="form-control" name="address2" value="{{ value.address.add_line2 }}">
+         	  	   	    	 </div>
+         	  	   	    </div>
+         	  	   </div>
+         	  	   <div class="clearfix gen-btn">
+         	  	   	    <button type="submit" class="btn btn-primary">Save</button>
+         	  	   </div>
+         	  	 </form>
+         	  </div>
+         </div>
+  </div>
+</div>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if profile_edit %}
+  <script>
+    swal({
+        title: "Success!",
+        text: "{{ profile_edit }}",
+        icon: "success",
+        buttons: false
+      })
+    function redirect(){
+     window.location.href = "{% url 'contractor/profile' %}";
+    }
+    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+  </script>
+{% endif %}
+<script type="text/javascript">
+function imagePreview(thisVal) {
+        console.log('-----------------',thisVal);
+        var extensionBannarImage = $('#profile_image').val().substring($('#profile_image').val().lastIndexOf('.') + 1)
+
+       console.log(extensionBannarImage, typeof (extensionBannarImage))
+        if(extensionBannarImage == 'png' || extensionBannarImage == 'jpg' || extensionBannarImage == 'jpeg')
+        {
+         // alert("File size must under 2mb!");
+            console.log("if")
+            document.getElementById('prof-picture').src = window.URL.createObjectURL(thisVal);
+        }
+
+        else
+        {
+            console.log("else")
+            console.log("---",$('#profile_image').val())
+            var extensionBannarImage1 = $('#profile_image').val().substring($('#profile_image').val().lastIndexOf('.') + 1)
+            console.log("--1",extensionBannarImage1)
+            if(extensionBannarImage1 == ""){
+                console.log("else if")
+            }
+            else if(extensionBannarImage1 == 'png' || extensionBannarImage1 == 'jpg' || extensionBannarImage1 == 'jpeg' ){
+                console.log("else else if")
+                document.getElementById('prof-picture').src = window.URL.createObjectURL(thisVal);
+            }else{
+                console.log("else else")
+                $('#prof-picture').attr("src","{{ MEDIA_URL }}{{value.image}}")
+                $("#profile_image").val("")
+                swal("error","Please Choose PNG or JPG or JPEG Image","error")
+                return false;
+            }
+        }
+    }
+
+
+</script>
+{% endblock %}

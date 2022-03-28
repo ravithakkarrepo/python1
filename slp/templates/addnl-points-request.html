@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+{% static "" as baseUrl %}
+{% block body %}
+    <div class="pcoded-content">
+        <div class="page-header card">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <div class="d-inline">
+                            <h5>Requests to add additional points in Product</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+
+                </div>
+            </div>
+        </div>
+        <div class="page-header card">
+            <div class="card">
+                <div class="card-block">
+                    <div class="dt-responsive table-responsive">
+                        <table id="multi-colum-addln-points" class="table table-striped table-bordered nowrap">
+                            <thead>
+                            <tr>
+                                <th>Contractor Name</th>
+                                <th>Product Name</th>
+                                <th>Manufacturer</th>
+                                <th>Additional Requested Points</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for x in data %}
+                                <tr>
+                                    <td>{{ x.requested_contractor_name }}</td>
+                                    <td id="qr_{{ forloop.counter }}">{{ x.product_name }}</td>
+                                    <td id="email_{{ forloop.counter }}">{{ x.merchant_name }}</td>
+                                    <td id="msg_{{ forloop.counter }}">{{ x.additional_points }}</td>
+                                    {% if x.request_status == "Pending" %}
+                                        <td>
+                                            <button class="btn btn-primary"><a style="color: #fff;"
+                                                                               class="resolve-class" onclick="points()"
+                                                                               href="#"
+                                                                               data-url="{% url 'additional_points/resolve/' add_points_request_id=x.id %}">Resolve/Decline</a></button>
+                                        </td>
+                                    {% else %}
+                                        <td>{{ x.request_status }}</td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    {% if add %}
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>{% else %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
+    {% endif %}
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script>
+
+        function points() {
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger',
+                },
+                buttonsStyling: false
+            })
+
+            swalWithBootstrapButtons.fire({
+                title: 'Are you sure to want to resolve this?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Resolve it!',
+                cancelButtonText: 'No, Decline it!',
+                reverseButtons: true
+            }).then((result) => {
+                console.log('result--', result.value, result)
+                if (result.value) {
+
+                    var url = $('.resolve-class').attr('data-url');
+                    console.log(url);
+                    var splitUrl = url.split('/')
+
+                    $.ajax({
+
+                        url: url,
+                        type: "POST",
+                        dataType: 'json',
+                        data: {
+                            'type': 'Resolved'
+                        },
+                        success: function (data) {
+                            swalWithBootstrapButtons.fire(
+                                'Resolved!',
+                                'Additional Points request has successfully resolved.',
+                                'success',
+                            )
+                            if ($('.swal2-confirm').html() == 'OK') {
+                                $('.swal2-confirm').css('display', 'none');
+                            }
+
+                            function redirect() {
+                                window.location.href = "{% url 'additional_points'  %}";
+                            }
+
+                            setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+                            console.log('success');
+                        }
+
+                    }
+                )
+                    ;
+                }
+                else if (result.dismiss == "cancel"){
+                    var url = $('.resolve-class').attr('data-url');
+                    console.log(url);
+                    var splitUrl = url.split('/')
+
+                    $.ajax({
+
+                        url: url,
+                        type: "POST",
+                        dataType: 'json',
+                        data: {
+                            'type': 'Declined'
+                        },
+                        success: function (data) {
+                            swalWithBootstrapButtons.fire(
+                                'Declined!',
+                                'Additional Points request has been declined.',
+                                'success',
+                            )
+                            if ($('.swal2-confirm').html() == 'OK') {
+                                $('.swal2-confirm').css('display', 'none');
+                            }
+
+                            function redirect() {
+                                window.location.href = "{% url 'additional_points'  %}";
+                            }
+
+                            setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+                            console.log('success');
+                        }
+
+                    }
+                )
+                    ;
+                }
+
+            })
+
+        }
+
+
+    </script>
+
+{% endblock %}

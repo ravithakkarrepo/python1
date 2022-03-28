@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<div id="loader" class="add_merchant_loader"><div><img src="{{MEDIA_URL}}3.svg"></div></div>
+<a onclick="noBack()" href="{% url 'login_error' %}"></a>
+<div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5><a href="{% url 'contractors'  %}"><i class="icofont icofont-simple-left"></i></a> Add contractor</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+               <div class="card">
+                      <div class="card-block">
+                        <form action="{% url 'contractors/add/'  %}" method="post">{% csrf_token %}
+
+                         <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <!-- <label>Contractor Name <span style="color:red;">*</span></label>
+                                <input type="text" class="form-control full_name" name="full_name" required="" placeholder="Enter Contractor Name"> -->
+                                <label>Company Name <span style="color:red;">*</span></label>
+                                <input type="text" class="form-control company_name" name="company_name" required="" placeholder="Enter Company Name">
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <!-- <label>Email Address <span style="color:red;">*</span></label>
+                                <input type="email" class="form-control email" name="email" required="" placeholder="abc@gmail.com" pattern="[a-zA-Z0-9._%+-]{1,}@[a-zA-Z0-9._%+-]{1,}[.]{1}[a-zA-Z0-9._%+-]{1,}"> -->
+                                <label>Address 1 <span style="color:red;">*</span></label>
+                                <input type="text" class="form-control address1" name="address1" required="" placeholder="Enter Address 1">
+                            </div>
+                        </div>
+                       </div>
+                       <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <!-- <label>Phone Number <span style="color:red;">*</span></label>
+                                <input type="text" class="form-control phone" name="phone" required="" pattern="[0-9]{10}" title="Enter your 10 digit Number" placeholder="9874563214"> -->
+                                <label>Address 2</label>
+                                <input type="text" class="form-control address2" name="address2" placeholder="Enter Address 2">
+                              </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <!-- <label>Company Name <span style="color:red;">*</span></label>
+                                <input type="text" class="form-control company_name" name="company_name" required="" placeholder="Enter Company Name"> -->
+                                <label>Contact Name 1<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control contact_name1" name="contact_name1" required="" placeholder="Enter Contact Name">
+                            </div>
+                        </div>
+                       </div>
+                       <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                
+                                <label>Contact 1 Email<span style="color:red;">*</span></label>
+                                <input type="email" class="form-control email" name="email1" required="" placeholder="Enter Contact Name">
+                              </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                
+                                <label>Contact 1 Phone<span style="color:red;">*</span></label>
+                                <input type="text" class="form-control phone" name="phone1" required="" pattern="[0-9]{10}" title="Enter your 10 digit Number" placeholder="9874563214">
+                            </div>
+                        </div>
+                       </div>
+                       <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                
+                                <label>Contact 2 Name</label>
+                                <input type="text" class="form-control contact_name2" name="contact_name2" placeholder="Enter Contact Name">
+                              </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                
+                                <label>Contact 2 Email</label>
+                                <input type="email" class="form-control email" name="email2" placeholder="Enter Contact Name">
+                            </div>
+                        </div>
+                       </div>
+                       <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                
+                                <label>Contact 2 Phone</label>
+                                <input type="text" class="form-control phone" name="phone2" pattern="[0-9]{10}" title="Enter your 10 digit Number" placeholder="9874563214">
+                              </div>
+                        </div>
+                        
+                       </div>
+                       <div class="clearfix">
+                          <button type="submit" class="btn btn-primary m-r-10" id="add_contractor_submit">Submit</button>
+                          <button type="reset"  class="btn btn-default">Clear</button></a>
+                       </div>
+                     </form>
+                      </div>
+               </div>
+          </div>
+        </div>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+{% if success %}
+<script>
+  swal({
+    title: "Success!",
+    text: "Contractor has been successfully added and email is sent to the email address",
+    icon: "success",
+    buttons: false
+  })
+    function redirect(){
+
+       window.location.href = "{% url 'contractors'  %}";
+    }
+
+    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+{% if not_success %}
+  <script>
+    swal("Oops!", "Mail didnt sent. Contractor not added Successfully.", "error")
+  </script>
+{% endif %}
+
+
+{% if already_exists %}
+  <script>
+    swal("Oops!", "Email already Exists", "error")
+  </script>
+{% endif %}
+
+{% if duplicate_company_name %}
+  <script>
+    swal("Oops!", "Company Name already Exists", "error")
+  </script>
+{% endif %}
+
+
+<script type="text/javascript">
+  window.history.forward();
+    function noBack() { window.history.forward(); }
+</script>
+
+{% if loader %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('.add_merchant_loader').hide();
+    // [A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}
+    var reg_email = /[a-zA-Z0-9._%+-]{1,}@[a-zA-Z0-9._%+-]{1,}[.]{1}[a-zA-Z0-9._%+-]{1,}/
+    var reg_phone = /[0-9]{10}/
+    $('#add_contractor_submit').click(function(){
+      console.log(!$('.phone').val().match(reg_phone))
+      if($('.full_name').val() == '' || $('.email').val() == '' || $('.phone').val() == '' || !$('.email').val().match(reg_email) || !$('.phone').val().match(reg_phone)){
+        $('.add_merchant_loader').hide();
+      }else{
+        console.log('loader show')
+        $('.add_merchant_loader').show();
+        // $('#add_merchant_submit').attr('disabled', true)
+      }
+    })
+  })
+</script>
+{% endif %}
+<script type="text/javascript">
+document.querySelector(".phone").addEventListener("keypress", function (evt) {
+    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+    {
+        evt.preventDefault();
+    }
+});
+
+
+// after one click submit btn disable
+$('form').submit(function(){
+    $(this).find('button[type=submit]').prop('disabled', true);
+});
+</script>
+<!--
+<script type="text/javascript">
+  $.post( "{% url 'merchant_list' %}",
+         { csrfmiddlewaretoken: $("[name='csrfmiddlewaretoken']") ,
+           other_params: JSON.stringify('full_name':$('.full_name').val(), 'email':$('.email').val(), 'phone':$('.phone').val())
+         },
+         console.log('qwertyui')
+         function(data) {
+             if(data.status == 1){ // meaning that everyhting went ok
+              response = {'status': 1, 'message': _("Ok")}
+                // do something
+                console.log('if')
+             }
+             else{
+                alert(data.message)
+                // do your redirect
+                response = {'status': 0, 'message': _("Your error")}
+                console.log('else')
+                window.location("{% url 'merchant_list' %}")
+             }
+        });
+</script> -->
+{% endblock %}
+

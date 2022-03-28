@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<style>
+  .custom_wrap_txt {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 150px;
+    display: block;
+    overflow: hidden;
+  }
+</style>
+
+        <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5>Jobs</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   <div class="text-right">
+                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#job-category">Add Category</a>
+                   </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+              <div class="card">
+                <div class="card-block">
+                  <div class="dt-responsive table-responsive">
+                    <table id="multi-colum-dt-job-list" class="table table-striped table-bordered nowrap">
+                      <thead>
+                        <tr>
+                          <th>Job Category</th>
+                          <th>status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for list in job_list %}
+                        <tr>
+                          <td class="custom_wrap_txt">{{list.job_category_name}}</td>
+                          <td>{{list.status}}</td>
+                        </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+<form method="POST" action="{% url 'add_job_category' %}">
+    {% csrf_token %}
+    <div class="modal fade" id="job-category" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content p-l-20 p-r-20 p-t-15">
+        <div class="modal-body text-center">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            <h4>Add new Job Category</h4>
+            <label>Name <span style="color:red;">*</span></label>
+            <input type="text" class="form-control" id="job_cat_name" name="job_category_name" required>
+            <label>Status&nbsp;<span style="color:red;">*</span></label>
+                                        <select class="form-control" name="status" required="">
+                                             <option value="active">Active</option>
+                                             <option value="inactive">Inactive</option>
+                                            </select>     
+        </div>
+        <div class="modal-footer">
+                <button type="submit" class="btn btn-primary waves-effect waves-light" id="job_category_submit">Submit</button>
+                <button type="reset" class="btn btn-default waves-effect"  >Reset</button>
+        </div>
+        </div>
+    </div>
+    </div>
+    </form>    
+    
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
+{% if job_add %}
+<script>
+  swal({
+    title: "Success!",
+    text: "Job has been successfully added",
+    icon: "success",
+    buttons: false
+  })
+    function redirect(){
+    
+       window.location.href = "{% url 'jobs'  %}";
+    }
+
+    setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %} 
+
+{% if already_exists %}
+  <script>
+    swal({
+    title: "Error!",
+    text: "Job name already Exists",
+    icon: "error",
+    buttons: false
+  })
+    function redirect(){
+    
+    window.location.href = "{% url 'jobs'  %}";
+ }
+
+  setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+  </script>
+{% endif %}
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#job_category_submit').click(function(){
+      console.log('in 1')
+        // console.log(!$('.phone').val().match(reg_phone))
+        if($('#job_cat_name').val().trim() == "") {
+          alert("category name cannot be null")
+        return false;
+      }
+    })
+  })
+  </script>
+{% endblock %}
+
+
+

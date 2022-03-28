@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+        <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5><a href="{% url 'quiz_list'  %}"><i class="icofont icofont-simple-left"></i></a> Add Questions</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                 
+              </div>
+            </div>
+          </div>
+          <form class="md-float-material" id="ques_form" action="{% url 'add_ques'  %}" method="post">
+          {% csrf_token %}
+          <div class="page-header card">
+               <div class="card">
+                      <div class="card-block">
+                         <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                            <div class="form-group">
+                                <label>Quiz Name <span style="color:red;">*</span></label>
+                                <input type="text" class="form-control" name="quiz_name" required="" >
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-lg-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Choose Video <span style="color:red;">*</span></label>
+                                <select class="form-control" name="video_id" required="">
+                                      <option value="0">Select Video</option>
+                                    {% for vid,vtitle,c in videodata %}
+                                      <option value="{{vid}}">{{vtitle}} ({{c}})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                           <div class="col-xl-2 col-lg-2 col-sm-12">
+                            <div class="form-group">
+                                <label>Points <span style="color:red;">*</span></label>
+                                <input type="number" min="0" class="form-control your_class" name="points" required="">
+                            </div>
+                        </div>
+                       </div>
+                       <div class="row">
+                           <div class="col-xl-4 col-lg-4 col-sm-12">
+                            <div class="form-group">
+                                <label>Choose Product</label>
+                                <select class="form-control" name="product" >
+                                      <option value="0">Select Product</option>
+                                    {% for product in products %}
+                                      <option value="{{product.id}}">{{product.product_name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                       </div>
+                       <div class="ques-list">
+                      <div class="ques-one">
+                          <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-sm-12">
+                                  <div class="form-group add-ques-boxs">
+                                       <div class="clearfix">
+                                          <label class="question_no">Question: <span style="color:red;">*</span><a href="#" ><i class="icofont icofont-trash" onclick="delete_question($(this),'question_1')"></i></a><a href="#"><i id="add_questions" onclick="add_question()" style="display: none;" class="icofont icofont-plus-circle add_questions"></i></a></label>
+                                      </div>
+                                      <input type="text" class="form-control question" id="question_1" name="question_1" required="" onchange="question('question_1')" onfocus="question1('question_1')">
+                                  </div>
+                              </div>
+                         </div>
+                          <div class="row" id="ques_option_1">
+                              <div class="col-xl-6 col-lg-6 col-sm-12">
+                                  <div class="form-group">
+                                      <label>Option 1: <span style="color:red;">*</span></label>
+                                      <input type="text" class="form-control option" name="a_1" required="" id=option_1_1      onchange="check1('option_1_1','answer_1')" onfocus="check2('option_1_1','answer_1')" >
+                                  </div>
+                              </div>
+                              <div class="col-xl-6 col-lg-6 col-sm-12">
+                                  <div class="form-group">
+                                      <label>Option 2: <span style="color:red;">*</span></label>
+                                      <input type="text" class="form-control option" name="b_1" required="" id=option_1_2 onchange="check1('option_1_2','answer_1')" onfocus="check2('option_1_2','answer_1')">
+                                  </div>
+                              </div>
+                              <div class="col-xl-6 col-lg-6 col-sm-12">
+                                  <div class="form-group">
+                                      <label>Option 3: <span style="color:red;">*</span></label>
+                                      <input type="text" class="form-control option" name="c_1" required="" id=option_1_3 onchange="check1('option_1_3','answer_1')" onfocus="check2('option_1_3','answer_1')">
+                                  </div>
+                              </div>
+                              <div class="col-xl-6 col-lg-6 col-sm-12">
+                                  <div class="form-group">
+                                      <label>Option 4: <span style="color:red;">*</span></label>
+                                      <input type="text" class="form-control option" name="d_1" required="" id=option_1_4 onchange="check1('option_1_4','answer_1')" onfocus="check2('option_1_4','answer_1')">
+                                  </div>
+                              </div>
+                         </div>
+                          <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-sm-12">
+                                  <div class="form-group">
+                                      <label>Correct Answer: <span style="color:red;">*</span></label>
+                                      <input type="text" class="form-control corr_ans" name="answer_1" required="" id='answer_1' onchange="ans1('answer_1')" onfocus="ans2('answer_1')">
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                     
+                       </div>
+                       <div class="clearfix">
+                          <input type="submit" id="ques_submit" class="btn btn-primary m-r-10 addquestion" value="submit" >
+                          <button type="reset" class="btn btn-default reset">Cancel</button>
+                       </div>
+                      </div>
+               </div>
+          </div>
+        </form>
+        </div>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/add_questions.js' %}"></script>
+<script type="text/javascript">
+   
+
+    
+//to restrict e in input type number
+// 0 for null values
+// 8 for backspace 
+// 48-57 for 0-9 numbers
+document.querySelector(".your_class").addEventListener("keypress", function (evt) {
+    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+    {
+        evt.preventDefault();
+    }
+});
+
+</script> 
+
+<!-- {% if selectVideo %}
+<script type="text/javascript">
+  swal("error!", " please select video", "error")
+</script>
+{% endif %}   -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+{% if add_quiz %}
+<script>
+//  after quiz add successfully it gets redirect to quiz list page
+swal({
+    title: "Success!",
+    text: "Quiz has been successfully added",
+    icon: "success",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'quiz_list'  %}";
+   console.log("success");
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+</script>
+{% endif %}
+
+
+
+{% if selectVideo %}
+<script>
+//  after quiz add successfully it gets redirect to quiz list page
+swal({
+    title: "error!",
+    text: "please select video",
+    icon: "error",
+    buttons: false
+  })
+function redirect(){
+   window.location.href = "{% url 'add_ques'  %}";
+   console.log("success");
+}
+ setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+
+
+// after one click submit btn disable
+$('form').submit(function(){
+    console.log('one click')
+    $('#ques_submit').find('button[type=submit]').prop('disabled', true);
+    console.log('one click another')
+}); 
+</script>
+{% endif %}
+<script type="text/javascript">
+$(function()
+{
+  $('#ques_form').submit(function(){
+    $("input[type='submit']", this)
+      .val("Please Wait...")
+      .attr('disabled', 'disabled');
+    return true;
+  });
+});
+</script>
+<input type="text" hidden id="ques_option_1_hidden" value="">
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5>Users</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+              <div class="card">
+                <div class="card-block">
+                  <div class="dt-responsive table-responsive">
+                    <table id="multi-colum-dt1" class="table table-striped table-bordered nowrap">
+                      <thead>
+                        <tr>
+                          <th>Full Name</th>
+                          <th>Email Address</th>
+                          <th>Company Name</th>
+                          <th>Status (Blocked/Unblocked) </th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for f,e,c,b,user_id in data %}
+                        <tr>
+                          <td>{{ f }}</td>
+                           <td>{{ e }}</td>
+                           <td>{{ c }}</td>
+                          <td>{% if b %} Block {% else %} Unblock
+                               {% endif %}
+                           </td> 
+                          <td>
+                             <a href="/view_list/{{user_id}}" title="View" class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i class="icofont icofont-eye-alt"></i></a>
+                          </td>
+                        </tr>
+                        {% endfor %}  
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+
+{% endblock %}

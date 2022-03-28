@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+        <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5>Merchants</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   <div class="text-right">
+                         <!-- <a href="{% url 'add_merchant' %}" class="btn btn-primary">Add Merchant</a> -->
+                   </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+              <div class="card">
+                <div class="card-block">
+                  <div class="dt-responsive table-responsive">
+                    <table id="multi-colum-dt2" class="table table-striped table-bordered nowrap">
+                      <thead>
+                        <tr>
+                          <th>Merchant Name</th>
+                          <th>Email</th>
+                          <th>Phone Number</th>
+                          <th>No. of Products</th>
+                          <th>Status</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for user_id,name,email,phone,pro,is_blocked in comb %}
+                        <tr>
+                          <td>{{ name }}</td>
+                          <td>{{ email }}</td>
+                          <td>{{ phone }}</td>
+                          <td>{{ pro }}</td>
+                          <td>{% if is_blocked %}Block {% else %} Unblock {% endif %}</td>
+                          <td>
+                             <a href="/merchant_details/{{user_id}}" title="View" class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i class="icofont icofont-eye-alt"></i></a>
+                            <!--  <a href="/merchant_delete/{{user_id}}" class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i class="icofont icofont-trash"></i></a> -->
+                          </td>
+                        </tr>
+                        {% endfor %}  
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+       
+{% endblock %}
+
+
+

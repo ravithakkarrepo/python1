@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body %}
+<style>
+    label.validateError {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-top: 0px;
+    }
+    label {
+        display: inline-block;
+        max-width: 100%;
+        margin-bottom: 5px;
+        font-weight: 700;
+    }
+</style>
+<div class="pcoded-content">
+    <div class="page-header card">
+        <div class="row align-items-end">
+            <div class="col-lg-8">
+                <div class="page-header-title">
+                    <div class="d-inline">
+                        <h5 style="margin-left: 3%;"><a href="{% url 'get_files' %}"><i class="icofont icofont-simple-left"></i></a> Add Files</h5>
+                    </div>
+                </div>
+            </div>
+        <div class="col-lg-4">
+    </div>
+</div>
+
+<div class="page-header card">
+    <form enctype="multipart/form-data" id="add_file_form">
+        <div class="card">
+            <div class="card-block">
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-sm-12">
+                        <div class="form-group input-group">
+                            <label for="file_name" class="cal-input">Choose File Type:</label>&nbsp;<span style="color:red;">*</span>
+                            <select name="file_name" id="file_name" onchange="fileChange('file_name')" required="">
+                                <option selected disabled>Select File Type</option>
+                                <option value="equipment">Equipment</option>
+                                <option value="tech_tips_file">TechTips</option>
+                                <option value="safety_file">Safety</option>
+                                <option value="building">Building</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-sm-12">
+                        <div class="form-group input-group">
+                            <label for="myfile" class="cal-input">Select a file:</label>&nbsp;<span style="color:red;">*</span>
+                            <input type="file" id="myfile" name="" required>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button class="btn btn-primary" type="submit" id="final-submit">Submit</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="modal coman-modal  fade" id="data-added" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog  modal-a" role="document">
+        <div class="modal-content text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        <div class="success-msg-icon">
+            <i class="fa fa-check-circle m-b-0" aria-hidden="true"></i>
+        </div>
+        <h2 id="success-added-mesg"></h2>
+    </div>
+</div>
+
+<div class="modal coman-modal fade" id="wrong-msg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-a" role="document">
+        <div class="modal-content text-center">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick=closeModal()>
+                <span aria-hidden="true">×</span>
+            </button>
+
+            <h1>Error</h1>
+            <div class="wrong-msg-icon">
+                <i class="fa fa-times" aria-hidden="true"></i>
+            </div>
+            <p id="error-text"></p>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script> 
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+
+<script>
+var submit_data = function (e) {
+    let flag = 0;
+    {% if len == 0 %}
+        flag++;
+        return false;
+    {% endif %}
+
+    var isValid = $("#add_file_form").valid();
+    console.log('is valid-----',isValid)
+    if (isValid == false) {
+        $('#final-submit').attr("disabled", false);
+        flag++;
+        return false;
+    }
+
+    var url_link;
+    var file_name = $("#file_name").val();
+    var select_file = $('input[type="file"]')[0].files[0]
+    // if (file_name == 'equipment'){
+    //     console.log('in equipment')
+    //     // var select_file = $('#equipment_resources')[0].files[0];
+    //     var select_file = $("input[name=equipment_resources]")[0].files[0];
+    // } 
+    console.log('file_name and select_file',file_name,select_file)
+    var csrf_token = "{{ csrf_token }}";
+    var formdata = new FormData()
+
+    url_link = "{% url 'file_upload' %}";
+
+    formdata.append("file_name", file_name);
+    if (file_name == 'tech_tips_file'){
+        formdata.append("tech_tips_file", select_file);
+    } else if ((file_name == 'equipment')){
+        formdata.append("equipment_resources", select_file);
+    } else if ((file_name == 'safety_file')){
+        formdata.append("safety_document_file", select_file);
+    } else if ((file_name == 'building')){
+        formdata.append("building_document_file", select_file);
+    }
+
+    console.log('formdata---',formdata)
+      
+      
+
+    if (flag == 0) {
+        $('#final-submit').attr("disabled", true);
+        $('#loader').show();
+        // $('body').css('background',rgba(0,0,0,0.5))
+        $.ajax({
+            headers: {"X-CSRFToken": csrf_token},
+            type: "POST",
+            url: url_link,
+            data: formdata,
+            cache: false,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            success: function (data) {
+                console.log('success----',data)
+                $('#loader').hide();
+                $("#success-added-mesg").text(data)
+                $("#data-added").modal('show')
+
+                function redirect() {
+                  $("#data-added").modal('hide')
+                    window.location.href = "{% url 'file_upload' %}";
+                } setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+            },
+            error: function (data) {
+                console.log('data----',data)
+                $('#final-submit').attr("disabled", false);
+                $('#loader').hide();
+                openErrorModal(data.responseText)
+            },
+            complete:function(data){
+                $('#final-submit').attr("disabled", false);
+            },
+        });
+        e.stopImmediatePropagation();
+        e.preventDefault();
+    } else {
+        $('#final-submit').attr("disabled", false);
+        return false;
+    }
+};
+$('#final-submit').on('click', submit_data);
+</script>
+
+
+<script>
+       $("#add_file_form").validate({
+              errorClass: "validateError",
+              rules: {
+               
+                  file_name:{
+                     required: true,
+                  },
+                  myfile:{
+                        required: true,
+                  },
+              },
+              errorPlacement: function (error, element) {
+                  if ($(element).hasClass("cal-input")) {
+                      error.insertAfter($(element).parents(".input-group"));
+                  
+                  } else {
+                      error.insertAfter(element);
+                      error.insertAfter( $(element).parents(".pro-box"));
+                  }
+              },
+          });
+</script>
+<script>
+    function fileChange(id){
+	console.log('----',$('#'+ id).val())
+    $('#myfile').attr('name',$('#'+ id).val())
+    }
+</script>
+<script>
+    $('#loader').hide();
+    function openSuccessModal(msg) {
+        $("#success-msg").modal('show');
+        $('#success-text').text(msg);}
+
+    function openErrorModal(msg) {
+        $('#error-text').text(msg);
+        $("#wrong-msg").modal('show');}  
+  </script>
+{% endblock %}

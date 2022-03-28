@@ -1,0 +1,1039 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+   <head>
+      <title>SLP</title>
+      <meta charset="utf-8">
+      <link rel="shortcut icon" href="{% static 'img/favicon.png' %}">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Quicksand:500,700" rel="stylesheet">
+      <link rel="stylesheet" href="{% static 'css/bootstrap-material-datetimepicker-bs4.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/waves.min.css' %}" type="text/css" media="all">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/feather.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/themify-icons.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/icofont.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/font-awesome.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/widget.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/custom_css.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/media.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-material-datetimepicker-bs4.min.css' %}">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+      <!-- datatables  -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.bootstrap4.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dataTables.bootstrap4.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/buttons.dataTables.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sweetalert.css' %}">
+    <!-- <style type="text/css">
+      input[type=number]::-webkit-inner-spin-button,
+      input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+      }
+  </style> -->
+
+   </head>
+   <body>
+
+
+      {% if is_admin or is_merchant or is_contractor %}
+		<div id="loader" class="product_loader base"><div><img src="{{MEDIA_URL}}3.svg"></div></div>
+		<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script> 
+          <script type="text/javascript">
+	            // $('#pcoded').css('display', 'none');
+
+            $(document).ready(function(){
+	            // alert('1')
+              	$('.product_loader.base').css('display', 'none');
+                $('.pcoded').css('display', 'block');
+
+              	$('.navbar.header-navbar.pcoded-header').css('display', 'block');
+              	$('.pcoded-inner-navbar.main-menu').css('display', 'block');
+            })
+          </script>
+        {% endif %}
+
+
+        <div id="pcoded" class="pcoded" style="display: none;">
+          <div class="pcoded-overlay-box"> </div>
+            <div class="pcoded-container navbar-wrapper">
+                <nav class="navbar header-navbar pcoded-header" style="display: none;">
+                    <div class="navbar-wrapper">
+                        <div class="navbar-logo"> {% if is_merchant %}<a href="{% url 'dashboard_' %}">{% endif %} {% if is_admin %}<a href="{% url 'dashboard' %}"> {% endif %}{% if is_contractor %}<a href="{% url 'contractor/dashboard' %}"> {% endif %}<img src="{% static 'img/logo.png' %}"  class="img_logo" /> </a>
+                          
+                          <a class="mobile-menu" id="mobile-collapse" href="#!">
+                          <i class="icofont icofont-navigation-menu icon-toggle-right"></i>
+                          </a> 
+                          <h5 class="Panels" style="margin-right: -124px; font-size: 18px; color: #000000; font-weight: bold;">{% if is_merchant %}Merchant Panel {% endif %} {% if is_admin %}Admin Panel {% endif %} {% if is_contractor %} Contractor Panel {% endif %}</h5>
+                        </div>
+                        <div class="navbar-container container-fluid">
+                            <ul class="nav-left">
+                                <li class="header-search">
+                            
+                                </li>
+                            </ul>
+                            <ul class="nav-right">
+                                <li class="user-profile header-notification">
+                                    <div class="dropdown-primary dropdown">
+                                        <div class="dropdown-toggle" data-toggle="dropdown"> <i class="feather icon-user"> </i> Welcome, {{ name }}<i class="feather icon-chevron-down"> </i> 
+                                        </div>
+                                        <ul class="profile-notification  dropdown-menu">
+                                            {% if is_admin %}
+                                            <li> <a href="{% url 'change_password' %}"  class="waves-effect waves-light" style="float: none;"> <i class="feather icon-settings"> </i> Change Password</a> </li>
+                                            <li> <a href="{% url 'logout' %}" class="waves-effect waves-light" style="float: none;"  data-toggle="modal" data-target="#Logout"> <i class="feather icon-log-out"> </i> Logout </a> </li>
+                                            {% endif %}
+                                            
+                                            {% if is_merchant %}
+                                            <li> <a href="{% url 'profile' %}" class="waves-effect waves-light" style="float: none;"> <i class="feather icon-user "> </i> My Profile </a> </li>
+                                            <li> <a href="{% url 'changePassword' %}"  class="waves-effect waves-light" style="float: none;"> <i class="feather icon-settings"> </i> Change Password</a> </li>
+                                            <li> <a href="#" class="waves-effect waves-light" style="float: none;"  data-toggle="modal" data-target="#Logout"> <i class="feather icon-log-out"> </i> Logout </a> </li>
+                                            {% endif %}
+
+                                            {% if is_contractor %}
+                                            <li> <a href="{% url 'contractor/profile' %}" class="waves-effect waves-light" style="float: none;"> <i class="feather icon-user "> </i> My Profile </a> </li>
+                                            <li> <a href="{% url 'contractor/change/password' %}"  class="waves-effect waves-light" style="float: none;"> <i class="feather icon-settings"> </i> Change Password</a> </li>
+                                            <li> <a href="{% url 'contractor/logout/' %}" class="waves-effect waves-light" style="float: none;"  data-toggle="modal" data-target="#Logout"> <i class="feather icon-log-out"> </i> Logout </a> </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+                <div class="pcoded-main-container">
+                   <div class="pcoded-wrapper">
+                        {% if is_merchant %}
+                        <nav class="pcoded-navbar">
+                          <div class="nav-list">
+                            <div class="pcoded-inner-navbar main-menu">
+                              <ul class="pcoded-item   pcoded-left-item">
+                                  <li class="pcoded-hasmenu {% if dashboard_class %} active {% endif %}"><a href="{% url 'dashboard_' %}"> <span class="pcoded-micon"><i class="feather icon-home"></i></span> <span class="pcoded-mtext">Dashboard </span></a></li>
+                                  <li class="pcoded-hasmenu {% if product_list_class %} active {% endif %}"> <a href="{% url 'product_' %}"> <span class="pcoded-micon"><i class="feather icon-box"></i></span> <span class="pcoded-mtext">Products </span> </a></li>
+                                  <li class="pcoded-hasmenu {% if batch_class %} active {% endif %}"> <a href="{% url 'batch' %}"> <span class="pcoded-micon"><i class="feather icon-layers"></i> </span> <span class="pcoded-mtext">Batches </span> </a> </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </nav>
+                        {% endif %}
+                   {% if is_contractor %}
+                       <nav class="pcoded-navbar">
+                          <div class="nav-list">
+                            <div class="pcoded-inner-navbar main-menu" style="display: none;">
+                              <ul class="pcoded-item   pcoded-left-item">
+                                  <li class="pcoded-hasmenu {% if dashboard_class %} active {% endif %}">
+                                    <a href="{% url 'contractor/dashboard' %}">
+                                      <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                      <span class="pcoded-mtext"> Dashboard </span>
+                                    </a>
+                                  </li>
+                                  <li class="pcoded-hasmenu {% if contractor_users_class %} active {% endif %}">
+                                    <a href="{% url 'contractor/users' %}">
+                                      <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                      <span class="pcoded-mtext"> Sprayers </span>
+                                    </a>
+                                  </li>
+                                  <li class="pcoded-hasmenu {% if product_list_class %} active {% endif %}">
+                                    <a href="{% url 'contractor/products' %}">
+                                      <span class="pcoded-micon"><i class="feather icon-box"></i></span>
+                                      <span class="pcoded-mtext"> Products </span>
+                                    </a>
+                                  </li>
+                                  <!-- <li class="pcoded-hasmenu {% if job_list_class %} active {% endif %}">
+                                    <a href="{% url 'jobs' %}">
+                                      <span class="pcoded-micon"><i class="fa fa-graduation-cap"></i></span>
+                                      <span class="pcoded-mtext"> Job Categories </span>
+                                    </a>
+                                  </li>
+                                  <li class="pcoded-hasmenu {% if task_class %} active {% endif %}">
+                                    <a href="{% url 'task' %}">
+                                      <span class="pcoded-micon"><i class="fa fa-tasks"></i></span>
+                                      <span class="pcoded-mtext"> Tasks </span>
+                                    </a>
+                                  </li> -->
+                                  <!-- <li class="pcoded-hasmenu {% if due_bills_class %} active {% endif %}">
+                                    <a href="{% url 'contractor/due/bills' %}">
+                                      <span class="pcoded-micon"><i class="fa fa-credit-card"></i></span>
+                                      <span class="pcoded-mtext"> Due Bills </span>
+                                    </a>
+                                  </li> -->
+                                  <!-- <li class="pcoded-hasmenu {% if task_due_bills_class %} active {% endif %}">
+                                    <a href="{% url 'contractor/task/due/bills' %}">
+                                      <span class="pcoded-micon"><i class="fa fa-credit-card"></i></span>
+                                      <span class="pcoded-mtext">Task Due Bills </span>
+                                    </a>
+                                  </li> -->
+                              </ul>
+                            </div>
+                          </div>
+                       </nav>
+                    {% endif %}
+
+                        {% if is_admin %}
+                        <nav class="pcoded-navbar">
+                          <div class="nav-list">
+                            <div class="pcoded-inner-navbar main-menu" style="display: none;">
+                              <ul class="pcoded-item   pcoded-left-item">
+                                  <li class="pcoded-hasmenu {% if a_dashboard_class %} active {% endif %}">
+                                    <a href="{% url 'dashboard' %}">
+                                      <span class="pcoded-micon"><i class="feather icon-home"></i></span>
+                                      <span class="pcoded-mtext"> Dashboard </span>
+                                    </a>
+                                  </li>
+                                  <li class="pcoded-hasmenu {% if user_class %} active {% endif %}">
+                                    <a href="{% url 'user_list' %}">
+                                      <span class="pcoded-micon"><i class="feather icon-users"></i></span>
+                                      <span class="pcoded-mtext"> Users </span>
+                                    </a>
+                                  </li>
+                                  <li class="pcoded-hasmenu {% if contractor_class %} active {% endif %}">
+                                    <a href="{% url 'contractors' %}">
+                                      <span class="pcoded-micon"><i class="fas fa-users"></i></span>
+                                      <span class="pcoded-mtext"> Contractors </span>
+                                    </a>
+                                  </li>
+                                  <li class="pcoded-hasmenu {% if task_additional_points_class %} active {% endif %}">
+                                    <a href="{% url 'task_additional_points' %}">
+                                      <span class="pcoded-micon"><i class="fa fa-credit-card"></i></span>
+                                      <span class="pcoded-mtext"> Add Points Requests </span>
+                                    </a>
+                                  </li>
+                                  <li class="pcoded-hasmenu {% if merchant_class or merchant_product_class %} active {% endif %}">
+                                    <a href="{% url 'merchant_list' %}">
+                                      <span class="pcoded-micon"><i class="feather icon-user-plus"></i></span>
+                                      <span class="pcoded-mtext"> Merchants </span>
+                                    </a>
+                                  </li>
+                                  <li class="pcoded-hasmenu {% if product_list_class %} active {% endif %}">
+                                    <a href="{% url 'product' %}"> 
+                                      <span class="pcoded-micon"><i class="feather icon-box"></i></span> 
+                                      <span class="pcoded-mtext">Products</span>
+                                    </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if video_class %} active {% endif %}">
+                                  <a href="{% url 'video_table' %}"> 
+                                    <span class="pcoded-micon"><i class="feather icon-video"></i></span> 
+                                    <span class="pcoded-mtext">Videos</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if category_class %} active {% endif %}">
+                                  <a href="{% url 'category_display' %}"> 
+                                    <span class="pcoded-micon"><i class="feather icon-list"></i></span> 
+                                    <span class="pcoded-mtext">Categories</span>
+                                  </a>
+                                </li>
+                                  <li class="pcoded-hasmenu {% if quiz_class %} active {% endif %}">
+                                    <a href="{% url 'quiz_list' %}">
+                                      <span class="pcoded-micon"><i class="feather icon-alert-circle"></i></span>
+                                      <span class="pcoded-mtext"> Quiz </span>
+                                    </a>
+                                  </li>
+                                  <li class="pcoded-hasmenu {% if leaderboard_class %} active {% endif %}">
+                                    <a href="{% url 'leaderboard/' %}">
+                                      <span class="pcoded-micon"><i class="icofont icofont-dashboard"></i></span>
+                                      <span class="pcoded-mtext">Leader board</span>
+                                    </a>
+                                </li>
+                                  <li class="pcoded-hasmenu {% if banner_class %} active {% endif %}">
+                                    <a href="{% url 'banner_list' %}">
+                                      <span class="pcoded-micon"><i class="feather icon-flag"></i></span>
+                                      <span class="pcoded-mtext"> Banner </span>
+                                    </a>
+                                  </li>
+                                  
+                                  <li class="pcoded-hasmenu {% if qrcode_class %} active {% endif %}">
+                                  <a href="{% url 'qrcodes/' %}">
+                                    <span class="pcoded-micon"><i class="icofont icofont-qr-code"></i></span>
+                                    <span class="pcoded-mtext">QR Codes</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if disputerequest_class %} active {% endif %}">
+                                  <a href="{% url 'dispute/requests/' %}">
+                                    <span class="pcoded-micon "><i class="feather icon-alert-triangle"></i></span>
+                                    <span class="pcoded-mtext">Dispute Request</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if contactus_class %} active {% endif %}">
+                                  <a href="{% url 'contact_us' %}">
+                                    <span class="pcoded-micon "><i class="fas fa-address-book" aria-hidden="true"></i></span>
+                                    <span class="pcoded-mtext">Contact Us</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if cms_class %} active {% endif %}">
+                                  <a href="{% url 'cmslist' %}">
+                                    <span class="pcoded-micon"><i class="feather icon-file"></i></span>
+                                    <span class="pcoded-mtext">CMS Pages</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if settings_class %} active {% endif %}">
+                                  <a href="{% url 'settings_admin' %}">
+                                    <span class="pcoded-micon"><i class="feather icon-settings"></i></span>
+                                    <span class="pcoded-mtext">Settings</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if contest_class %} active {% endif %}">
+                                  <a href="{% url 'contestList' %}">
+                                    <span class="pcoded-micon"><i class="fa fa-trophy"></i></span>
+                                    <span class="pcoded-mtext">Contest</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if fresh_class %} active {% endif %}">
+                                  <a href="https://web.freshchat.com/a/283604146376799/inbox/0/0/conversation/288188782309181">
+                                    <span class="pcoded-micon"><i class="fa fa-comments" aria-hidden="true"></i></span>
+                                    <span class="pcoded-mtext">Live Chat</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if giftbit_class %} active {% endif %}">
+                                  <a href="{% url 'giftbitData' %}">
+                                    <span class="pcoded-micon"><i class="feather icon-shopping-cart"></i></span>
+                                    <span class="pcoded-mtext">Purchased gift cards</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if upc_class %} active {% endif %}">
+                                  <a href="{% url 'admin_settings' %}">
+                                    <span class="pcoded-micon"><i class="fa fa-cogs"></i></span>
+                                    <span class="pcoded-mtext">UPC Settings</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if rating_class %} active {% endif %}">
+                                  <a href="{% url 'upc/ratings' %}">
+                                    <span class="pcoded-micon"><i class="fa fa-star"></i></span>
+                                    <span class="pcoded-mtext">UPC Ratings</span>
+                                  </a>
+                                </li>
+                                <li class="pcoded-hasmenu {% if rating_class %} active {% endif %}">
+                                  <a href="{% url 'get_files' %}">
+                                    <span class="pcoded-micon"><i class="fa fa-file"></i></span>
+                                    <span class="pcoded-mtext">Add files</span>
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </nav>
+                        {% endif %}
+                        {% block body %}
+                        {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="Logout" tabindex="-1" role="dialog">
+          <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+              <div class="modal-header"> </div>
+              <div class="modal-body text-center">
+                <h4>Do you want to Logout? </h4>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default waves-effect " data-dismiss="modal">No </button>
+                {% if is_admin %}
+                <a href="{% url 'logout' %}"><button type="button" class="btn btn-primary waves-effect waves-light ">Yes </button></a>
+                {% endif %}
+              {% if is_contractor %}
+                <a href="{% url 'contractor/logout/' %}"><button type="button" class="btn btn-primary waves-effect waves-light ">Yes </button></a>
+                {% endif %}
+                {% if is_merchant %}
+                <a href="{% url 'logout_' %}"><button type="button" class="btn btn-primary waves-effect waves-light ">Yes </button></a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        <input type="hidden" id="tech-selected-files" name="tech-selected-files">
+        <input type="hidden" id="app-selected-files" name="app-selected-files">
+        <input type="hidden" id="video-selected-files" name="video-selected-files">
+        <input type="hidden" id="safety-selected-files" name="safety-selected-files">
+        <input type="hidden" id="certificate-selected-files" name="certificate-selected-files">
+        <input type="hidden" id="equipment-selected-files" name="equipment-selected-files">
+        <input type="hidden" id="industry-selected-files" name="industry-selected-files">
+        <input type="hidden" id="building-selected-files" name="building-selected-files">
+        <input type="hidden" id="quality-selected-files" name="quality-selected-files">
+        <input type="hidden" id="attachment-selected-files" name="attachment-selected-files">
+        
+
+        {% csrf_token %}
+
+
+        <script type="text/javascript" src="{% static 'js/jquery-ui.min.js' %}">
+          </script>
+        <script type="text/javascript" src="{% static 'js/popper.min.js' %}">
+          </script> 
+        <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}">
+          </script>
+        <script src="{% static 'js/waves.min.js' %}" type="text/javascript">
+          </script> 
+        <script type="text/javascript" src="{% static 'js/jquery.slimscroll.js' %}">
+          </script>
+        <script type="text/javascript" src="{% static 'js/modernizr.js' %}">
+          </script> 
+        <script type="text/javascript" src="{% static 'js/css-scrollbars.js' %}">
+          </script> 
+        <script type="text/javascript" src="{% static 'js/common-pages.js' %}">
+          </script> 
+        <script src="{% static 'js/pcoded.js' %}" type="text/javascript">
+          </script> 
+        <script type="text/javascript" src="{% static 'js/script.min.js' %}">
+          </script>
+        <script src="{% static 'js/vertical/vertical-layout.min.js' %}" type="text/javascript">
+          </script>
+          <!-- no -->
+        <script src="{% static 'js/rocket-loader.min.js' %}" data-cf-settings="" defer="">
+          </script>
+          <!-- end -->
+        <script src="{% static 'js/block_unblock.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/add_product.js' %}" type="text/javascript"></script>
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+        <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+
+        <!-- data table -->
+        <script type="text/javascript" src="{% static 'js/jquery.dataTables.min.js' %}"></script>
+        <script src="{% static 'js/dataTables.buttons.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/dataTables.bootstrap4.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/dataTables.responsive.min.js' %}" type="text/javascript"></script>
+        <script src="{% static 'js/data-table-custom.js' %}" type="text/javascript"></script>
+
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $('#multi-colum-dt1').DataTable({ //user list
+              
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+                    targets: [4],
+                    orderData: [4, 0],
+                    "orderable": false
+                }]
+            });
+
+
+            $('#multi-colum-dt2').DataTable({ //merchant list
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+                    targets: [5],
+                    orderData: [5, 0],
+                    "orderable": false
+                }]
+            });
+
+            $('#multi-colum-dt3').DataTable({ //Banner list
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+                    targets: [2],
+                    orderData: [2, 0],
+                    "orderable": false
+                }, {
+                    targets: [3],
+                    orderData: [3, 0],
+                    "orderable": false
+                },{
+                    targets: [4],
+                    orderData: [4, 0],
+                    "orderable": false
+                }]
+            });
+
+            $('#multi-colum-demo').DataTable({ //Banner list
+                columnDefs: []
+            });
+
+            $('#multi-colum-dt-merchant_details').DataTable({ //merchant details view
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+                    targets: [2],
+                    orderData: [2, 0],
+                    "orderable": false
+                }]
+            });
+
+            $('#multi-colum-dt-batch').DataTable({ //Batch list
+                "orders" : [0,'desc'],
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [0, 1],
+                }, {
+                    targets: [1],
+                    // orderData: [1, 0],
+                }, {
+                    targets: [5],
+                    orderData: [5, 0],
+                    "orderable": false
+                }]
+            });
+             $('#multi-colum-dt-product').DataTable({ //product list
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                },{% if is_admin %}{
+                    targets: [2],
+                    orderData: [2, 0],
+                },{% endif %}{% if is_merchant %}{
+                    targets: [2],
+                    orderData: [2, 0],
+                    "orderable": false
+                },{% endif %}{
+                    targets: [3],
+                    orderData: [3, 0],
+                    "orderable": false
+                }]
+            });
+
+             $('#multi-colum-dt-contractor-product').DataTable({ //product list in contractor
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                },{
+                    targets: [2],
+                    orderData: [2, 0],
+                },{
+                    targets: [3],
+                    orderData: [3, 0],
+                    "orderable": false,
+
+                },{
+                    targets: [4],
+                    orderData: [4, 0],
+                    "orderable": false,
+                }
+                ]
+            });
+
+            $('#multi-colum-dt4').DataTable({ //quiz list
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+
+                    targets: [3],
+                    orderData: [3, 0],
+                    "orderable": false
+                }]
+            });
+
+            $('#multi-colum-dt5').DataTable({ //dispute_req
+                "order": [[ 0, 'disc' ]],
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                },
+                    {
+
+                    targets: [3],
+                    orderData: [3, 0],
+                    "orderable": false
+                },
+                    {
+
+                    targets: [4],
+                    orderData: [4, 0],
+                    "orderable": false
+                }],
+                "scrollX": true,
+
+            });
+
+            $('#multi-colum-addln-points').DataTable({ //additional points entry in product
+                "order": [[ 0, 'disc' ]],
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                },
+                    {
+
+                    targets: [3],
+                    orderData: [3, 0],
+                },
+                    {
+
+                    targets: [4],
+                    orderData: [4, 0],
+                    "orderable": false
+                }],
+                "scrollX": true,
+
+            });
+
+
+            $('#multi-colum-task-addln-points').DataTable({ //additional points entry in task
+                "order": [[ 0, 'disc' ]],
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                },
+                    {
+
+                    targets: [3],
+                    orderData: [3, 0],
+                },
+                    {
+
+                    targets: [4],
+                    orderData: [4, 0],
+                    "orderable": false
+                }],
+                "scrollX": true,
+
+            });
+
+
+            
+            $('#multi-colum-dt-contact_us').DataTable({ //contact_us
+                "order": [[ 0, 'disc' ]],
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                    // "orderable": false,
+                }, {
+                    targets: [2],
+                    orderData: [2, 0],
+                    // "orderable": false,
+                }, {
+                    targets: [3],
+                    orderData: [3, 0],
+                    "orderable": false,
+                }]
+            });
+
+            $('#multi-colum-dt12').DataTable({ // rewards
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }]
+            });
+
+            $('#multi-colum-dt76').DataTable({ // User Reward History for Admin view users and contractor view users
+                columnDefs: [{
+                    targets: [6],
+                    orderData: [6, 0],
+                    "orderable": false
+                }]
+            });
+
+            $('#multi-colum-dt-leader').DataTable({ // leader
+                "order": [[ 4, 'disc' ]],
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }]
+            });
+                    
+            $('#multi-colum-dt-con').DataTable({ // con
+                columnDefs: [{
+                    targets: [3],
+                    orderData: [3, 0],
+                    "orderable": false
+                }, {
+                    targets: [4],
+                    orderData: [4, 0],
+                    "orderable": false
+                }]
+            });
+
+            $('#multi-colum-dt-contest_participant').DataTable({ // contest participant list
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+
+                    targets: [3],
+                    orderData: [3, 0],
+                    // "orderable": false
+                }]
+            });
+            
+            $('#multi-colum-dt-contest_winner').DataTable({ // contest winner list
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+
+                    targets: [3],
+                    orderData: [3, 0],
+                    "orderable": false
+                }]
+            });
+
+            $('#multi-colum-dtcontest_new').DataTable({ // contest list list
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+
+                    targets: [5],
+                    orderData: [5, 0],
+                    "orderable": false
+                }]
+            });
+
+            $('#multi-colum-dt-qr').DataTable({
+              
+              columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+                    targets: [2],
+                    orderData: [2, 0]
+                },{
+                    targets: [9],
+                    orderData: [9, 0],
+                    "orderable": false
+                }],
+                "scrollX": true,
+                // }]
+            });
+
+            $('#multi-colum-dt-qr-con').DataTable({
+              
+              columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                }, {
+                    targets: [2],
+                    orderData: [2, 0]
+                },{
+                    targets: [6],
+                    orderData: [6, 0],
+                    "orderable": false
+                }],
+                "scrollX": true,
+                // }]
+            });
+
+            $('#multi-colum-dt-job-list').DataTable({ // contractor job list
+                columnDefs: [{
+                    targets: [0],
+                    orderData: [1, 0],
+
+                }, {
+                    targets: [1],
+                    orderData: [1, 0],
+                    // "orderable": false
+
+                }],
+                "scrollX": true,
+            });
+            
+            $('#multi-colum-dt-assign-task-list').DataTable({ // contractor task list
+                columnDefs: [{
+                    targets: [4],
+                    orderData: [1, 0],
+                    "orderable": false
+
+                }],
+                "scrollX": true,
+            });
+
+            
+            $('#multi-colum-dt-user-tasklist').DataTable({ // admin user task list
+                columnDefs: [{
+                    targets: [2],
+                    orderData: [1, 0],
+                    // "orderable": false
+
+                }]
+            });
+            
+
+              var len = $('.question_tag');
+              len.each(function(index) {
+                var elem = $(this);
+                index++;
+                elem.attr('name', 'question_'+index);
+              });
+              var len = $('.a_tag');
+              len.each(function(index) {
+                var elem = $(this);
+                index++;
+                elem.attr('name', 'a_'+index);
+              });
+              var len = $('.b_tag');
+              len.each(function(index) {
+                var elem = $(this);
+                index++;
+                elem.attr('name', 'b_'+index);
+              });
+              var len = $('.c_tag');
+              len.each(function(index) {
+                var elem = $(this);
+                index++;
+                elem.attr('name', 'c_'+index);
+              });
+              var len = $('.d_tag');
+              len.each(function(index) {
+                var elem = $(this);
+                index++;
+                elem.attr('name', 'd_'+index);
+              });
+              var len = $('.answer_tag');
+              len.each(function(index) {
+                var elem = $(this);
+                index++;
+                elem.attr('name', 'answer_'+index);
+              });
+
+              var table = $('.contest-list-1').DataTable( {
+                ajax: "data.json"
+              });
+              setInterval( function () {
+                console.log('refresh111')
+                table.ajax.reload();
+              }, 30000 );
+
+              // $('.dataTables_scrollHeadInner').css('width','1471.98px')
+              // $('.dataTables_scrollHeadInner').children('table').css('width','1471.98px')
+
+// validation for end time should be greater than start time
+$("#dateTimeAddButton").click(function (){                   
+  console.log('inside function')  
+
+  var now = new Date();
+  offset = -5.0;
+  utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+
+  d = new Date(utc + (3600000*offset));
+  console.log("d : ", d)
+
+  var UTC_Time = d.toString().split(" ")
+  var time = document.getElementById("demo").innerHTML = d;
+  console.log("time today",time,"wwwwwwwwwwwwwww",Date(UTC_Time))
+  var UTC_Time_final = Date(UTC_Time)
+  var startDate = new Date($('.start_Time').val());
+  console.log('startDate',startDate)
+  // var naina = "Wed Nov 27 2019 10:55:00" 
+  var startDate_string = startDate.toString().split(" ")
+  startDate_string[0] = startDate_string[0]+','
+  console.log(startDate_string[0])
+  var a = startDate_string[1]
+  var b = startDate_string[2]
+  startDate_string[2] = a
+  startDate_string[1] = b
+  // [a,b] = [b,a]
+  console.log("after splitting start date=-========",startDate_string)
+  console.log("after splitting again in date format",Date(startDate_string));
+  var startDate_string_final = Date(startDate_string)
+  var endDate = new Date($('.end_Time').val());
+  console.log('endDate',endDate)
+  var enddate_string = endDate.toString().split(" ")
+  enddate_string[0] = enddate_string[0]+','
+  console.log(enddate_string[0])
+  var c = enddate_string[1]
+  var d = enddate_string[2]
+  enddate_string[2] = c
+  enddate_string[1] = d
+  console.log("after splitting start date=-========",enddate_string)
+  var endDate_string = Date(startDate_string)
+
+  var status = $('.status').val();
+  console.log('status----',status)
+  // OffsetDateTime.now( ZoneOffset.UTC );
+  if(startDate_string_final < UTC_Time_final && status < undefined){
+    swal("error", "start date cannot be less than current time", "error")
+    return false; 
+  }
+  if (startDate > endDate){
+    swal("error", "start date should be greater than end date", "error")
+    return false; 
+  }
+  }) 
+          })       
+        </script>
+
+<script src="{% static 'js/moment-with-locales.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-material-datetimepicker-bs4.min.js'  %}"></script>
+<script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+
+
+
+
+<script type="text/javascript">
+  $('#datetimepicker').bootstrapMaterialDatePicker({
+format: 'YYYY-MM-DD HH:mm',
+shortTime: false,
+//maxDate: null,
+//currentDate: $now,
+//disabledDays: [],
+date: true,
+time: true,
+monthPicker: false,
+year: false,
+clearButton: false,
+nowButton: false,
+switchOnClick: true,
+cancelText: 'Cancel',
+//okText: 'VALIDER',
+//clearText: 'EFFACER',
+//nowText: 'MAINTENANT',
+//triggerEvent: 'focus',
+lang: 'en',
+weekStart: 1,
+});
+
+ $('#datetimepicker1').bootstrapMaterialDatePicker({
+format: 'YYYY-MM-DD HH:mm',
+shortTime: false,
+//maxDate: null,
+//currentDate: $now,
+//disabledDays: [],
+date: true,
+time: true,
+monthPicker: false,
+year: false,
+clearButton: false,
+nowButton: false,
+switchOnClick: true,
+cancelText: 'Cancel',
+//okText: 'VALIDER',
+//clearText: 'EFFACER',
+//nowText: 'MAINTENANT',
+//triggerEvent: 'focus',
+lang: 'en',
+weekStart: 1,
+})
+
+
+   /* function loop() {
+        console.log("loop function start")
+        var start = []
+        var end = []
+
+            var now = new Date();
+            offset = -5.0;
+            utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            now = new Date(utc + (3600000 * offset));
+
+            var j = 0;
+            for (j = 1; j <= $(".start").length; j++) {
+                var tempStart = $("#start_date_" + j).text();
+                var tempEnd = $("#end_date_" + j).text();
+                console.log("tempStart in date format : ", Date(tempStart), Date(tempEnd));
+                start.push(tempStart);
+                end.push(tempEnd);
+            }
+            console.log('start array : ', start);
+            console.log('end array : ', end);
+
+            for (var i = 0; i < start.length; i++) {
+                console.log(start[i], typeof (start[i]));
+                console.log("time of now : ", now, "type : ", typeof (now));
+
+                var startNewDate = new Date(start[i]);
+                console.log("startNewDate : ", startNewDate, typeof (startNewDate));
+
+                var EndNewDate = new Date(end[i]);
+                console.log("EndNewDate : ", EndNewDate, typeof (EndNewDate));
+
+                if ((startNewDate <= now) && (now < EndNewDate)) {
+                    console.log('3')
+                    console.log($("#status1_" + (i + 1)), $("#status1_" + (i + 1)).text())
+                    if ($("#status1_" + (i + 1)).text() != "running") {
+                        $("#status1_" + (i + 1)).text("running");
+                        location.reload();
+                    }
+                } else if (EndNewDate <= now) {
+                    console.log('4')
+                    console.log($("#status1_" + (i + 1)), $("#status1_" + (i + 1)).text())
+                    if ($("#status1_" + (i + 1)).text() != "completed") {
+                        $("#status1_" + (i + 1)).text("completed");
+                        location.reload();
+                    }
+                }
+            }
+            setTimeout(loop, 1000);
+        }
+
+*/
+
+
+$('#category_submit').click(function(){
+  console.log('in 1')
+    // console.log(!$('.phone').val().match(reg_phone))
+  if($('#add_category').val().trim() == "") {
+    alert("category name cannot be null")
+  return false;
+  }
+})
+
+$('#video_submit').click(function(){
+  console.log('in 1')
+    // console.log(!$('.phone').val().match(reg_phone))
+  if($('#title_video').val().trim() == "") {
+    alert("Video Title cannot be null")
+  return false;
+  }
+  if($('#Description_video').val().trim() == "") {
+    alert("Video Description cannot be null")
+  return false;
+  }
+}) 
+</script>
+
+
+<!-- <script type="text/javascript">
+	window.history.forward();
+	function noBack() { window.history.forward(); }
+</script>  
+<BODY onload="noBack();" 
+onpageshow="if (event.persisted) noBack();" onunload=""> -->
+    </body>
+</html>

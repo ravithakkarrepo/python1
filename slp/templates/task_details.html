@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+    <div class="pcoded-content">
+        <div class="page-header card">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <div class="d-inline">
+                            <h5><a href="{% url 'task' %}"><i
+                                    class="icofont icofont-simple-left"></i></a>{{ details.assigned_user.full_name }}
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                </div>
+            </div>
+        </div>
+        <div class="page-header card">
+            <div class="page-header-title p-b-15">
+                <div class="d-inline">
+                    <h5>Task Details</h5>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <div class="v-product-top">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Title</label>
+                                    <div class="col-sm-8">
+                                        <h4>{{ details.title }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Assigned User</label>
+                                    <div class="col-sm-8">
+                                        <h4>{{ details.assigned_user.full_name }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Assigned Job</label>
+                                    <div class="col-sm-8">
+                                        <h4>{{ details.assigned_job.job_category_name }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Description</label>
+                                    <div class="col-sm-8">
+                                        <h4>{{ details.description }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Task Status</label>
+                                    <div class="col-sm-8">
+                                        <h4>{{ details.task_status }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-12 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Attachment</label>
+                                    <div class="col-md-12 row">
+                                        {% for a in details.attachment %}
+                                        <div class="attachment col-md-4" id="attachment_{{forloop.counter}}">
+                                            <a href="{{ a }}" target="_blank"></a>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page-header-title p-b-15">
+                <div class="d-inline">
+                    <h5>User Entered QR Details</h5>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-block">
+                    <div class="v-product-top">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">A Side Batch</label>
+                                    <div class="col-sm-8">
+                                        <h4>{% if productData == '' %}-{% else %}{{ productData.a_side_batch }}{% endif %}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">A Side Set Temp</label>
+                                    <div class="col-sm-8">
+                                        <h4>{% if productData == '' %}-{% else %}{{ productData.a_side_set_temp }}{% endif %}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">B Side Set Temp</label>
+                                    <div class="col-sm-8">
+                                        <h4>{% if productData == '' %}-{% else %}{{ productData.b_side_set_temp }}{% endif %}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Hose Set Temp</label>
+                                    <div class="col-sm-8">
+                                        <h4>{% if productData == '' %}-{% else %}{{ productData.hose_set_temp }}{% endif %}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Pressure Set</label>
+                                    <div class="col-sm-8">
+                                        <h4>{% if productData == '' %}-{% else %}{{ productData.pressure_set }}{% endif %}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Mixing Chamber Size</label>
+                                    <div class="col-sm-8">
+                                        <h4>{% if productData == '' %}-{% else %}{{ productData.mixing_chamber_size }}{% endif %}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Start Drum Temp</label>
+                                    <div class="col-sm-8">
+                                        <h4>{% if productData == '' %}-{% else %}{{ productData.start_drum_temp }}{% endif %}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-4 col-form-label">Image</label>
+                                    <div class="col-sm-8 sheet-img">
+                                        {% if productData == '' %}-{% else %}<img src="{{ productData.image.url }}"></img>{% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script type="text/javascript">
+    var attachmentLength = $('.attachment').length
+    console.log('attachmentLength-----',attachmentLength) 
+    var extensionIcon = ''
+    for(var i =0; i<attachmentLength; i++){
+      console.log('i---',i)
+      var a = $("#attachment_"+(i+1)).children().attr("href").split('/')
+      var b = a[a.length - 1].split('.')
+        
+    //   var attachmentFileName = $('#attachment_'+(i+1)).text()
+      console.log('attachmentFileName-----',a[a.length - 1])
+      var attachmentExtension = b[b.length-1]
+      if(attachmentExtension == 'pdf'){
+        extensionIcon = `<i class="icofont icofont-file-pdf" style="font-size: 40px;
+    color: #cb0606";></i>`
+        console.log('--pdf---',$('#attachment_'+(i+1)))
+        $('#attachment_'+(i+1)).children().append(extensionIcon)
+        $('#attachment_'+(i+1)).append(b[0])
+  
+      }
+      if(attachmentExtension == 'png' || attachmentExtension == 'jpg' || attachmentExtension == 'jpeg'){
+        extensionIcon = `<i class="icofont icofont-ui-image" style="font-size: 40px;
+    color: #cb0606";></i>`
+        console.log('---png--',$('#attachment_'+(i+1)))
+        $('#attachment_'+(i+1)).children().append(extensionIcon)
+        $('#attachment_'+(i+1)).append(b[0])
+      }
+    }
+  
+  </script>    
+
+{% endblock %}
+

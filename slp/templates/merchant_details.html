@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<div class="pcoded-content">
+  <div class="page-header card">
+    <div class="row align-items-end">
+      <div class="col-lg-8">
+        <div class="page-header-title">
+          <div class="d-inline">
+            <h5><a href="{% url 'merchant_list' %}"><i class="icofont icofont-simple-left"></i></a> {{ details.full_name }}</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+      </div>
+    </div>
+  </div>
+  <div class="page-header card">
+    <div class="card">
+      <div class="card-block">
+        <div class="v-product-top">
+            
+          <div class="row block_unblock">
+              <div class="col-xl-4 col-lg-12 col-sm-12">
+                <div class="user-prof-one-part">
+                  <div class="image">
+                      <img src=" {% if details.image %} {{MEDIA_URL}}{{ details.image }} {% else %} {{MEDIA_URL}}{{ image }}default.jpg {% endif %}" alt="image not found">
+                      <div class="switch-custom m-t-5 status text-center p-t-8 ">
+                          <!-- <form method="post" data-url = "{% url 'merchant_block' user_id %}" id="status_form">
+                            <input type="checkbox" value="{{ is_blocked }}" name="m_block_unblock" class="m_block_unblock">
+                            <span></span>
+                          </form> -->
+                          {% if details.is_blocked %}
+      
+                          <button type="button" data-url = "{% url 'merchant_block' user_id %}" class="btn btn-danger  text-center waves-effect text-center m_unblock" id="m_unblock_id" onclick="m_unblock()" title="merchant is blocked click here to unblock merchant">Unblock </button> 
+                          {% else %}
+                          
+                          <button type="button" data-url = "{% url 'merchant_block' user_id %}" class="btn btn-primary  text-center waves-effect text-center m_block" id="m_block_id" onclick="block()" title="merchant is Unblocked click here to block merchant">Block </button>
+                          {% endif %}
+                </div>
+                  </div>
+                </div>
+              </div>
+            <div class="col-xl-8 col-lg-12 col-sm-12">
+              <div class="form-group row">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <h4>{{ details.full_name }}</h4>
+                </div>
+              </div>
+              <div class="form-group row">
+                  <label class="col-sm-4 col-form-label">Email</label>
+                    <div class="col-sm-8">
+                      <h4>{{ details.email }}</h4>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                      <label class="col-sm-4 col-form-label">Phone Number</label>
+                        <div class="col-sm-8">
+                          <h4>{{ details.phone }}</h4>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-sm-4 col-form-label">Address</label>
+                            <div class="col-sm-8">
+                              {% if  details.address.add_line1 != "" %}
+                              <h4>{{ details.address.add_line1 }}</h4>
+                              {% endif %}
+                              {% if  details.address.city != "" %}
+                              <h4>{{ details.address.city }}</h4>
+                              {% endif %}
+                              {% if  details.address.state != "" %}
+                              <h4>{{ details.address.state }}</h4>
+                              {% endif %}
+                              {% if  details.address.country != "" %}
+                              <h4>{{ details.address.country }}</h4>
+                              {% endif %}
+                            </div>
+                          </div>
+            </div>
+          
+          </div>
+         
+         
+              </div>
+                    </div>
+               </div>
+              <div class="page-header-title p-b-15">
+           <div class="d-inline">
+             <h5>Products</h5>
+           </div>
+              </div>
+              <div class="card">
+                <div class="card-block">
+                  <div class="dt-responsive table-responsive">
+                    <table id="multi-colum-dt-merchant_details" class="table table-striped table-bordered nowrap">
+                      <thead>
+                        <tr>
+                          <th>Product Name</th>
+                          <th>Total Points</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for p in products %}
+                        <tr>
+                          <td>{{ p.product_name }}</td>
+                          <td>{{ p.total_points }}</td>
+                          <td>
+                            <a href="{% url 'm_product/' id=p.id %}" class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i class="icofont icofont-eye-alt"></i></a>
+                          </td>
+                        {% endfor %}    
+
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+{% endblock %}

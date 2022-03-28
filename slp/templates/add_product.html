@@ -1,0 +1,862 @@
+{% extends 'base.html' %}
+{% load static %}
+<style type="text/css">
+    #progress-bar {
+        margin-top: 1em;
+    }
+
+</style>
+{% block body %}
+
+    <div id="loader" class="product_loader">
+        <div><img src="{{ MEDIA_URL }}3.svg"></div>
+        <div id="progress-bar-message" style="color: white; padding-top: 19px;"></div>
+    </div>
+
+    <div class="pcoded-content">
+        <div class="page-header card">
+            <div class="row align-items-end">
+                <div class="col-lg-8">
+                    <div class="page-header-title">
+                        <div class="d-inline">
+                            <h5><a href="{% url 'product' %}"><i class="icofont icofont-simple-left"></i></a> Add
+                                Product</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+
+                </div>
+            </div>
+        </div>
+        <div class="page-header card">
+            <form action="{% url 'product/' %}" id="product_add" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="card">
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Merchant Name</label>&nbsp;<span style="color:red;">*</span>
+                                    <select class="form-control" name="merchant_id" id="merchant_id" required="">
+                                        <option value="">Choose Merchant</option>
+                                        {% for id,email,name in merchant_combo %}
+                                            <option value="{{ id }}">{{ name }},&nbsp;&nbsp;&nbsp;{{ email }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Product Name</label>&nbsp;<span style="color:red;">*</span>
+                                    <input type="text" class="form-control" name="product_name" id="product_name"
+                                           required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group des1-fr">
+                                    <label>Product Description</label>&nbsp;<span style="color:red;">*</span>
+                                    <textarea class="form-control" id="product_description" name="product_description"
+                                              required=""></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Product Image</label>
+                                    <div class="prof-pic-part prof-pic-part-admin">
+                                        <div class="prof-pic-img">
+                                            <img src="https://slp-static.s3.us-east-2.amazonaws.com/media/product/image/default.png"
+                                                 alt="" id="product_fake_image">
+                                        </div>
+                                        <div class="prof-pic-btn">
+                                            <input type="file" name="product_image" id="product_image" accept="image/*">
+                                            <span><i class="icofont icofont-camera-alt"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="page-header-title p-b-15">
+                            <div class="d-inline">
+                                <h5>Product Activation Details</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>A Side Batch (e.g - abc)</label>&nbsp;<span style="color:red;">*</span>
+                                    <input type="text" pattern="^[A-Za-z -]+$" class="form-control" name="a_side_batch"
+                                           id="a_side_batch" required="">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>B Side Set temp</label>&nbsp;<span style="color:red;">*</span>
+                                    <select class="form-control" name="b_side_set_temp" id="b_side_set_temp"
+                                            required="">
+                                        <option value="">Choose Temp</option>
+                                        <option value="100">100</option>
+                                        <option value="102">102</option>
+                                        <option value="104">104</option>
+                                        <option value="106">106</option>
+                                        <option value="108">108</option>
+                                        <option value="110">110</option>
+                                        <option value="112">112</option>
+                                        <option value="114">114</option>
+                                        <option value="116">116</option>
+                                        <option value="118">118</option>
+                                        <option value="120">120</option>
+                                        <option value="122">122</option>
+                                        <option value="124">124</option>
+                                        <option value="126">126</option>
+                                        <option value="128">128</option>
+                                        <option value="130">130</option>
+                                        <option value="132">132</option>
+                                        <option value="134">134</option>
+                                        <option value="138">138</option>
+                                        <option value="140">140</option>
+                                        <option value="142">142</option>
+                                        <option value="144">144</option>
+                                        <option value="146">146</option>
+                                        <option value="148">148</option>
+                                        <option value="150">150</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>A Side Set temp</label>&nbsp;<span style="color:red;">*</span>
+                                    <select class="form-control" name="a_side_set_temp" id="a_side_set_temp"
+                                            required="">
+                                        <option value="">Choose Temp</option>
+                                        <option value="100">100</option>
+                                        <option value="102">102</option>
+                                        <option value="104">104</option>
+                                        <option value="106">106</option>
+                                        <option value="108">108</option>
+                                        <option value="110">110</option>
+                                        <option value="112">112</option>
+                                        <option value="114">114</option>
+                                        <option value="116">116</option>
+                                        <option value="118">118</option>
+                                        <option value="120">120</option>
+                                        <option value="122">122</option>
+                                        <option value="124">124</option>
+                                        <option value="126">126</option>
+                                        <option value="128">128</option>
+                                        <option value="130">130</option>
+                                        <option value="132">132</option>
+                                        <option value="134">134</option>
+                                        <option value="138">138</option>
+                                        <option value="140">140</option>
+                                        <option value="142">142</option>
+                                        <option value="144">144</option>
+                                        <option value="146">146</option>
+                                        <option value="148">148</option>
+                                        <option value="150">150</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Hot Set temp</label>&nbsp;<span style="color:red;">*</span>
+                                    <!-- <input type="number" class="integerField form-control temp" name="hot_set_temp" id="hot_set_temp" required=""> -->
+                                    <select class="form-control" name="hot_set_temp" id="hot_set_temp" required="">
+                                        <option value="">Choose Temp</option>
+                                        <option value="100">100</option>
+                                        <option value="102">102</option>
+                                        <option value="104">104</option>
+                                        <option value="106">106</option>
+                                        <option value="108">108</option>
+                                        <option value="110">110</option>
+                                        <option value="112">112</option>
+                                        <option value="114">114</option>
+                                        <option value="116">116</option>
+                                        <option value="118">118</option>
+                                        <option value="120">120</option>
+                                        <option value="122">122</option>
+                                        <option value="124">124</option>
+                                        <option value="126">126</option>
+                                        <option value="128">128</option>
+                                        <option value="130">130</option>
+                                        <option value="132">132</option>
+                                        <option value="134">134</option>
+                                        <option value="138">138</option>
+                                        <option value="140">140</option>
+                                        <option value="142">142</option>
+                                        <option value="144">144</option>
+                                        <option value="146">146</option>
+                                        <option value="148">148</option>
+                                        <option value="150">150</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Mixing Chamber Size</label>&nbsp;<span style="color:red;">*</span>
+                                    <!-- <input type="number" class=" integerField form-control temp" name="mixing_chamber_size" id="mixing_chamber_size" required=""> -->
+                                    <select class=" integerField form-control temp" name="mixing_chamber_size"
+                                            id="mixing_chamber_size" required="">
+                                        <option value="">Choose Temp</option>
+                                        <option value="0">0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Pressure Set</label>&nbsp;<span style="color:red;">*</span>
+                                    <select class="form-control" name="pressure_set" id="pressure_set" required="">
+                                        <option value="">Choose Temp</option>
+                                        <option value="900">900</option>
+                                        <option value="925">925</option>
+                                        <option value="950">950</option>
+                                        <option value="975">975</option>
+                                        <option value="1000">1000</option>
+                                        <option value="1025">1025</option>
+                                        <option value="1075">1075</option>
+                                        <option value="1100">1100</option>
+                                        <option value="1125">1125</option>
+                                        <option value="1150">1150</option>
+                                        <option value="1175">1175</option>
+                                        <option value="1200">1200</option>
+                                        <option value="1225">1225</option>
+                                        <option value="1250">1250</option>
+                                        <option value="1275">1275</option>
+                                        <option value="1300">1300</option>
+                                        <option value="1325">1325</option>
+                                        <option value="1350">1350</option>
+                                        <option value="1375">1375</option>
+                                        <option value="1400">1400</option>
+                                        <option value="1425">1425</option>
+                                        <option value="1450">1450</option>
+                                        <option value="1475">1475</option>
+                                        <option value="1500">1500</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Starting Drum Temperature</label>&nbsp;<span style="color:red;">*</span>
+                                    <select class="form-control" name="starting_drum_temperature"
+                                            id="starting_drum_temperature" required="">
+                                        <option value="">Choose Temp</option>
+                                        <option value="40">40</option>
+                                        <option value="42">42</option>
+                                        <option value="44">44</option>
+                                        <option value="46">46</option>
+                                        <option value="48">48</option>
+                                        <option value="50">50</option>
+                                        <option value="52">52</option>
+                                        <option value="54">54</option>
+                                        <option value="56">56</option>
+                                        <option value="58">58</option>
+                                        <option value="60">60</option>
+                                        <option value="62">62</option>
+                                        <option value="64">64</option>
+                                        <option value="68">68</option>
+                                        <option value="70">70</option>
+                                        <option value="72">72</option>
+                                        <option value="74">74</option>
+                                        <option value="76">76</option>
+                                        <option value="78">78</option>
+                                        <option value="80">80</option>
+                                        <option value="82">82</option>
+                                        <option value="84">84</option>
+                                        <option value="86">86</option>
+                                        <option value="88">88</option>
+                                        <option value="90">90</option>
+                                        <option value="92">92</option>
+                                        <option value="94">94</option>
+                                        <option value="96">96</option>
+                                        <option value="98">98</option>
+                                        <option value="100">100</option>
+                                        <option value="102">102</option>
+                                        <option value="104">104</option>
+                                        <option value="106">106</option>
+                                        <option value="108">108</option>
+                                        <option value="110">110</option>
+                                        <option value="112">112</option>
+                                        <option value="114">114</option>
+                                        <option value="116">116</option>
+                                        <option value="118">118</option>
+                                        <option value="120">120</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Machine Type</label>&nbsp;<span style="color:red;">*</span>
+                                    <select class="form-control" name="machine_type"
+                                            id="machine_type" required="">
+                                        <option value="">Choose Machine Type</option>
+                                        {% for machine in machine %}
+                                        <option value={{machine.machine_type}}>{{machine.machine_type}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Substrate Type</label>&nbsp;<span style="color:red;">*</span>
+                                    <select class="form-control" name="substrate_type"
+                                            id="substrate_type" required="">
+                                        <option value="">Choose Substrate Type</option>
+                                        {% for substrate in substrate %}
+                                        <option value={{substrate.substrate_type}}>{{substrate.substrate_type}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Substrate Temp</label>
+                                    <select class="form-control" name="substrate_temp"
+                                            id="substrate_temp">
+                                        <option value="">Choose Substrate temp</option>
+                                        <option value="0">0°F</option>
+                                        <option value="10">10°F</option>
+                                        <option value="20">20°F</option>
+                                        <option value="30">30°F</option>
+                                        <option value="40">40°F</option>
+                                        <option value="50">50°F</option>
+                                        <option value="60">60°F</option>
+                                        <option value="70">70°F</option>
+                                        <option value="80">80°F</option>
+                                        <option value="90">90°F</option>
+                                        <option value="90">100°F</option>
+                                        <option value="90">110°F</option>
+                                        <option value="90">120°F</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Substrate Moisture</label>
+                                    <select class="form-control" name="substrate_moisture"
+                                            id="substrate_moisture">
+                                        <option value="">Choose Substrate Moisture</option>
+                                        <option value="0">0%</option>
+                                        <option value="10">10%</option>
+                                        <option value="20">20%</option>
+                                        <option value="30">30%</option>
+                                        <option value="40">40%</option>
+                                        <option value="50">50%</option>
+                                        <option value="60">60%</option>
+                                        <option value="70">70%</option>
+                                        <option value="80">80%</option>
+                                        <option value="90">90%</option>
+                                        <option value="100">100%</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Safety warning signs Posted?</label>
+                                    <select class="form-control" name="safety_warning"
+                                            id="safety_warning">
+                                        <option value="">Choose Safety warning signs</option>
+                                        <option value="yes">YES</option>
+                                        <option value="no">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Mechanical Ventilation Used</label>
+                                    <select class="form-control" name="mechanical_used"
+                                            id="mechanical_used">
+                                        <option value="">Choose Mechanical Ventilation Used</option>
+                                        <option value="yes">YES</option>
+                                        <option value="no">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Sprayer Using Fresh Air?</label>
+                                    <select class="form-control" name="sprayer_fresh"
+                                            id="sprayer_fresh">
+                                        <option value="">Choose Sprayer Using Fresh Air</option>
+                                        <option value="yes">YES</option>
+                                        <option value="no">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Complete After Spraying (e.g - abc)</label>
+                                    <input type="text" pattern="^[A-Za-z -]+$" class="form-control" name="complete_spray"
+                                           id="complete_spray">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="page-header-title p-b-15">
+                    <div class="d-inline">
+                        <h5>Product Guidelines</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-block">
+                        <!-- <div class="prod-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>Tech Tips (Supported File Type: pdf, mp4)</h2>
+                                <div class="browse-btn">
+                                    <input id="tech_tips_0" name="technical_tips_0" type="file"
+                                           class="custom-file-input tech_tips" onchange="techFile('tech_tips_0');"
+                                           accept=".pdf,video/*">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n_tips" value="0">
+                                </div>
+                            </div>
+                            <ul id="tech_tips_ul"></ul>
+                        </div> -->
+                        <!-- <div class="prod-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>Technical Datasheet (Supported File Type: pdf)</h2>
+                                <div class="browse-btn">
+                                    <input id="tech_file_0" name="technical_datasheet_files_0" type="file"
+                                           class="custom-file-input tech_file" onchange="techFile('tech_file_0');"
+                                           accept=".pdf">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n" value="0">
+                                </div>
+                            </div>
+                            <ul id="tech_file_ul"></ul>
+                        </div>
+                        <div class="prod-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>Application Guideline (Supported File Type: pdf)</h2>
+                                <div class="browse-btn">
+                                    <input id="app_file_0" name="application_guideline_files_0" type="file"
+                                           class="custom-file-input app_file" onchange="appFile('app_file_0');"
+                                           accept=".pdf">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n_app" value="0">
+                                </div>
+                            </div>
+                            <ul id="app_file_ul"></ul>
+                        </div>
+                        <div class="prod-guidelines-list video-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>Video (Supported File Type: mp4)</h2>
+                                <div class="browse-btn">
+                                    <input type="file" name="video_0" class="custom-file-input video" id="video_0"
+                                           accept="video/*" onchange="videoFile('video_0');">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n_video" value="0">
+                                </div>
+                            </div>
+                            <ul id="video_ul"></ul>
+                        </div> -->
+                         
+                        <div class="prod-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>UPC Product Resources (Supported File Type: pdf, png, jpg, jpeg)</h2>
+                                <div class="browse-btn">
+                                    <input type="file" name="certificate_file_0"
+                                           class="custom-file-input certificate_file" id="certificate_file_0"
+                                           accept=".pdf,image/*" onchange="certificateFile('certificate_file_0');">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n_certificate" value="0">
+                                </div>
+                            </div>
+                            <ul id="certificate_file_ul"></ul>
+                        </div>
+
+                        <!-- <div class="prod-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>Tech Tips (Supported File Type: pdf, png, jpg, jpeg)</h2>
+                                <div class="browse-btn">
+                                    <input type="file" name="industry_file_0"
+                                           class="custom-file-input industry_file" id="industry_file_0"
+                                           accept=".pdf,image/*" onchange="industryFile('industry_file_0');">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n_industry" value="0">
+                                </div>
+                            </div>
+                            <ul id="industry_file_ul"></ul>
+                        </div>
+
+                        <div class="prod-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>Safety Documents (Supported File Type: pdf, png, jpg, jpeg)</h2>
+                                <div class="browse-btn">
+                                    <input type="file" name="safety_datasheet_files_0" class="custom-file-input safety"
+                                           id="safety_file_0" accept=".pdf,image/*" onchange="safetyFile('safety_file_0');">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n_safety" value="0">
+                                </div>
+                            </div>
+                            <ul id="safety_file_ul"></ul>
+                        </div>
+
+                        <div class="prod-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>Building Science Resources (Supported File Type: pdf, png, jpg, jpeg)</h2>
+                                <div class="browse-btn">
+                                    <input type="file" name="building_file_0"
+                                           class="custom-file-input building_file" id="building_file_0"
+                                           accept=".pdf,image/*" onchange="buildingFile('building_file_0');">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n_building" value="0">
+                                </div>
+                            </div>
+                            <ul id="building_file_ul"></ul>
+                        </div> -->
+
+                        <div class="prod-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>Jobsite Tools (Supported File Type: pdf, png, jpg, jpeg)</h2>
+                                <div class="browse-btn">
+                                    <input type="file" name="quality_file_0"
+                                           class="custom-file-input quality_file" id="quality_file_0"
+                                           accept=".pdf,image/*" onchange="qualityFile('quality_file_0');">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n_quality" value="0">
+                                </div>
+                            </div>
+                            <ul id="quality_file_ul"></ul>
+                        </div>
+
+                        <!-- <div class="prod-guidelines-list clearfix">
+                            <div class="clearfix">
+                                <h2>Equipment Resources (Supported File Type: pdf, png, jpg, jpeg)</h2>
+                                <div class="browse-btn">
+                                    <input type="file" name="equipment_file_0"
+                                           class="custom-file-input equipment_file" id="equipment_file_0"
+                                           accept=".pdf,image/*" onchange="equipmentFile('equipment_file_0');">
+                                    <label>Upload</label>
+                                    <input type="hidden" id="change_n_equipment" value="0">
+                                </div>
+                            </div>
+                            <ul id="equipment_file_ul"></ul>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="page-header-title p-b-15">
+                    <div class="d-inline">
+                        <h5>Product Rewards Point</h5>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-block v-product-top">
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>QR Code Scan</label>&nbsp;<span style="color:red;">*</span>
+                                    <input type="number" name="qr_code_scan_rewards"
+                                           class=" integerField form-control point" id="qr_code_scan_rewards"
+                                           required="">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>A Side Batch</label>&nbsp;<span style="color:red;">*</span>
+                                    <input name="a_side_batch_rewards" type="number"
+                                           class="integerField form-control point" id="a_side_batch_rewards"
+                                           required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>A Side Set Temp</label>&nbsp;<span style="color:red;">*</span>
+                                    <input type="number" name="a_side_set_temp_rewards"
+                                           class="integerField form-control point" id="a_side_set_temp_rewards"
+                                           required="">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>B Side Set Temp</label>&nbsp;<span style="color:red;">*</span>
+                                    <input type="number" name="b_side_set_temp_rewards"
+                                           class="integerField form-control point" id="b_side_set_temp_rewards"
+                                           required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Hot Set Temp</label>&nbsp;<span style="color:red;">*</span>
+                                    <input type="number" name="hot_set_temp_rewards"
+                                           class="integerField form-control point" id="hot_set_temp_rewards"
+                                           required="">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Pressure Set</label>&nbsp;<span style="color:red;">*</span>
+                                    <input type="number" name="pressure_set_rewards"
+                                           class="form-control integerField point" id="pressure_set_rewards"
+                                           required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Mixing Chamber Size</label>&nbsp;<span style="color:red;">*</span>
+                                    <input type="number" name="mixing_chamber_size_rewards"
+                                           class=" integerField form-control point" id="mixing_chamber_size_rewards"
+                                           required="">
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Photo of Installed foam</label>&nbsp;<span style="color:red;">*</span>
+                                    <input type="number" name="photo_installed_foam"
+                                           class="integerField form-control point" id="photo_installed_foam"
+                                           required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-6 col-sm-12">
+                                <div class="form-group">
+                                    <label>Starting Drum Temperature Point</label>&nbsp;<span
+                                        style="color:red;">*</span>
+                                    <input type="number" name="starting_drum_temperature_point"
+                                           class=" integerField form-control point" id="starting_drum_temperature_point"
+                                           required="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-6 col-lg-12 col-sm-12">
+                                <div class="form-group row">
+                                    <label class="col-sm-12 col-form-label"><strong>Total Points : </strong><strong
+                                            id="total-points" class="total">0</strong></label>
+                                    <input type="hidden" id="total_points1" name="total_points" value="">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <button class="btn btn-primary" type="submit"
+                                    onclick="$('#total_points1').val($('#total-points').html())"
+                                    id="progress-bar-trigger">Submit
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <!-- <div id="progress-wrapper"> -->
+                    <!-- <button id="progress-bar-trigger">Run</button> -->
+                    <div id="progress-bar" style="background-color: #244289; width: 0%;display: none;">&nbsp;</div>
+                    <!--  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" id="progress-bar" style="width: 0%">&nbsp;</div> -->
+                    <!-- <div id="progress-bar-message"></div> -->
+                    <!-- </div> -->
+
+
+                    <!--
+                                        <div class="progress" id="progressbar_product_5">
+                                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 5%"></div>
+                                        </div>
+                                        <div class="progress" id="progressbar_product_15">
+                                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 15%"></div>
+                                        </div>
+                                        <div class="progress" id="progressbar_product_30">
+                                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 30%"></div>
+                                        </div>
+                                        <div class="progress" id="progressbar_product_50">
+                                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+                                        </div>
+                                        <div class="progress" id="progressbar_product_75">
+                                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
+                                        </div>
+                                        <div class="progress" id="progressbar_product_100">
+                                          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                                        </div> -->
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+    {% if error %}
+        <script type="text/javascript">
+            swal("error", 'Please Select Merchant..!!', "error")
+        </script>
+    {% endif %}
+    {% if product_name_error %}
+        <script type="text/javascript">
+            swal("error", 'Product Name is already exists. Please enter unique product name.', "error")
+        </script>
+    {% endif %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.product_loader').hide();
+            // $('#progressbar_product_5').hide();
+            // $('#progressbar_product_15').hide();
+            // $('#progressbar_product_30').hide();
+            // $('#progressbar_product_50').hide();
+            // $('#progressbar_product_75').hide();
+            // $('#progressbar_product_100').hide();
+
+            var regex = /^[A-Za-z -]+$/;
+
+            $('#progress-bar-trigger').click(function () {
+                var a_side = $('#a_side_batch').val()
+                if ($('#product_name').val().trim() == "") {
+                    alert("product name cannot be null")
+                    return false;
+                }
+                if ($('#product_description').val().trim() == "") {
+                    alert("product description cannot be null")
+                    return false;
+                }
+                if ($('#a_side_batch').val().trim() == "") {
+                    alert("a side batch cannot be null")
+                    return false;
+                }
+                if ($('#merchant_id').val() == '0' || !a_side.match(regex) || $('#b_side_set_temp').val() == "" || $('#a_side_set_temp').val() == "" || $('#hot_set_temp').val() == "" || $('#pressure_set').val() == "" || $('#starting_drum_temperature').val() == "" || $('#mixing_chamber_size').val() == "" || $('#qr_code_scan_rewards').val() == "" || $('#a_side_batch_rewards').val() == "" || $('#a_side_set_temp_rewards').val() == "" || $('#b_side_set_temp_rewards').val() == "" || $('#hot_set_temp_rewards').val() == "" || $('#pressure_set_rewards').val() == "" || $('#mixing_chamber_size_rewards').val() == "" || $('#photo_installed_foam').val() == "" || $('#starting_drum_temperature_point').val() == "") {
+                    $('.product_loader').hide();
+                    // $('#progressbar_product_5').hide();
+                    // $('#progressbar_product_15').hide();
+                    // $('#progressbar_product_30').hide();
+                    // $('#progressbar_product_50').hide();
+                    // $('#progressbar_product_75').hide();
+                    // $('#progressbar_product_100').hide();
+                    console.log('loader123 hide')
+                }
+                    //  if($('#b_side_set_temp').val() == "0"){
+                    //   swal("error",'Please Select B Side Set Temperature..!!',"error")
+                    // }
+                    // else if($('#a_side_set_temp').val() == "0"){
+                    //   swal("error",'Please Select A Side Set Temperature..!!',"error")
+                    // }
+                    // else if($('#hot_set_temp').val() == "0"){
+                    //   swal("error",'Please Select Hot Set Temperature..!!',"error")
+                    // }
+                    // else if($('#pressure_set').val() == "0"){
+                    //   swal("error",'Please Select Pressure Set..!!',"error")
+                    // }
+                    // else if($('#starting_drum_temperature').val() == "0"){
+                    //   swal("error",'Please Select Starting Drum Temperature..!!',"error")
+                    // }
+                    // else if($('#mixing_chamber_size').val() == ""){
+                    //   swal("error",'Please Select Mixing Chamber Size..!!',"error")
+                // }
+                else {
+                    $(this).find('button[type=submit]').prop('disabled', true);
+                    $('.product_loader').show();
+                    // $('#progressbar_product_5').show();
+                    // setTimeout($('#progressbar_product_5').hide(),15000)
+                    // setTimeout($('#progressbar_product_15').show(),15000)
+                    // setTimeout($('#progressbar_product_15').hide(),30000)
+                    // setTimeout($('#progressbar_product_30').show(),30000)
+                    // setTimeout($('#progressbar_product_30').hide(),60000)
+                    // setTimeout($('#progressbar_product_50').show(),60000)
+                    // setTimeout($('#progressbar_product_50').hide(),90000)
+                    // setTimeout($('#progressbar_product_75').show(),120000)
+                    // setTimeout($('#progressbar_product_75').hide(),150000)
+                    // setTimeout($('#progressbar_product_100').show(),180000)
+
+                    console.log('loader123 show')
+                    // var i = 0;
+                    // while(i <= 100){
+                    //   var progress = 'width: '+i+'%'
+                    //   console.log('progress-----',progress)
+                    //   setTimeout($('#progressbar_product').children().attr('style',progress),120000)
+                    //   setTimeout(i++, 120000);
+                    // }
+                }
+            })
+
+            $("#a_side_batch").on("keyup", function () {
+                if (!$('#a_side_batch').val().match(regex)) {
+                    $('.product_loader').hide();
+                    // $('#progressbar_product_5').hide();
+                    // $('#progressbar_product_15').hide();
+                    // $('#progressbar_product_30').hide();
+                    // $('#progressbar_product_50').hide();
+                    // $('#progressbar_product_75').hide();
+                    // $('#progressbar_product_100').hide();
+                }
+            });
+
+        });
+
+
+        $('.point').on("keypress", function (evt) {
+            console.log(evt)
+            if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57) {
+                evt.preventDefault();
+            }
+        });
+        $('.point').attr('min', 0)
+
+        $('.temp').attr('onkeydown', "javascript: return event.keyCode == 69 ? false : true")
+
+
+        // after one click submit btn disable
+        // $('form').submit(function(){
+
+
+        // });
+    </script>
+
+
+    <script type="text/javascript">
+        function updateProgress(progressBarElement, progressBarMessageElement, progress) {
+            console.log('---------', progressBarElement)
+            progressBarElement.style.width = progress.percent + "%";
+            // progressBarMessageElement.innerHTML = progress.current + ' of ' + progress.total + ' processed.';
+            if (progress.current == -1) {
+                progress.current = 0;
+            }
+            progressBarMessageElement.innerHTML = progress.current + ' % ';
+
+        }
+
+        var trigger = document.getElementById('progress-bar-trigger');
+        console.log('trigger-------', trigger)
+        trigger.addEventListener('click', function (e) {
+            var bar = document.getElementById("progress-bar");
+            console.log('bar----', bar)
+            var barMessage = document.getElementById("progress-bar-message");
+            console.log('barmsg-------', barMessage)
+            for (var i = 0; i < 11; i++) {
+                console.log('i---------', i)
+                setTimeout(updateProgress, 500 * i, bar, barMessage, {
+                    percent: (10 * i) - 1,
+                    current: (10 * i) - 1,
+                    total: 99
+                })
+            }
+        })
+    </script>
+{% endblock %}
+        

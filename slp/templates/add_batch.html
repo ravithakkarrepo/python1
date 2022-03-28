@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+<a onclick="noBack()" href="{% url 'login' %}"></a>
+<div id="loader" style="display: none;"><div><img src="{{MEDIA_URL}}3.svg"></div></div>
+<div class="pcoded-content">
+    <div class="page-header card">
+    <div class="row align-items-end">
+      <div class="col-lg-8">
+        <div class="page-header-title">
+          <div class="d-inline">
+            <h5><a href="{% url 'batch' %}"><i class="icofont icofont-simple-left"></i></a> Add Batch</h5>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+         
+      </div>
+    </div>
+    </div>
+            
+    <div class="page-header card">
+         <div class="card">
+              <div class="card-block">
+                <form action="{% url 'batch/' %}" method="post" id="qr_form" enctype="multipart/form-data" >
+                    {% csrf_token %}
+                   <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                             <div class="form-group">
+                                  <label>Choose Product</label>&nbsp;<span style="color:red;">*</span>
+                                  <select class="form-control product_id" name="product_id" required="">
+                                          <option value="0">Select option</option>
+                                          {% for p in product %}
+                                            <option value="{{ p.id }}">{{ p.product_name }}</option>
+                                        {% endfor %}
+                                  </select>
+                             </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                             <div class="form-group">
+                                  <label>Batch Number</label>&nbsp;<span style="color:red;">*</span>
+                                  <input type="number" min="0" class="form-control" id="batch_number" name="batch_number" required="">
+                             </div>
+                        </div>
+                   </div>
+
+                   <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                             <div class="form-group">
+                                  <label>Quantity</label>&nbsp;<span style="color:red;">*</span>
+                                  <input type="number" min="1" class="form-control" id="quantity" name="quantity" required="">
+                             </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                             <div class="form-group">
+                                  <label>Start Date</label>
+                                  <input type="date" class="form-control" id="start_date" name="start_date" required="" value="">
+                             </div>
+                        </div>
+                   </div>
+                   <div class="row">
+                        <div class="col-xl-6 col-lg-6 col-sm-12">
+                             <div class="form-group">
+                                  <label>Start Time</label>
+                                  <input type="time" class="form-control" id="start_time" name="start_time"required="">
+                             </div>
+                        </div>
+                   </div>
+                   <div class="clearfix gen-btn">
+                        <button type="submit" class="btn btn-primary" id="generate">Generate</button>
+                   </div>
+                </form>
+              </div>
+         </div>
+    </div>
+</div>
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<!-- <script type="text/javascript">
+  $('#generate').on('click',function(){
+    var product_id = $('.product_id').val()
+    var batch_number = $('#batch_number').val()
+    console.log(product_id)
+    if(product_id == 'Select option' || batch_number == ''){
+      $('#loader').hide();
+      swal('Please Choose Product..!!!')
+    }
+  });
+</script> -->
+<script type="text/javascript">
+  window.history.forward();
+  function noBack() { window.history.forward(); }
+</script>
+
+<!-- {% if loader %} -->
+<script type="text/javascript">
+  $(document).ready(function(){
+    // $('#loader').hide();
+    $('#generate').click(function(){
+      var product_id = $('.product_id').val()
+      var batch_number = $('#batch_number').val()
+      var quantity = $('#quantity').val()
+      console.log(product_id)
+      if(product_id == '0'){
+        // $('#loader').hide();
+        swal("error",'Please Choose Product..!!!',"error")
+      }else if(batch_number == '' || quantity == ''){
+        // $('#loader').hide();
+      }
+      else{
+        // $('#loader').show();
+        $('#loader').css('display','block')
+      }
+    })
+  })
+</script>
+<!-- {% endif %} -->
+
+<script>
+  $(document).ready(function(){
+    $("#start_date").val(getActualDate())
+    $("#start_time").val(getActualHour())
+
+    function addZero(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+    function getActualDate() {
+        var d = new Date();
+        var day = addZero(d.getDate());
+        var month = addZero(d.getMonth()+1);
+        console.log(month)
+        var year = addZero(d.getFullYear());
+        console.log(day + "-" + month + "-" + year)
+        return year + "-" + month + "-" + day;
+    }
+    function getActualHour() {
+        var d = new Date();
+        var h = addZero(d.getHours());
+        var m = addZero(d.getMinutes());
+        return h + ":" + m;
+    }
+  });
+    document.querySelector("#batch_number").addEventListener("keypress", function (evt) {
+      console.log(evt)
+      if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+      {
+          evt.preventDefault();
+      }
+    });
+    document.querySelector("#quantity").addEventListener("keypress", function (evt) {
+      console.log(evt)
+      if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+      {
+          evt.preventDefault();
+      }
+      // if (evt.which == 0){
+      //   evt.preventDefault();
+      // }
+    });
+
+    // zero cant be initial value
+    $('#quantity').change(function(){
+      var in_int = $("#quantity").val()
+      console.log('1',in_int,typeof(in_int))
+      in_int = parseInt(in_int)
+      console.log(in_int,typeof(in_int))
+    if(in_int == "0"){
+      alert('zero cannot be set as an initial value');
+      $('#generate').prop('disabled', true);
+      $('#start_date').prop('disabled', true);
+      $('#start_time').prop('disabled', true);
+    }else {
+      $('#generate').prop('disabled', false);
+      $('#start_date').prop('disabled', false);
+      $('#start_time').prop('disabled', false);
+    }
+})
+
+</script>
+
+{% if add %}
+  <script>
+    swal({
+    title: "Success!",
+    text: "{{ add }}",
+    icon: "success",
+    buttons: false
+  })
+  function redirect(){
+    window.location.href = "{% url 'batch'  %}";
+}
+  setTimeout(redirect, 2000); //2000 is equivalent to 2 seconds
+  </script>
+{% endif %}
+{% endblock %}

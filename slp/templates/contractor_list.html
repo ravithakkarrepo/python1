@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block body %}
+
+<a onclick="noBack()" href="{% url 'login_error' %}"></a>
+        <div class="pcoded-content">
+          <div class="page-header card">
+            <div class="row align-items-end">
+              <div class="col-lg-8">
+                <div class="page-header-title">
+                  <div class="d-inline">
+                    <h5>Contractors</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                   <div class="text-right">
+                         <a href="{% url 'contractors/add/' %}" class="btn btn-primary">Add Contractor</a>
+                   </div>
+              </div>
+            </div>
+          </div>
+          <div class="page-header card">
+              <div class="card">
+                <div class="card-block">
+                  <div class="dt-responsive table-responsive">
+                    <table id="multi-colum-dt-con" class="table table-striped table-bordered nowrap">
+                      <thead>
+                        <tr>
+                          <th>Contractor Name</th>
+                          <th>Company Name</th>
+                          <th>Email</th>
+                          <th>Phone Number</th>
+                          <th>Action</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for contractor_id, name, company, email, phone in data %}
+                        <tr>
+                          <td>{{ name }}</td>
+                          <td>{{ company }}</td>
+                          <td>{{ email }}</td>
+                          <td>{{ phone }}</td>
+                          <td>
+                              <a href="/contractors/{{contractor_id}}" title="View" class="tabledit-edit-button btn btn-primary waves-light waves-effect"><i class="icofont icofont-eye-alt"></i></a>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+          </div>
+        </div>
+
+<script type="text/javascript">
+  window.history.forward();
+  function noBack() { window.history.forward(); }
+</script>
+{% endblock %}
+
+
+
